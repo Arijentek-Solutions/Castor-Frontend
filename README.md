@@ -20,6 +20,30 @@ This monorepo uses **pnpm workspaces** and **Turborepo** to manage multiple appl
 - **Node.js**: v18.x or higher.
 - **pnpm**: v9.x or higher (Recommended).
 
+## Developer Setup
+
+To contribute to this project, follow this **Fork & Pull** workflow:
+
+1. **Fork the repository** on GitHub to your own account.
+2. **Clone your fork** locally:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/Castor-Frontend.git
+   cd castor
+   ```
+3. **Add the main repo as 'upstream'** to get latest updates:
+   ```bash
+   git remote add upstream https://github.com/Arijentek-Solutions/Castor-Frontend.git
+   ```
+4. **Pull latest updates** from main repo:
+   ```bash
+   git pull upstream main
+   ```
+5. **Push your work** to your personal fork:
+   ```bash
+   git push origin branchname
+   ```
+
+
 ## Getting Started
 
 1. **Clone the repository**:
