@@ -1,4 +1,4 @@
-# Castor Monorepo
+# Castor
 
 Welcome to the Castor project! This is a unified healthcare platform built with a modular monorepo architecture.
 
