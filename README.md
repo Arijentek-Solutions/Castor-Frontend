@@ -84,7 +84,22 @@ pnpm --filter web dev
 ## Workflow for Developers
 
 1. **Create a branch**: `git checkout -b feature/your-feature`.
-2. **Commit**: `git commit -m "feat: your description"`.
+2. **Commit**: Use Conventional Commits for better project history.
+   ```bash
+   git commit -m "feat: add user profile dashboard"
+   ```
+
+| Prefix | Type | Description |
+| :--- | :--- | :--- |
+| `feat` | Feature | A new feature for the user |
+| `fix` | Bug Fix | A bug fix for the user |
+| `docs` | Documentation | Documentation only changes |
+| `style` | Styling | Changes that do not affect the meaning of the code |
+| `refactor`| Refactor | A code change that neither fixes a bug nor adds a feature |
+| `perf` | Performance | A code change that improves performance |
+| `test` | Testing | Adding missing tests or correcting existing tests |
+| `chore` | Maintenance | Changes to the build process, auxiliary tools, or libraries |
+
 3. **Push**: `git push -u origin feature/your-feature`.
 4. **Pull updates**: `git checkout main && git pull`.
 
