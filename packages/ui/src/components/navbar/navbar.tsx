@@ -32,7 +32,7 @@ export const Navbar = () => {
           <NavItem label="Health Institute" href={SITE_URLS.institute} hasDropdown dropdownContent={<HealthInstituteDropdown />} />
           <NavItem label="Transportation"   href={SITE_URLS.transport} />
           <NavItem label="Careers"          href={`${SITE_URLS.web}/careers`} />
-          <NavItem label="Contact"          href="/contact" />
+          <NavItem label="Contact"          href={`${SITE_URLS.web}/contact`} />
         </div>
 
         {/* Actions */}
