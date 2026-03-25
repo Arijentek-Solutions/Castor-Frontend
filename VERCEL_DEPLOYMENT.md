@@ -21,16 +21,19 @@ Repeat these steps for **each** app in the `apps/` folder:
 1.  **Create New Project**: In Vercel, click "Add New" -> "Project".
 2.  **Import Repository**: Select your `Castor-Frontend` repository.
 3.  **Configure Project**:
-    -   **Project Name**: Give it a unique name (e.g., `castor-web`, `castor-auth`).
+    -   **Project Name**: Give it a unique name (e.g., `castor-web`).
     -   **Framework Preset**: Select **Next.js**.
-    -   **Root Directory**: Click "Edit" and select the specific app folder (e.g., `apps/web`). Keep "Include source files outside of the Root Directory in the Build Step" **checked** (important for shared packages).
+    -   **Root Directory**: Click "Edit" and select the specific app folder. Ensure **"Include source files outside of the Root Directory"** is checked.
 4.  **Build & Output Settings**:
-    -   Framework should automatically detect `pnpm`.
-    -   Build Command: `pnpm build` (Vercel runs this from the `apps/xxx` directory).
-    -   Output Directory: `.next` (default).
-5.  **Environment Variables**:
-    -   Add all required `NEXT_PUBLIC_*` variables (copy from `.env.example`).
-    -   **Critical**: For the `web` project, `NEXT_PUBLIC_AUTH_URL` should point to your deployed `auth` Vercel URL.
+    -   **Build Command**: `turbo run build --filter=<app-name>` (e.g., `turbo run build --filter=web`).
+5.  **Environment Variables** (The Most Important Part):
+    -   Add **ALL** of these to **EVERY** project in the Vercel Dashboard:
+        - `NEXT_PUBLIC_WEB_URL`: `https://castor-main.vercel.app`
+        - `NEXT_PUBLIC_INSTITUTE_URL`: `https://castor-institute.vercel.app`
+        - `NEXT_PUBLIC_ECOMMERCE_URL`: `https://castor-ecommerce.vercel.app`
+        - `NEXT_PUBLIC_SERVICES_URL`: `https://castor-getcare.vercel.app`
+        - `NEXT_PUBLIC_TRANSPORT_URL`: `https://castor-transport.vercel.app`
+        - `NEXT_PUBLIC_AUTH_URL`: `https://castor-auth.vercel.app` (Placeholder)
 
 ---
 
