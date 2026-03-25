@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@castor/ui";
 
 const serviceCards = [
   {
@@ -89,12 +90,17 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-wrap gap-4 pt-4">
-                  <button className="px-8 py-4 bg-[#2dabac] hover:bg-[#269798] text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-[0_10px_20px_-10px_rgba(45,171,172,0.5)] active:scale-95">
+                  <Button
+                    className="min-h-[58px] min-w-[198px] rounded-[14px] px-9 text-[1.05rem] font-semibold"
+                  >
                     Browse Products
-                  </button>
-                  <button className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl backdrop-blur-md border border-white/20 transition-all duration-300 active:scale-95">
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    className="min-h-[58px] min-w-[170px] rounded-[14px] px-9 text-[1.05rem] font-semibold"
+                  >
                     B2B Inquiries
-                  </button>
+                  </Button>
                 </div>
               </div>
 

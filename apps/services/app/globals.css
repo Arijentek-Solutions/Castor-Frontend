@@ -2,7 +2,7 @@
 @source "../../../packages/ui/src/**/*.{ts,tsx}";
 
 :root {
-  --page-background: #f5f7fb;
+  --page-background: #ffffff;
   --surface: #ffffff;
   --hero-overlay-start: rgba(16, 29, 52, 0.88);
   --hero-overlay-mid: rgba(16, 29, 52, 0.72);
@@ -14,10 +14,14 @@
   --hero-title-accent: #f4c695;
   --hero-copy: rgba(240, 244, 251, 0.88);
   --hero-secondary-copy: rgba(240, 244, 251, 0.72);
-  --hero-primary: #33c3cf;
-  --hero-primary-hover: #26b0bb;
+  --hero-primary: #20a9ad;
+  --hero-primary-hover: #1c989c;
+  --hero-primary-shadow: 0 10px 15px -3px rgba(32, 169, 173, 0.2), 0 4px 6px -4px rgba(32, 169, 173, 0.2);
   --hero-secondary-background: rgba(255, 255, 255, 0.08);
   --hero-secondary-border: rgba(255, 255, 255, 0.16);
+  --hero-secondary-hover: rgba(255, 255, 255, 0.14);
+  --hero-secondary-text: rgba(255, 255, 255, 1);
+  --hero-secondary-blur: 12px;
   --hero-shadow: 0 32px 80px rgba(13, 24, 43, 0.18);
   --foreground: #171717;
 }
@@ -35,13 +39,12 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(214, 226, 242, 0.9), transparent 32%),
-    linear-gradient(180deg, #fcfdff 0%, var(--page-background) 100%);
+  background: var(--page-background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
 }

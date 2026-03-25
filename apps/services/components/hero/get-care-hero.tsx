@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button, HeroActions } from "@castor/ui";
 
 const heroStats = [
   "Skilled medical recovery",
@@ -41,15 +42,15 @@ export function GetCareHero() {
                   nursing, or daily support.
                 </p>
 
-                <div className="mt-9 flex flex-wrap gap-4">
-                  <button className="inline-flex min-h-14 items-center justify-center rounded-full bg-[var(--hero-primary)] px-7 text-[0.95rem] font-medium text-white transition-colors duration-200 hover:bg-[var(--hero-primary-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--hero-primary)]">
+                <HeroActions>
+                  <Button>
                     Find Care Options
-                  </button>
-                  <button className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-[color:var(--hero-secondary-border)] bg-[color:var(--hero-secondary-background)] px-7 text-[0.95rem] font-medium text-white backdrop-blur-md transition-colors duration-200 hover:bg-white/14 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/70">
+                  </Button>
+                  <Button variant="secondary">
                     <PhoneIcon />
                     <span>Speak to Coordinator</span>
-                  </button>
-                </div>
+                  </Button>
+                </HeroActions>
 
                 <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--hero-secondary-copy)]">
                   {heroStats.map((stat) => (

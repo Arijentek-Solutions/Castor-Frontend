@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button, HeroActions } from "@castor/ui";
 
 export default function CareersPage() {
   return (
@@ -43,14 +44,11 @@ export default function CareersPage() {
                     make a meaningful impact in your community.
                   </p>
 
-                  <div className="mt-9 flex flex-wrap gap-4">
-                    <a
-                      href="#open-positions"
-                      className="inline-flex min-h-14 items-center justify-center rounded-full bg-[#33c3cf] px-7 text-[0.95rem] font-medium text-white shadow-[0_12px_30px_rgba(51,195,207,0.30)] transition-colors duration-200 hover:bg-[#26b0bb]"
-                    >
+                  <HeroActions>
+                    <Button href="#open-positions">
                       View Open Positions
-                    </a>
-                  </div>
+                    </Button>
+                  </HeroActions>
                 </div>
               </div>
             </div>

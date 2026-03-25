@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button, HeroActions } from "@castor/ui";
 
 export default function Home() {
   return (
@@ -40,20 +41,14 @@ export default function Home() {
                     care coordination across the region.
                   </p>
 
-                  <div className="mt-9 flex flex-wrap gap-4">
-                    <a
-                      href="#"
-                      className="inline-flex min-h-14 items-center justify-center rounded-full bg-[#37c5d0] px-7 text-[0.95rem] font-medium text-white shadow-[0_12px_30px_rgba(55,197,208,0.3)] transition-colors duration-200 hover:bg-[#2eb3bd]"
-                    >
+                  <HeroActions>
+                    <Button href="#">
                       Request A Ride
-                    </a>
-                    <a
-                      href="#"
-                      className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/18 bg-white/10 px-7 text-[0.95rem] font-medium text-white/92 backdrop-blur-sm transition-colors duration-200 hover:bg-white/16"
-                    >
+                    </Button>
+                    <Button href="#" variant="secondary">
                       Partner With Us
-                    </a>
-                  </div>
+                    </Button>
+                  </HeroActions>
 
                   <div className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-white/70">
                     <span className="inline-flex items-center gap-2">

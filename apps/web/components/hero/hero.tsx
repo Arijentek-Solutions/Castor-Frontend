@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { Button } from "@castor/ui";
 
 export function Hero() {
   return (
@@ -24,7 +25,7 @@ export function Hero() {
           </div>
 
           <div className="relative z-20 flex h-full items-center justify-start px-6 lg:px-24">
-            <div className="flex max-w-2xl flex-col gap-6 pt-32 animate-in fade-in slide-in-from-left-8 duration-1000 ease-out">
+            <div className="flex max-w-2xl flex-col gap-6 pt-6 animate-in fade-in slide-in-from-left-8 duration-1000 ease-out lg:pt-0">
               <div
                 className="flex items-center justify-center gap-[8px] rounded-full border border-white/30 bg-white/20 backdrop-blur-sm shadow-inner"
                 style={{ width: "fit-content", minWidth: "193.844px", padding: "9px 17px" }}
@@ -50,12 +51,17 @@ export function Hero() {
               </p>
 
               <div className="mt-4 flex flex-wrap gap-4">
-                <button className="rounded-xl bg-[#2dabac] px-8 py-4 font-bold text-white shadow-[0_10px_20px_-10px_rgba(45,171,172,0.5)] transition-all duration-300 hover:scale-105 hover:bg-[#269798]">
+                <Button
+                  className="min-h-[58px] min-w-[156px] px-9 text-[1.05rem] font-semibold"
+                >
                   Get Started
-                </button>
-                <button className="rounded-xl border border-white/20 bg-white/10 px-8 py-4 font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20">
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="min-h-[58px] min-w-[168px] rounded-[14px] border-white/18 bg-[#4a556b]/78 px-9 text-[1.05rem] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm hover:bg-[#566178]/84"
+                >
                   Our Services
-                </button>
+                </Button>
               </div>
             </div>
           </div>
