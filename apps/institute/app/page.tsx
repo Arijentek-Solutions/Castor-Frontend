@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button, HeroActions } from "@castor/ui";
 
 const badgeIcon = "/graduationicon.svg";
 const studentIcon = "/studenticon.svg";
@@ -47,17 +48,11 @@ export default function Home() {
               region&apos;s leading institute.
             </p>
 
-            <div className="mt-9 flex flex-wrap gap-4">
-              <a
-                href="#"
-                className="inline-flex min-h-14 items-center justify-center rounded-full bg-[#22c7d6] px-7 text-[0.95rem] font-medium text-white shadow-[0_12px_30px_rgba(34,199,214,0.35)] transition-colors duration-200 hover:bg-[#28d6e6]"
-              >
+            <HeroActions>
+              <Button href="#">
                 View Course Schedule
-              </a>
-              <a
-                href="#"
-                className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-white/18 bg-white/10 px-7 text-[0.95rem] font-medium text-white/92 backdrop-blur-sm transition-colors duration-200 hover:bg-white/16"
-              >
+              </Button>
+              <Button href="#" variant="secondary">
                 <Image
                   src={studentIcon}
                   alt=""
@@ -66,9 +61,9 @@ export default function Home() {
                   className="opacity-90"
                   aria-hidden="true"
                 />
-                Student Portal Login
-              </a>
-            </div>
+                <span>Student Portal Login</span>
+              </Button>
+            </HeroActions>
               </div>
             </div>
           </div>

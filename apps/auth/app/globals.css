@@ -5,6 +5,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --hero-primary: #20a9ad;
+  --hero-primary-hover: #1c989c;
+  --hero-primary-shadow: 0 10px 15px -3px rgba(32, 169, 173, 0.2), 0 4px 6px -4px rgba(32, 169, 173, 0.2);
+  --hero-secondary-background: rgba(255, 255, 255, 0.1);
+  --hero-secondary-border: rgba(255, 255, 255, 0.18);
+  --hero-secondary-hover: rgba(255, 255, 255, 0.16);
+  --hero-secondary-text: rgba(255, 255, 255, 0.92);
+  --hero-secondary-blur: 4px;
 }
 
 @theme inline {

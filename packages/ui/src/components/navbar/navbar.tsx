@@ -70,14 +70,14 @@ const NavItem = ({ label, href = "#", hasDropdown = false, dropdownContent }: Na
     return isExternal ? (
       <a
         href={href}
-        className="group flex items-center justify-center gap-1 whitespace-nowrap px-2 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:px-3 xl:text-[16px]"
+        className="group flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:text-[16px]"
       >
         {label}
       </a>
     ) : (
       <Link
         href={href}
-        className="group flex items-center justify-center gap-1 whitespace-nowrap px-2 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:px-3 xl:text-[16px]"
+        className="group flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:text-[16px]"
       >
         {label}
         {hasDropdown && (
@@ -94,7 +94,7 @@ const NavItem = ({ label, href = "#", hasDropdown = false, dropdownContent }: Na
       {isExternal ? (
         <a
           href={href}
-          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-4 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
+          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
         >
           {label}
           {hasDropdown && (
@@ -106,7 +106,7 @@ const NavItem = ({ label, href = "#", hasDropdown = false, dropdownContent }: Na
       ) : (
         <Link
           href={href}
-          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-4 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
+          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
         >
           {label}
           {hasDropdown && (
