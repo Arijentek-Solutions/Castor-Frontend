@@ -127,7 +127,7 @@ const getCareItems = [
   {
     title: "Home Health",
     description: "Skilled nursing & therapy services",
-    href: SITE_URLS.services,
+    href: `${SITE_URLS.services}/#hero`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 20s-6-3.8-6-9a3.5 3.5 0 0 1 6-2.2A3.5 3.5 0 0 1 18 11c0 5.2-6 9-6 9Z" />
@@ -137,7 +137,7 @@ const getCareItems = [
   {
     title: "Private Duty Nursing",
     description: "One-on-one nursing care",
-    href: SITE_URLS.services,
+    href: `${SITE_URLS.services}/#hero`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 11V7a3 3 0 1 1 6 0v4" />
@@ -150,7 +150,7 @@ const getCareItems = [
   {
     title: "Home Care (Non-Medical)",
     description: "Personal care & companionship",
-    href: SITE_URLS.services,
+    href: `${SITE_URLS.services}/#hero`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="9" cy="8" r="3" />
@@ -163,7 +163,7 @@ const getCareItems = [
   {
     title: "Veterans / VA Care",
     description: "Specialized care for veterans",
-    href: SITE_URLS.services,
+    href: `${SITE_URLS.services}/#hero`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 3 7 5v6c0 4 2.6 7.6 5 9 2.4-1.4 5-5 5-9V5l-5-2Z" />

@@ -55,8 +55,7 @@ export default function Home() {
     <div className="min-h-screen w-full bg-white pb-20 font-sans">
       <main className="w-full px-4 sm:px-6 lg:px-8">
         <section 
-          className="relative w-full overflow-hidden bg-[#0e1b33] mt-40 rounded-[1.5rem] mx-auto max-w-[1871px] shadow-sm"
-          style={{ minHeight: "700px" }}
+          className="relative mx-auto mt-40 h-[700px] w-full max-w-[1871px] overflow-hidden rounded-[2rem] bg-[#0e1b33] shadow-sm"
         >
           {/* Background Gradient/Ornaments */}
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
