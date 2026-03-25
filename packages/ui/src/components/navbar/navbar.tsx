@@ -1,129 +1,27 @@
 "use client";
-import Link from 'next/link';
-import type { ReactNode } from 'react';
-import { SITE_URLS } from '../../config/site-urls';
 
-export const Navbar = () => {
-  return (
-    <div className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4 sm:top-6 sm:px-5 lg:top-8 lg:px-6">
-      <nav 
-        className="flex h-20 w-full max-w-[1380px] items-center justify-between rounded-full border border-[#bfc7d5]/15 bg-white px-5 py-3 shadow-[0_12px_32px_rgba(27,28,28,0.06)] backdrop-blur-[20px] sm:px-6 md:h-22 md:px-8 lg:h-24 lg:px-12 xl:px-16"
-      >
-        {/* Logo Section */}
-        <a href={SITE_URLS.web} className="group flex flex-shrink-0 items-center gap-3 transition-opacity hover:opacity-90 sm:gap-4">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-full text-xl font-bold text-white shadow-sm sm:h-11 sm:w-11 sm:text-2xl lg:h-12 lg:w-12"
-            style={{ backgroundColor: '#20A9AD' }}
-          >
-            C
-          </div>
-          <div className="flex flex-col">
-            <span className="text-xl font-black leading-none tracking-tight text-[#1b1c1c] transition-colors group-hover:text-[#20A9AD] sm:text-2xl">CASTOR</span>
-            <span className="mt-0.5 text-[9px] font-bold uppercase leading-tight tracking-[0.05em] text-[#20A9ADB2] sm:text-[10px]">
-              HEALTH ECOSYSTEM
-            </span>
-          </div>
-        </a>
+import Link from "next/link";
+import { Inter } from "next/font/google";
+import { useState, type ReactNode } from "react";
+import { SITE_URLS } from "../../config/site-urls";
 
-        {/* Navigation Links */}
-        <div className="mx-4 hidden min-w-0 flex-1 items-center justify-center gap-1 xl:mx-6 xl:gap-2 lg:flex">
-          <NavItem label="Get Care"         href={SITE_URLS.services}  hasDropdown dropdownContent={<GetCareDropdown />} />
-          <NavItem label="Medical Supplies" href={SITE_URLS.ecommerce} hasDropdown dropdownContent={<MedicalSuppliesDropdown />} />
-          <NavItem label="Health Institute" href={SITE_URLS.institute} hasDropdown dropdownContent={<HealthInstituteDropdown />} />
-          <NavItem label="Transportation"   href={SITE_URLS.transport} />
-          <NavItem label="Careers"          href={`${SITE_URLS.web}/careers`} />
-          <NavItem label="Contact"          href={`${SITE_URLS.web}/contact`} />
-        </div>
+const inter = Inter({ subsets: ["latin"] });
 
-        {/* Actions */}
-        <div className="flex flex-shrink-0 items-center gap-2 self-stretch sm:gap-3 lg:gap-4">
-          <button className="hidden rounded-full p-2.5 text-gray-400 transition-colors hover:bg-gray-50 md:block lg:p-3">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-          <Link
-            href="/choose"
-            className="flex h-11 items-center justify-center whitespace-nowrap rounded-[33554400px] bg-[#0E1B33] px-5 text-sm font-semibold text-white shadow-[0_10px_15px_-3px_rgba(0,0,0,0.10),0_4px_6px_-4px_rgba(0,0,0,0.10)] transition-all hover:opacity-90 active:scale-95 sm:h-12 sm:px-6 md:px-7 lg:h-14 lg:px-8"
-          >
-            Help Me Choose
-          </Link>
-        </div>
-      </nav>
-    </div>
-  );
+type DropdownEntry = {
+  title: string;
+  description: string;
+  href: string;
+  icon: ReactNode;
 };
 
-interface NavItemProps {
+type NavEntry = {
   label: string;
-  href?: string;
-  hasDropdown?: boolean;
-  dropdownContent?: ReactNode;
-}
-
-const NavItem = ({ label, href = "#", hasDropdown = false, dropdownContent }: NavItemProps) => {
-  // Determine if this is a cross-app link (absolute URL)
-  const isExternal = href.startsWith('http');
-
-  if (!dropdownContent) {
-    return isExternal ? (
-      <a
-        href={href}
-        className="group flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:text-[16px]"
-      >
-        {label}
-      </a>
-    ) : (
-      <Link
-        href={href}
-        className="group flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors hover:text-[#0D99FF] xl:text-[16px]"
-      >
-        {label}
-        {hasDropdown && (
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 transition-transform group-hover:translate-y-0.5">
-            <path d="M6 9l6 6 6-6"></path>
-          </svg>
-        )}
-      </Link>
-    );
-  }
-
-  return (
-    <div className="group relative">
-      {isExternal ? (
-        <a
-          href={href}
-          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
-        >
-          {label}
-          {hasDropdown && (
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 transition-transform group-hover:rotate-180 group-hover:text-[#20A9AD]">
-              <path d="M6 9l6 6 6-6"></path>
-            </svg>
-          )}
-        </a>
-      ) : (
-        <Link
-          href={href}
-          className="flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-center text-[15px] font-bold leading-6 text-[#6A6A67] transition-colors group-hover:bg-[#E8FAFB] group-hover:text-[#20A9AD] xl:text-[16px]"
-        >
-          {label}
-          {hasDropdown && (
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50 transition-transform group-hover:rotate-180 group-hover:text-[#20A9AD]">
-              <path d="M6 9l6 6 6-6"></path>
-            </svg>
-          )}
-        </Link>
-      )}
-      <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-        {dropdownContent}
-      </div>
-    </div>
-  );
+  href: string;
+  desktopWidth: string;
+  dropdownItems?: DropdownEntry[];
 };
 
-const getCareItems = [
+const getCareItems: DropdownEntry[] = [
   {
     title: "Home Health",
     description: "Skilled nursing & therapy services",
@@ -173,7 +71,7 @@ const getCareItems = [
   },
 ];
 
-const medicalSuppliesItems = [
+const medicalSuppliesItems: DropdownEntry[] = [
   {
     title: "DME Equipment",
     description: "Durable medical equipment",
@@ -210,7 +108,7 @@ const medicalSuppliesItems = [
   },
 ];
 
-const healthInstituteItems = [
+const healthInstituteItems: DropdownEntry[] = [
   {
     title: "CNA Program",
     description: "Certified Nursing Assistant training",
@@ -246,20 +144,206 @@ const healthInstituteItems = [
   },
 ];
 
-const GetCareDropdown = () => (
-  <div className="w-[286px] rounded-[30px] border border-[#BFECEF] bg-white/95 p-6 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
-    <div className="space-y-5">
-      {getCareItems.map((item) => (
+const navItems: NavEntry[] = [
+  { label: "Get Care", href: SITE_URLS.services, desktopWidth: "lg:w-[84px] xl:w-[106px]", dropdownItems: getCareItems },
+  { label: "Medical Supplies", href: SITE_URLS.ecommerce, desktopWidth: "lg:w-[126px] xl:w-[161px]", dropdownItems: medicalSuppliesItems },
+  { label: "Health Institute", href: SITE_URLS.institute, desktopWidth: "lg:w-[118px] xl:w-[153px]", dropdownItems: healthInstituteItems },
+  { label: "Transportation", href: SITE_URLS.transport, desktopWidth: "lg:w-[104px] xl:w-[130px]" },
+  { label: "Careers", href: `${SITE_URLS.web}/careers`, desktopWidth: "lg:w-[70px] xl:w-[81px]" },
+  { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
+];
+
+export const Navbar = () => {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
+
+  return (
+    <div className={`${inter.className} fixed left-0 right-0 top-0 z-50`}>
+      <div className="flex justify-center px-3 pt-3 sm:px-4 lg:px-6 lg:pt-4">
+        <nav className="w-full max-w-[1276px] rounded-[32px] border border-[#edf0f4] bg-white/96 px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-[20px] sm:px-4 lg:rounded-full lg:px-3 xl:px-4 lg:py-0">
+          <div className="flex min-h-[56px] items-center justify-between gap-3 lg:h-20">
+            <Brand />
+
+            <div className="hidden flex-1 items-center justify-center lg:flex">
+              <div className="flex h-9 w-full max-w-[574px] items-center justify-between xl:max-w-[733px]">
+                {navItems.map((item) => (
+                  <DesktopNavItem key={item.label} item={item} />
+                ))}
+              </div>
+            </div>
+
+            <div className="hidden items-center lg:flex">
+              <Link
+                href="/choose"
+                className="flex h-12 w-[174px] items-center justify-center whitespace-nowrap rounded-full bg-[#0E1B33] px-5 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] transition-transform hover:scale-[0.99] active:scale-[0.97] xl:h-14 xl:w-[188px] xl:px-10 xl:text-[14px]"
+              >
+                Help Me Choose
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-2 lg:hidden">
+              <Link
+                href="/choose"
+                className="flex h-11 items-center justify-center rounded-full bg-[#0E1B33] px-4 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)]"
+              >
+                Help Me Choose
+              </Link>
+              <button
+                aria-expanded={isMobileOpen}
+                aria-label="Toggle navigation menu"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#edf0f4] text-[#0E1B33] transition-colors hover:bg-[#f7f9fb]"
+                onClick={() => setIsMobileOpen((open) => !open)}
+                type="button"
+              >
+                <MenuIcon open={isMobileOpen} />
+              </button>
+            </div>
+          </div>
+
+          {isMobileOpen ? (
+            <div className="border-t border-[#edf0f4] pt-3 lg:hidden">
+              <div className="space-y-1 pb-1">
+                {navItems.map((item) => (
+                  <MobileNavItem
+                    key={item.label}
+                    item={item}
+                    isOpen={openMobileSection === item.label}
+                    onToggle={() =>
+                      setOpenMobileSection((current) => (current === item.label ? null : item.label))
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </nav>
+      </div>
+    </div>
+  );
+};
+
+const Brand = () => (
+  <a href={SITE_URLS.web} className="flex items-center gap-2.5 transition-opacity hover:opacity-90 lg:gap-2 xl:gap-3">
+    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#20A9AD_0%,#1A8B8F_100%)] text-[20px] font-black leading-7 tracking-[-0.05em] text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] lg:h-10 lg:w-10 xl:h-12 xl:w-12">
+      C
+    </div>
+    <div className="min-w-0">
+      <div className="text-[20px] font-black leading-7 tracking-[-0.025em] text-[#0E1B33] lg:text-[17px] lg:leading-6 xl:text-[20px] xl:leading-7">CASTOR</div>
+      <div className="text-[9px] font-bold uppercase leading-[10px] tracking-[0.2em] text-[rgba(32,169,173,0.7)] lg:text-[8px] lg:tracking-[0.14em] xl:text-[10px] xl:tracking-[0.2em]">
+        Health Ecosystem
+      </div>
+    </div>
+  </a>
+);
+
+const DesktopNavItem = ({ item }: { item: NavEntry }) => {
+  const hasDropdown = Boolean(item.dropdownItems?.length);
+
+  if (!hasDropdown) {
+    return (
+      <NavLink
+        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors hover:text-[#0E1B33] xl:px-4 xl:text-[14px] ${item.desktopWidth}`}
+        href={item.href}
+      >
+        {item.label}
+      </NavLink>
+    );
+  }
+
+  return (
+    <div className={`group relative flex h-9 ${item.desktopWidth} items-center justify-center`}>
+      <NavLink
+        className="flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors group-hover:text-[#0E1B33] xl:gap-1 xl:px-[14px] xl:text-[14px]"
+        href={item.href}
+      >
+        <span>{item.label}</span>
+        <ChevronDown className="mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 group-hover:rotate-180" />
+      </NavLink>
+      <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+        <DropdownMenu items={item.dropdownItems ?? []} />
+      </div>
+    </div>
+  );
+};
+
+const MobileNavItem = ({
+  item,
+  isOpen,
+  onToggle,
+}: {
+  item: NavEntry;
+  isOpen: boolean;
+  onToggle: () => void;
+}) => {
+  const hasDropdown = Boolean(item.dropdownItems?.length);
+
+  if (!hasDropdown) {
+    return (
+      <NavLink
+        className="flex h-11 items-center rounded-[20px] px-4 text-[14px] font-bold leading-5 text-[#0E1B33] transition-colors hover:bg-[#f7f9fb]"
+        href={item.href}
+      >
+        {item.label}
+      </NavLink>
+    );
+  }
+
+  return (
+    <div className="rounded-[22px] border border-[#edf0f4] p-1">
+      <div className="flex items-center gap-2">
+        <NavLink
+          className="flex min-w-0 flex-1 items-center rounded-[18px] px-3 py-3 text-[14px] font-bold leading-5 text-[#0E1B33]"
+          href={item.href}
+        >
+          {item.label}
+        </NavLink>
+        <button
+          aria-expanded={isOpen}
+          aria-label={`Toggle ${item.label} links`}
+          className="flex h-10 w-10 items-center justify-center rounded-[18px] text-[#6A6A67] transition-colors hover:bg-[#f7f9fb]"
+          onClick={onToggle}
+          type="button"
+        >
+          <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        </button>
+      </div>
+      {isOpen ? (
+        <div className="space-y-1 px-2 pb-2 pt-1">
+          {item.dropdownItems?.map((dropdownItem) => (
+            <a
+              key={dropdownItem.title}
+              href={dropdownItem.href}
+              className="flex items-start gap-3 rounded-[18px] px-3 py-3 transition-colors hover:bg-[#f7f9fb]"
+            >
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD]">
+                {dropdownItem.icon}
+              </div>
+              <div>
+                <div className="text-[14px] font-bold leading-5 text-[#17233C]">{dropdownItem.title}</div>
+                <div className="mt-1 text-[13px] leading-5 text-[#6A6A67]">{dropdownItem.description}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+const DropdownMenu = ({ items }: { items: DropdownEntry[] }) => (
+  <div className="w-[286px] rounded-[28px] border border-[#edf0f4] bg-white/98 p-4 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
+    <div className="space-y-2">
+      {items.map((item) => (
         <a
           key={item.title}
           href={item.href}
-          className="group flex items-start gap-4 rounded-[22px] px-3 py-3 text-left transition-colors hover:bg-[#EAF6F7]"
+          className="group flex items-start gap-4 rounded-[20px] px-3 py-3 text-left transition-colors hover:bg-[#f7f9fb]"
         >
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#E8FAFB] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
             {item.icon}
           </div>
           <div>
-            <div className="text-[15px] font-bold leading-5 text-[#17233C] transition-colors group-hover:text-[#20A9AD]">{item.title}</div>
+            <div className="text-[15px] font-bold leading-5 text-[#17233C]">{item.title}</div>
             <div className="mt-1 text-[14px] leading-6 text-[#6A6A67]">{item.description}</div>
           </div>
         </a>
@@ -268,46 +352,51 @@ const GetCareDropdown = () => (
   </div>
 );
 
-const MedicalSuppliesDropdown = () => (
-  <div className="w-[286px] rounded-[30px] border border-[#BFECEF] bg-white/95 p-6 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
-    <div className="space-y-5">
-      {medicalSuppliesItems.map((item) => (
-        <a
-          key={item.title}
-          href={item.href}
-          className="group flex items-start gap-4 rounded-[22px] px-3 py-3 text-left transition-colors hover:bg-[#EAF6F7]"
-        >
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#E8FAFB] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
-            {item.icon}
-          </div>
-          <div>
-            <div className="text-[15px] font-bold leading-5 text-[#17233C] transition-colors group-hover:text-[#20A9AD]">{item.title}</div>
-            <div className="mt-1 text-[14px] leading-6 text-[#6A6A67]">{item.description}</div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </div>
+const NavLink = ({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className: string;
+  children: ReactNode;
+}) => {
+  const isExternal = href.startsWith("http");
+
+  if (isExternal) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+};
+
+const ChevronDown = ({ className = "" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 9l6 6 6-6" />
+  </svg>
 );
 
-const HealthInstituteDropdown = () => (
-  <div className="w-[286px] rounded-[30px] border border-[#BFECEF] bg-white/95 p-6 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
-    <div className="space-y-5">
-      {healthInstituteItems.map((item) => (
-        <a
-          key={item.title}
-          href={item.href}
-          className="group flex items-start gap-4 rounded-[22px] px-3 py-3 text-left transition-colors hover:bg-[#EAF6F7]"
-        >
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#E8FAFB] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
-            {item.icon}
-          </div>
-          <div>
-            <div className="text-[15px] font-bold leading-5 text-[#17233C] transition-colors group-hover:text-[#20A9AD]">{item.title}</div>
-            <div className="mt-1 text-[14px] leading-6 text-[#6A6A67]">{item.description}</div>
-          </div>
-        </a>
-      ))}
-    </div>
-  </div>
+const MenuIcon = ({ open }: { open: boolean }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    {open ? (
+      <>
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </>
+    ) : (
+      <>
+        <path d="M4 7h16" />
+        <path d="M4 12h16" />
+        <path d="M4 17h16" />
+      </>
+    )}
+  </svg>
 );
