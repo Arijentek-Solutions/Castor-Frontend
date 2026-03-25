@@ -7,7 +7,7 @@ const studentIcon = "/studenticon.svg";
 export default function Home() {
   return (
     <main className="min-h-screen bg-[var(--page-background)]">
-      <section className="px-4 pb-14 pt-32 sm:px-6 lg:px-8 lg:pb-20 lg:pt-40">
+      <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-40">
         <div className="mx-auto w-full max-w-[1871px]">
           <div className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#132540] shadow-[var(--hero-shadow)]">
           <Image

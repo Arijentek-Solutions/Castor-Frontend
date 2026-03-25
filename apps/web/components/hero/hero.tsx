@@ -5,7 +5,7 @@ import { Button } from "@castor/ui";
 
 export function Hero() {
   return (
-    <section className="px-4 pb-14 pt-32 sm:px-6 lg:px-8 lg:pb-20 lg:pt-40">
+    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-40">
       <div className="mx-auto w-full max-w-[1871px]">
         <div className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#0e1b33] shadow-sm">
           <div className="absolute inset-0 z-0 bg-[#0e1b33]">

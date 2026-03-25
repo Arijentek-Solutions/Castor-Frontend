@@ -56,7 +56,7 @@ export default function Home() {
     <div className="min-h-screen w-full bg-white pb-20 font-sans">
       <main className="w-full px-4 sm:px-6 lg:px-8">
         <section 
-          className="relative mx-auto mt-40 h-[700px] w-full max-w-[1871px] overflow-hidden rounded-[2rem] bg-[#0e1b33] shadow-sm"
+          className="relative mx-auto mt-40 min-h-[980px] w-full max-w-[1871px] overflow-hidden rounded-[2rem] bg-[#0e1b33] shadow-sm sm:mt-44 sm:min-h-[1120px] lg:mt-40 lg:min-h-[760px] xl:min-h-[700px]"
         >
           {/* Background Gradient/Ornaments */}
           <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
@@ -64,11 +64,11 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#2dabac] blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2" />
           </div>
 
-          <div className="relative z-10 flex flex-col items-center justify-center px-6 py-20 lg:py-32 md:px-12 lg:px-24 xl:px-32">
-            <div className="grid w-full max-w-[1400px] grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
+          <div className="relative z-10 flex flex-col items-center justify-center px-6 py-16 sm:px-8 sm:py-20 md:px-12 lg:px-20 lg:py-24 xl:px-32 xl:py-28">
+            <div className="grid w-full max-w-[1400px] grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:gap-14 xl:gap-16">
               
               {/* Left Content */}
-              <div className="flex flex-col space-y-8 animate-in fade-in slide-in-from-left-8 duration-1000 ease-out">
+              <div className="flex flex-col space-y-7 animate-in fade-in slide-in-from-left-8 duration-1000 ease-out sm:space-y-8">
                 <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/20 backdrop-blur-sm px-4 py-2 shadow-inner">
                   <div className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2dabac] opacity-75"></span>
@@ -80,7 +80,7 @@ export default function Home() {
                 </div>
 
                 <div className="space-y-6">
-                  <h1 className="text-5xl font-bold leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
+                  <h1 className="text-[3.2rem] font-bold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-7xl">
                     Medical Supplies <br />
                     <span className="text-[#2dabac]">& Equipment</span>
                   </h1>
@@ -89,15 +89,15 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:pt-4">
                   <Button
-                    className="min-h-[58px] min-w-[198px] rounded-[14px] px-9 text-[1.05rem] font-semibold"
+                    className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[198px] sm:w-auto"
                   >
                     Browse Products
                   </Button>
                   <Button
                     variant="secondary"
-                    className="min-h-[58px] min-w-[170px] rounded-[14px] px-9 text-[1.05rem] font-semibold"
+                    className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[170px] sm:w-auto"
                   >
                     B2B Inquiries
                   </Button>
@@ -105,11 +105,11 @@ export default function Home() {
               </div>
 
               {/* Right Cards Grid */}
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 animate-in fade-in zoom-in duration-1000 delay-200 ease-out">
+              <div className="grid grid-cols-1 gap-4 animate-in fade-in zoom-in duration-1000 delay-200 ease-out sm:grid-cols-2 sm:gap-5 xl:gap-6">
                 {serviceCards.map((card, index) => (
                   <div
                     key={index}
-                    className="group relative flex flex-col space-y-4 rounded-3xl border border-white/10 bg-white/5 p-8 transition-all duration-300 hover:border-[#2dabac]/30 hover:bg-white/10 hover:shadow-2xl translate-y-0 hover:-translate-y-2"
+                    className="group relative flex flex-col space-y-4 rounded-[1.75rem] border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:-translate-y-2 hover:border-[#2dabac]/30 hover:bg-white/10 hover:shadow-2xl sm:p-7 xl:p-8"
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2dabac] text-white shadow-lg shadow-[#2dabac]/20 transition-transform duration-300 group-hover:scale-110">
                       {card.icon}
