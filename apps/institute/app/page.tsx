@@ -1,65 +1,80 @@
 import Image from "next/image";
 
+const badgeIcon = "/graduationicon.svg";
+const studentIcon = "/studenticon.svg";
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-          Institute 
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-[var(--page-background)]">
+      <section className="px-4 pb-14 pt-32 sm:px-6 lg:px-8 lg:pb-20 lg:pt-40">
+        <div className="mx-auto w-full max-w-[1871px]">
+          <div className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#132540] shadow-[var(--hero-shadow)]">
+          <Image
+            src="/institute-hero.png"
+            alt="Castor Health Institute students and clinicians"
+            width={1530}
+            height={630}
+            priority
+            className="h-full w-full object-cover object-center"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-[rgba(14,27,51,0.84)] via-[rgba(14,27,51,0.58)] to-[rgba(14,27,51,0.08)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent_32%,transparent)]" />
+
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full max-w-[52rem] px-7 py-10 sm:px-10 md:px-14 lg:px-20 xl:px-24">
+              <div className="max-w-[40rem]">
+            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-2 text-[11px] font-semibold tracking-[0.02em] text-white/85 backdrop-blur-sm">
+              <Image
+                src={badgeIcon}
+                alt=""
+                width={14}
+                height={14}
+                className="opacity-85"
+                aria-hidden="true"
+              />
+              <span>Healthcare Education</span>
+            </div>
+
+            <h1 className="max-w-[11ch] text-[2.8rem] font-semibold leading-[0.96] tracking-[-0.04em] text-white sm:text-[3.45rem] md:text-[4.2rem] lg:text-[5.15rem]">
+              <span className="block">Castor Health</span>
+              <span className="mt-2 block text-[#22c7d6]">Institute</span>
+            </h1>
+
+            <p className="mt-7 max-w-[33rem] text-base leading-[1.85] text-white/72 sm:text-[1.07rem]">
+              State-approved healthcare training, certifications, and workforce
+              upskilling. Launch your career or train your staff with the
+              region&apos;s leading institute.
+            </p>
+
+            <div className="mt-9 flex flex-wrap gap-4">
+              <a
+                href="#"
+                className="inline-flex min-h-14 items-center justify-center rounded-full bg-[#22c7d6] px-7 text-[0.95rem] font-medium text-white shadow-[0_12px_30px_rgba(34,199,214,0.35)] transition-colors duration-200 hover:bg-[#28d6e6]"
+              >
+                View Course Schedule
+              </a>
+              <a
+                href="#"
+                className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-white/18 bg-white/10 px-7 text-[0.95rem] font-medium text-white/92 backdrop-blur-sm transition-colors duration-200 hover:bg-white/16"
+              >
+                <Image
+                  src={studentIcon}
+                  alt=""
+                  width={16}
+                  height={16}
+                  className="opacity-90"
+                  aria-hidden="true"
+                />
+                Student Portal Login
+              </a>
+            </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
