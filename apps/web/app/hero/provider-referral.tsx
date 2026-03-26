@@ -1,4 +1,29 @@
+"use client";
+
 import { Button } from "@castor/ui";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, x: 20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
 
 export function ProviderReferral() {
   const features = [
@@ -46,10 +71,22 @@ export function ProviderReferral() {
     <section 
       className="font-inter relative py-20 px-4 md:px-0 flex justify-center w-full overflow-hidden bg-white"
     >
-      <div className="max-w-6xl w-full bg-white rounded-[48px] border-2 border-[#20A9AD1A] shadow-[0_25px_50px_rgba(0,0,0,0.25)] p-6 md:p-12.5 flex flex-col md:flex-row gap-12 items-center">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="max-w-6xl w-full bg-white rounded-[48px] border-2 border-[#20A9AD1A] shadow-[0_25px_50px_rgba(0,0,0,0.25)] p-6 md:p-12.5 flex flex-col md:flex-row gap-12 items-center"
+      >
         {/* Left Content */}
         <div className="flex-1 space-y-8">
-          <div className="inline-flex items-center gap-2 bg-[#D5FBFF] px-4 py-2 rounded-full">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-[#D5FBFF] px-4 py-2 rounded-full"
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="#20A9AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 <circle cx="9" cy="7" r="4" stroke="#20A9AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -57,20 +94,44 @@ export function ProviderReferral() {
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#20A9AD" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span className="text-[#20A9AD] text-sm font-bold uppercase tracking-wider">For Healthcare Providers</span>
-          </div>
+          </motion.div>
 
           <div className="space-y-4">
-            <h2 className="text-[#0E1B33] text-[36px] md:text-[42px] font-black leading-tight tracking-[-0.36px]">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-[#0E1B33] text-[36px] md:text-[42px] font-black leading-tight tracking-[-0.36px]"
+            >
               Provider Referral Portal
-            </h2>
-            <p className="text-[#6A6A67] text-lg leading-[29.25px] max-w-lg">
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-[#6A6A67] text-lg leading-[29.25px] max-w-lg"
+            >
               Doctors, hospitals, clinics, and care coordinators can refer patients directly to our services through our secure provider portal.
-            </p>
+            </motion.p>
           </div>
 
-          <ul className="space-y-4">
+          <motion.ul 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, staggerChildren: 0.1 }}
+            className="space-y-4"
+          >
             {features.map((feature, i) => (
-              <li key={i} className="flex gap-3 items-start text-[#6A6A67] text-base leading-6">
+              <motion.li 
+                key={i} 
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex gap-3 items-start text-[#6A6A67] text-base leading-6"
+              >
                 <div className="mt-1 flex-shrink-0">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="10" cy="10" r="10" fill="#20A9AD" fillOpacity="0.1"/>
@@ -78,37 +139,49 @@ export function ProviderReferral() {
                     </svg>
                 </div>
                 {feature}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
 
-          <Button 
-            href="/provider-portal"
-            size="lg"
-            variant="primary"
-            className="shadow-lg shadow-[#20A9AD40]"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7, duration: 0.6 }}
           >
-            Create Provider Account
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Button>
+            <Button 
+              href="/provider-portal"
+              size="lg"
+              variant="primary"
+              className="shadow-lg shadow-[#20A9AD40]"
+            >
+              Create Provider Account
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 5L19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Button>
+          </motion.div>
         </div>
 
         {/* Right Feature Panel */}
-        <div 
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           className="w-full md:w-[480px] rounded-[32px] p-8 flex flex-col gap-6"
           style={{
             background: 'linear-gradient(146.2deg, #0E1B33 0%, #1A2B4D 100%)'
           }}
         >
           {highlightCards.map((card, i) => (
-            <div 
+            <motion.div 
               key={i}
-              className="group flex items-center gap-4 bg-white/10 hover:bg-white/15 transition-all p-4 rounded-[24px] border border-white/5"
+              variants={cardVariants}
+              whileHover={{ x: 5, backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+              className="group flex items-center gap-4 bg-white/10 transition-all p-4 rounded-[24px] border border-white/5 cursor-default"
             >
-         
               <div className="flex-shrink-0 bg-[#20A9AD] rounded-[14px] p-3 shadow-inner shadow-white/20">
                 {card.icon}
               </div>
@@ -120,10 +193,10 @@ export function ProviderReferral() {
                   {card.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

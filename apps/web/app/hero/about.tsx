@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import { motion } from "framer-motion";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,6 +56,28 @@ function ArrowRightIcon() {
   );
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const, // Custom quintic ease-out for premium feel
+    },
+  },
+};
+
 export function AboutCastorSection() {
   return (
     <section
@@ -64,7 +89,13 @@ export function AboutCastorSection() {
     >
       <div className="mx-auto max-w-[1280px] font-[var(--font-inter-about-castor)]">
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,616px)_minmax(0,616px)] lg:gap-12">
-          <div className="max-w-[616px]">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="max-w-[616px]"
+          >
             <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#d5fbff] px-4 py-2 text-[14px] font-bold leading-5 text-[#20a9ad]">
               <Image
                 src="/icons/about-castor-icon.svg"
@@ -102,12 +133,19 @@ export function AboutCastorSection() {
               <span>Learn More About Us</span>
               <ArrowRightIcon />
             </button>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2"
+          >
             {stats.map((stat) => (
-              <article
+              <motion.article
                 key={stat.label}
+                variants={itemVariants}
                 className={`rounded-[32px] px-8 py-8 ${stat.className}`}
               >
                 <p className="text-[42px] font-black leading-none sm:text-[48px]">
@@ -118,9 +156,9 @@ export function AboutCastorSection() {
                 >
                   {stat.label}
                 </p>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
