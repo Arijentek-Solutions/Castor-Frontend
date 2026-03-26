@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Safe and reliable non-emergency medical transportation services.",
 };
 
-import { Navbar } from "@castor/ui";
+import { Navbar, Footer } from "@castor/ui";
 
 export default function RootLayout({
   children,
@@ -31,6 +31,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

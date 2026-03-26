@@ -24,7 +24,7 @@ export default function CareersPage() {
                 <div className="max-w-[42rem]">
                   <div className="inline-flex items-center gap-3 rounded-full border border-white/16 bg-white/10 px-4 py-2.5 text-[0.78rem] font-medium tracking-[0.01em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md">
                     <Image
-                      src="/careers.svg"
+                      src="/icons/careers.svg"
                       alt=""
                       width={16}
                       height={16}
