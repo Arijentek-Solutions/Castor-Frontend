@@ -6,7 +6,3 @@ export const SITE_URLS = {
   transport: process.env.NEXT_PUBLIC_TRANSPORT_URL || 'https://castor-transport.vercel.app',
   web:       process.env.NEXT_PUBLIC_WEB_URL       || 'https://castor-main.vercel.app',
 } as const;
-
-if (typeof window !== 'undefined') {
-  console.log('SITE_URLS Configured:', SITE_URLS);
-}

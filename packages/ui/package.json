@@ -28,5 +28,8 @@
     "next": "16.1.7",
     "tsup": "^8.4.0",
     "typescript": "^5"
+  },
+  "dependencies": {
+    "lucide-react": "^1.7.0"
   }
 }
