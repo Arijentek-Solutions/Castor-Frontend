@@ -1,5 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "@castor/ui";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1] as const,
+        },
+    },
+};
 
 export function MedicalSupplies() {
     const products = [
@@ -32,7 +57,7 @@ export function MedicalSupplies() {
     const categories = [
         {
             name: "DME",
-            description: "Durable Medical Equipment",
+            description: "Durabe Medical Equipment",
             icon: "/icons/medicalsupplies/dme.png",
             gradient: "linear-gradient(135deg, #D5FBFF 0%, rgba(213, 251, 255, 0.50) 100%)",
         },
@@ -57,10 +82,16 @@ export function MedicalSupplies() {
     ];
 
     return (
-        <section className="font-inter px-4 py-16 sm:px-6 lg:px-8 bg-white">
+        <section className="font-inter px-4 py-16 sm:px-6 lg:px-8 bg-white overflow-hidden">
             <div className="mx-auto max-w-7xl">
                 {/* Header */}
-                <div className="text-center mb-12">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-12"
+                >
                     <div className="inline-flex items-center px-4 py-2 bg-cyan-100 text-cyan-700 rounded-full text-sm font-medium mb-4">
                         <Image
                             src="/icons/medicalsupplies/dme.png"
@@ -77,14 +108,22 @@ export function MedicalSupplies() {
                     <p className="mt-4 text-lg text-gray-600">
                         Browse our extensive catalog of medical equipment and supplies with flexible purchasing options
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-12">
+                <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-12"
+                >
                     {products.map((product, index) => (
-                        <div 
+                        <motion.div 
                             key={index} 
-                            className="group relative flex flex-col bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_48px_-12px_rgba(0,0,0,0.12)] border border-[#f3f4f6]"
+                            variants={itemVariants}
+                            whileHover={{ y: -8 }}
+                            className="group relative flex flex-col bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_48px_-12px_rgba(0,0,0,0.12)] border border-[#f3f4f6]"
                         >
                             <div className="relative overflow-hidden shrink-0">
                                 <Image
@@ -125,16 +164,24 @@ export function MedicalSupplies() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* Categories */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+                >
                     {categories.map((category, index) => (
-                        <div 
+                        <motion.div 
                             key={index} 
-                            className="group relative rounded-[24px] p-6 text-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-[1.02]"
+                            variants={itemVariants}
+                            whileHover={{ scale: 1.05, y: -5 }}
+                            className="group relative rounded-[24px] p-6 text-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all duration-300"
                             style={{ background: category.gradient }}
                         >
                             <div className="flex justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
@@ -148,12 +195,18 @@ export function MedicalSupplies() {
                             </div>
                             <h3 className="text-lg font-bold text-gray-900 mb-2">{category.name}</h3>
                             <p className="text-sm text-gray-600">{category.description}</p>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="flex flex-col sm:flex-row justify-center gap-4"
+                >
                     <Button 
                         href="/catalog" 
                         size="lg" 
@@ -168,8 +221,8 @@ export function MedicalSupplies() {
                     <button className="bg-white hover:bg-gray-50 text-gray-900 px-6 py-3 rounded-full font-medium transition-colors border border-gray-300">
                         Learn About Our Services
                     </button>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
-}
+}

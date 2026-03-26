@@ -1,4 +1,8 @@
+"use client";
+
+import { useId } from "react";
 import { Inter } from "next/font/google";
+import { motion } from "framer-motion";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -96,24 +100,60 @@ const services = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
 export function OurServices() {
   return (
     <section className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-white`}>
       <div className="mx-auto max-w-[1280px]">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <h2 className="text-[40px] font-black tracking-tight text-[#0e1b33] sm:text-[48px]">
             Our Services
           </h2>
           <p className="mt-4 text-[18px] text-[#6a6a67]">
             Comprehensive healthcare solutions tailored to your needs
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10"
+        >
           {services.map((service, index) => (
-            <div
+            <motion.div
               key={index}
-              className="group relative rounded-[32px] p-8 transition-all duration-300 hover:scale-[1.02]"
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              className="group relative rounded-[32px] p-8 transition-all duration-300"
               style={{
                 background: service.background,
                 border: service.border,
@@ -154,9 +194,9 @@ export function OurServices() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

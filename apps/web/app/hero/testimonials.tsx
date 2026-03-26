@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 const StarIcon = () => (
   <svg
@@ -14,6 +17,28 @@ const StarIcon = () => (
     />
   </svg>
 );
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
 
 export function Testimonials() {
   const testimonials = [
@@ -35,22 +60,36 @@ export function Testimonials() {
   ];
 
   return (
-    <section className="bg-[rgba(213,251,255,0.2)] py-20 px-4 md:px-8 lg:px-16 w-full flex flex-col items-center">
+    <section className="bg-[rgba(213,251,255,0.2)] py-20 px-4 md:px-8 lg:px-16 w-full flex flex-col items-center overflow-hidden">
       <div className="max-w-7xl w-full flex flex-col items-center">
-        <div className="text-center mb-12 flex flex-col gap-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 flex flex-col gap-4"
+        >
           <h2 className="text-[#0e1b33] text-4xl md:text-[48px] font-black leading-tight md:leading-[48px] tracking-[-0.48px]">
             What Our Clients Say
           </h2>
           <p className="text-[#6a6a67] text-lg md:text-[20px] font-normal leading-relaxed md:leading-[28px]">
             Real experiences from real people
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 w-full mt-4">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6 w-full mt-4"
+        >
           {testimonials.map((testimonial, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white rounded-[32px] p-8 shadow-[0px_10px_15px_0px_rgba(0,0,0,0.1),0px_4px_6px_0px_rgba(0,0,0,0.1)] flex flex-col h-full hover:-translate-y-1 transition-transform duration-300"
+              variants={itemVariants}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              className="bg-white rounded-[32px] p-8 shadow-[0px_10px_15px_0px_rgba(0,0,0,0.1),0px_4px_6px_0px_rgba(0,0,0,0.1)] flex flex-col h-full transition-shadow duration-300 hover:shadow-[0px_20px_25px_0px_rgba(0,0,0,0.15)]"
             >
               <div className="flex gap-1 mb-8">
                 {[...Array(5)].map((_, i) => (
@@ -68,9 +107,9 @@ export function Testimonials() {
                   {testimonial.role}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

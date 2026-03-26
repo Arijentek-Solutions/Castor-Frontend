@@ -1,10 +1,35 @@
+"use client";
+
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const inter = Inter({
     subsets: ["latin"],
     variable: "--font-inter",
 });
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.8,
+            ease: [0.22, 1, 0.36, 1] as const,
+        },
+    },
+};
 
 export function HealthcareCareers() {
     const services = [
@@ -31,20 +56,34 @@ export function HealthcareCareers() {
     return (
         <section className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-slate-800`}>
             <div className="mx-auto max-w-7xl">
-                <div className="text-center mb-12">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-12"
+                >
                     <h2 className="text-4xl font-bold text-white sm:text-5xl">
                         Start Your Healthcare Career
                     </h2>
                     <p className="mt-4 text-lg text-gray-300">
                         Professional training programs to launch or advance your career
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <motion.div 
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid grid-cols-1 gap-8 md:grid-cols-3"
+                >
                     {services.map((service, index) => (
-                        <div
+                        <motion.div
                             key={index}
-                            className="group relative rounded-2xl p-8 transition-all duration-300 hover:scale-105 bg-slate-700 border border-slate-600"
+                            variants={itemVariants}
+                            whileHover={{ y: -5, scale: 1.02 }}
+                            className="group relative rounded-2xl p-8 transition-all duration-300 bg-slate-700 border border-slate-600"
                         >
                             <div className="flex items-start">
                                 <div className="transition-transform duration-300 group-hover:scale-110">
@@ -90,10 +129,10 @@ export function HealthcareCareers() {
                                     </a>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );
-}
+}
