@@ -1,6 +1,4 @@
 "use client";
-
-import { useId } from "react";
 import { Inter } from "next/font/google";
 import { motion } from "framer-motion";
 
