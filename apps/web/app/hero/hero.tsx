@@ -96,15 +96,6 @@ export function Hero() {
             transition={{ delay: 1, duration: 0.8 }}
             className="absolute top-48 right-12 hidden lg:flex"
           >
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 shadow-2xl backdrop-blur-xl">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
-                <span className="text-[1.8rem] font-semibold leading-none text-[#2dabac]">⭐</span>
-              </div>
-              <div>
-                <p className="text-sm font-bold text-white">Top Rated</p>
-                <p className="text-[10px] uppercase tracking-tighter text-slate-300">TrustScore 4.8/5</p>
-              </div>
-            </div>
           </motion.div>
         </motion.div>
       </div>
