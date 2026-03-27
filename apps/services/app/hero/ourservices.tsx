@@ -1,8 +1,8 @@
 "use client";
-
+import { motion } from "framer-motion";
+import Link from "next/link";
 import { Stethoscope, Baby, UserCircle, Flag, Check, ArrowRight } from "lucide-react";
 import { Inter } from "next/font/google";
-import { motion } from "framer-motion";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +15,7 @@ interface ServiceItem {
   tag: string;
   icon: React.ReactNode;
   features: string[];
+  path?: string;
 }
 
 const services: ServiceItem[] = [
@@ -29,6 +30,7 @@ const services: ServiceItem[] = [
       "Short-term recovery focus",
       "Time-bound services",
     ],
+    path: "/homehealth",
   },
   {
     title: "Private Duty Nursing",
@@ -41,6 +43,7 @@ const services: ServiceItem[] = [
       "Shift-based care",
       "Ventilator & Trach care",
     ],
+    path: "/privateduty-nursing",
   },
   {
     title: "Home Care (Non-Medical)",
@@ -53,6 +56,7 @@ const services: ServiceItem[] = [
       "Meal preparation",
       "Light housekeeping",
     ],
+    path: "/home-care",
   },
   {
     title: "Veterans / VA Care",
@@ -65,6 +69,7 @@ const services: ServiceItem[] = [
       "Coordination with VA benefits",
       "Service-connected care",
     ],
+    path: "/veterans-care",
   },
 ];
 
@@ -73,19 +78,19 @@ export function OurServices() {
     <section className={`${inter.variable} font-sans py-24 px-4 sm:px-6 lg:px-8 bg-white`}>
       <div className="max-w-[1280px] mx-auto text-center mb-16">
         <motion.h2 
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="text-[36px] font-bold text-[#0e1b33] tracking-[-0.36px] mb-4"
         >
           Understanding Our Services
         </motion.h2>
         <motion.p 
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.05 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           className="text-[20px] text-[#6a6a67] max-w-[672px] mx-auto leading-[1.4]"
         >
           We help route you to the correct service based on your medical needs and insurance.
@@ -98,10 +103,9 @@ export function OurServices() {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ backgroundColor: "#ffffff", boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
-            className="group relative bg-[#f0f9fa] rounded-[32px] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)] transition-all duration-300 flex flex-col h-full border border-transparent hover:border-[#e5e7eb]"
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            className="group relative bg-[#f0f9fa] rounded-[32px] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)] transition-all duration-500 flex flex-col h-full border border-transparent hover:border-[#e5e7eb] hover:bg-white hover:shadow-xl"
           >
             <div className="flex justify-between items-start mb-8">
               <div className="bg-[#fef5ed] p-[14px] rounded-[24px] transition-transform duration-300">
@@ -132,10 +136,13 @@ export function OurServices() {
               ))}
             </ul>
 
-            <button className="w-full bg-white border border-[#e5e7eb] rounded-[14px] py-[8px] px-4 flex items-center justify-center gap-2 text-[#0e1b33] text-[14px] font-medium transition-all duration-300 hover:bg-[#20a9ad] hover:text-white hover:border-[#20a9ad] group/btn">
+            <Link 
+              href={service.path || "#"} 
+              className="w-full bg-white border border-[#e5e7eb] rounded-[14px] py-[8px] px-4 flex items-center justify-center gap-2 text-[#0e1b33] text-[14px] font-medium transition-all duration-300 hover:bg-[#20a9ad] hover:text-white hover:border-[#20a9ad] group/btn"
+            >
               Learn More
               <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-            </button>
+            </Link>
           </motion.div>
         ))}
       </div>

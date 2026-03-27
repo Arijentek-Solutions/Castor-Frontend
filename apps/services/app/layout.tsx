@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Professional in-home care services with skilled nursing, long-term support, and care coordination.",
 };
 
-import { Navbar } from "@castor/ui";
+import { Footer, Navbar } from "@castor/ui";
 
 export default function RootLayout({
   children,
@@ -29,6 +29,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Navbar />
         {children}
+        <Footer/>
       </body>
     </html>
   );

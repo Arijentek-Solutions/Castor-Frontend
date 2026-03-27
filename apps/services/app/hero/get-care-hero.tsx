@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import { Button, HeroActions } from "@castor/ui";
+import { motion } from "framer-motion";
 
 const heroStats = [
   "Skilled medical recovery",
@@ -11,7 +13,12 @@ export function GetCareHero() {
   return (
     <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-40">
       <div className="mx-auto w-full max-w-[1871px]">
-        <div className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#0f1d35] shadow-[var(--hero-shadow)]">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#0f1d35] shadow-[var(--hero-shadow)]"
+        >
           <Image
             src="/images/hero/getcare-hero.png"
             alt="Nurse supporting an elderly woman at home"
@@ -26,44 +33,70 @@ export function GetCareHero() {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full max-w-[52rem] px-7 py-10 sm:px-10 md:px-14 lg:px-20 xl:px-24">
               <div className="max-w-[40rem]">
-                <div className="inline-flex items-center gap-3 rounded-full border border-[color:var(--hero-badge-border)] bg-[color:var(--hero-badge-background)] px-4 py-2.5 text-[0.78rem] font-medium tracking-[0.01em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="inline-flex items-center gap-3 rounded-full border border-[color:var(--hero-badge-border)] bg-[color:var(--hero-badge-background)] px-4 py-2.5 text-[0.78rem] font-medium tracking-[0.01em] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md"
+                >
                   <span className="h-2.5 w-2.5 rounded-full bg-[var(--hero-badge-dot)] shadow-[0_0_0_4px_rgba(240,197,147,0.14)]" />
                   <span>Professional Nursing Care</span>
-                </div>
+                </motion.div>
 
-                <h1 className="mt-7 max-w-[11ch] text-[2.8rem] font-semibold leading-[0.96] tracking-[-0.04em] text-[var(--hero-title)] sm:text-[3.45rem] md:text-[4.2rem] lg:text-[5.15rem]">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="mt-7 max-w-[11ch] text-[2.8rem] font-semibold leading-[0.96] tracking-[-0.04em] text-[var(--hero-title)] sm:text-[3.45rem] md:text-[4.2rem] lg:text-[5.15rem]"
+                >
                   Compassionate
                   <span className="mt-2 block text-[var(--hero-title-accent)]">Home Care</span>
-                </h1>
+                </motion.h1>
 
-                <p className="mt-7 max-w-[33rem] text-base leading-[1.85] text-[var(--hero-copy)] sm:text-[1.07rem]">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                  className="mt-7 max-w-[33rem] text-base leading-[1.85] text-[var(--hero-copy)] sm:text-[1.07rem]"
+                >
                   Navigating home care can be complex. We guide you to the right
                   service, whether it&apos;s skilled medical recovery, long-term
                   nursing, or daily support.
-                </p>
+                </motion.p>
 
-                <HeroActions>
-                  <Button>
-                    Find Care Options
-                  </Button>
-                  <Button variant="secondary">
-                    <PhoneIcon />
-                    <span>Speak to Coordinator</span>
-                  </Button>
-                </HeroActions>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                >
+                  <HeroActions>
+                    <Button>
+                      Find Care Options
+                    </Button>
+                    <Button variant="secondary">
+                      <PhoneIcon />
+                      <span>Speak to Coordinator</span>
+                    </Button>
+                  </HeroActions>
+                </motion.div>
 
-                <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--hero-secondary-copy)]">
+                <motion.ul
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.8 }}
+                  className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-sm text-[var(--hero-secondary-copy)]"
+                >
                   {heroStats.map((stat) => (
                     <li key={stat} className="inline-flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-[var(--hero-badge-dot)]" />
                       <span>{stat}</span>
                     </li>
                   ))}
-                </ul>
+                </motion.ul>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
