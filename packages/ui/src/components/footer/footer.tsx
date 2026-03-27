@@ -117,7 +117,7 @@ export function Footer() {
           {/* Column 4: Contact Us */}
           <div className="flex flex-col gap-6 items-start">
             <h3 className="font-bold text-[18px] text-white font-['Inter']">Contact Us</h3>
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6"> 
               
               <div className="flex gap-4 items-start">
                 <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5">
@@ -128,7 +128,6 @@ export function Footer() {
                   <p className="font-semibold text-[18px] text-white">1-800-CASTOR-1</p>
                 </div>
               </div>
-              
               <div className="flex gap-4 items-start">
                 <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5">
                   <Mail className="w-5 h-5 text-white" />
