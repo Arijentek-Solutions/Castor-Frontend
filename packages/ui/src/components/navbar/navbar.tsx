@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { useState, type ReactNode } from "react";
+import { Phone, ChevronDown as ChevronDownIcon } from "lucide-react";
 import { SITE_URLS } from "../../config/site-urls";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -153,12 +154,50 @@ const navItems: NavEntry[] = [
   { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
 ];
 
+const TopBar = () => {
+  return (
+    <div className="bg-[#0E1B33] border-b border-white/10 relative z-[60]">
+      <div className="mx-auto flex h-9 sm:h-10 max-w-[1276px] items-center px-3 sm:px-6 relative">
+        {/* Phone Number: Left on mobile, Center on desktop */}
+        <div className="flex items-center gap-1.5 sm:gap-2 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
+          <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+          <Link 
+            href="tel:1-800-CASTOR-1" 
+            className="text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80 whitespace-nowrap"
+          >
+            1-800-CASTOR-1
+          </Link>
+        </div>
+        
+        {/* Right: Actions */}
+        <div className="ml-auto flex items-center gap-2 sm:gap-6">
+          <Link 
+            href={`${SITE_URLS.services}/provider`} 
+            className="text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+          >
+            Provider
+          </Link>
+          <div className="h-3.5 w-px bg-[rgba(32,169,173,0.4)]" />
+          <Link 
+            href={SITE_URLS.auth}
+            className="flex items-center gap-1 text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+          >
+            <span>Sign In</span>
+            <ChevronDownIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-60" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
 
   return (
     <div className={`${inter.className} fixed left-0 right-0 top-0 z-50`}>
+      <TopBar />
       <div className="flex justify-center px-3 pt-3 sm:px-4 lg:px-6 lg:pt-4">
         <nav className="w-full max-w-[1276px] rounded-[32px] border border-[#edf0f4] bg-white/96 px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-[20px] sm:px-4 lg:rounded-full lg:px-3 xl:px-4 lg:py-0">
           <div className="flex min-h-[56px] items-center justify-between gap-3 lg:h-20">
