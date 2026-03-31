@@ -46,7 +46,7 @@ const services: ServiceItem[] = [
     path: "/privateduty-nursing",
   },
   {
-    title: "Home Care (Non-Medical)",
+    title: "Personal Home Care",
     description: "Non-clinical support for daily living activities to maintain independence at home.",
     tag: "Medicare",
     icon: <UserCircle className="w-7 h-7 text-[#0e1b33]" />,
@@ -59,7 +59,7 @@ const services: ServiceItem[] = [
     path: "/home-care",
   },
   {
-    title: "Veterans / VA Care",
+    title: "Veterans Care",
     description: "Specialized services operating under VA programs for those who have served.",
     tag: "Private/Hybrid",
     icon: <Flag className="w-7 h-7 text-[#0e1b33]" />,
@@ -136,13 +136,23 @@ export function OurServices() {
               ))}
             </ul>
 
-            <Link 
-              href={service.path || "#"} 
+            <button 
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('open-help-modal', {
+                  detail: {
+                    initialStep: 'WHO_FOR',
+                    selections: {
+                      service: "care",
+                      subType: (service.path || "").replace('/', '') || "home-health"
+                    }
+                  }
+                }));
+              }}
               className="w-full bg-white border border-[#e5e7eb] rounded-[14px] py-[8px] px-4 flex items-center justify-center gap-2 text-[#0e1b33] text-[14px] font-medium transition-all duration-300 hover:bg-[#20a9ad] hover:text-white hover:border-[#20a9ad] group/btn"
             >
               Learn More
               <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-            </Link>
+            </button>
           </motion.div>
         ))}
       </div>
