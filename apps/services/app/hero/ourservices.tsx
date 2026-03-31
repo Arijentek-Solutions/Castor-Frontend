@@ -136,23 +136,13 @@ export function OurServices() {
               ))}
             </ul>
 
-            <button 
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent('open-help-modal', {
-                  detail: {
-                    initialStep: 'WHO_FOR',
-                    selections: {
-                      service: "care",
-                      subType: (service.path || "").replace('/', '') || "home-health"
-                    }
-                  }
-                }));
-              }}
+            <Link
+              href={service.path ?? "/"}
               className="w-full bg-white border border-[#e5e7eb] rounded-[14px] py-[8px] px-4 flex items-center justify-center gap-2 text-[#0e1b33] text-[14px] font-medium transition-all duration-300 hover:bg-[#20a9ad] hover:text-white hover:border-[#20a9ad] group/btn"
             >
               Learn More
               <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-            </button>
+            </Link>
           </motion.div>
         ))}
       </div>
