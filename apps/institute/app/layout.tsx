@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Healthcare training, certifications, and workforce upskilling.",
 };
 
-import { Navbar } from "@castor/ui";
+import { Footer, Navbar } from "@castor/ui";
 
 export default function RootLayout({
   children,
@@ -31,6 +31,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer/>
       </body>
     </html>
   );
