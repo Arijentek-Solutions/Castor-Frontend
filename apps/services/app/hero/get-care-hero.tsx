@@ -70,7 +70,11 @@ export function GetCareHero() {
                   transition={{ delay: 0.8, duration: 0.8 }}
                 >
                   <HeroActions>
-                    <Button>
+                    <Button 
+                      onClick={() => {
+                        window.dispatchEvent(new CustomEvent('open-help-modal'));
+                      }}
+                    >
                       Find Care Options
                     </Button>
                     <Button variant="secondary">

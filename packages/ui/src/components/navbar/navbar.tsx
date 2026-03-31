@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { Inter } from "next/font/google";
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, useEffect, useRef } from "react";
 import { Phone, ChevronDown as ChevronDownIcon } from "lucide-react";
 import { SITE_URLS } from "../../config/site-urls";
+import { HelpMeChooseModal } from "../help-me-choose-modal/HelpMeChooseModal";
 
 const inter = Inter({ subsets: ["latin"] });
+const HELP_MODAL_SESSION_STORAGE_KEY = "castor-help-modal-session-handled";
 
 type DropdownEntry = {
   title: string;
@@ -24,8 +26,8 @@ type NavEntry = {
 
 const getCareItems: DropdownEntry[] = [
   {
-    title: "Home Health",
-    description: "Skilled nursing & therapy services",
+    title: "Home Health (Medicare)",
+    description: "Recovery after surgery or illness",
     href: `${SITE_URLS.services}/homehealth`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -35,7 +37,7 @@ const getCareItems: DropdownEntry[] = [
   },
   {
     title: "Private Duty Nursing",
-    description: "One-on-one nursing care",
+    description: "Long-term complex care",
     href: `${SITE_URLS.services}/privateduty-nursing`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -47,8 +49,8 @@ const getCareItems: DropdownEntry[] = [
     ),
   },
   {
-    title: "Home Care (Non-Medical)",
-    description: "Personal care & companionship",
+    title: "Personal Home Care",
+    description: "Daily help (non-medical)",
     href: `${SITE_URLS.services}/home-care`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -60,8 +62,8 @@ const getCareItems: DropdownEntry[] = [
     ),
   },
   {
-    title: "Veterans / VA Care",
-    description: "Support for those who served",
+    title: "Veterans Care",
+    description: "VA authorized services",
     href: `${SITE_URLS.services}/veterans-care`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -194,6 +196,81 @@ const TopBar = () => {
 export const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const hasAutoOpenedHelpModal = useRef(false);
+  const [shouldAutoOpenForSession, setShouldAutoOpenForSession] = useState(false);
+
+  useEffect(() => {
+    const handleOpenModal = () => setIsHelpModalOpen(true);
+    window.addEventListener('open-help-modal', handleOpenModal);
+    return () => window.removeEventListener('open-help-modal', handleOpenModal);
+  }, []);
+
+  useEffect(() => {
+    const hasSessionBeenHandled = window.sessionStorage.getItem(HELP_MODAL_SESSION_STORAGE_KEY) === "true";
+    if (!hasSessionBeenHandled) {
+      setShouldAutoOpenForSession(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!shouldAutoOpenForSession || hasAutoOpenedHelpModal.current || isHelpModalOpen) {
+      return;
+    }
+
+    const markSessionHandled = () => {
+      window.sessionStorage.setItem(HELP_MODAL_SESSION_STORAGE_KEY, "true");
+      setShouldAutoOpenForSession(false);
+    };
+
+    const handleActivity = () => {
+      if (hasAutoOpenedHelpModal.current || isHelpModalOpen) {
+        return;
+      }
+
+      clearTimeout(timeoutId);
+      markSessionHandled();
+      activityEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, handleActivity);
+      });
+    };
+
+    const activityEvents: Array<keyof WindowEventMap> = [
+      "pointerdown",
+      "keydown",
+      "scroll",
+      "touchstart",
+    ];
+
+    const timeoutId = setTimeout(() => {
+      if (hasAutoOpenedHelpModal.current || isHelpModalOpen) {
+        return;
+      }
+
+      hasAutoOpenedHelpModal.current = true;
+      markSessionHandled();
+      setIsHelpModalOpen(true);
+    }, 10000);
+
+    activityEvents.forEach((eventName) => {
+      window.addEventListener(eventName, handleActivity, { passive: true });
+    });
+
+    return () => {
+      clearTimeout(timeoutId);
+      activityEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, handleActivity);
+      });
+    };
+  }, [isHelpModalOpen, shouldAutoOpenForSession]);
+
+  const openHelpModal = () => {
+    setIsHelpModalOpen(true);
+  };
+
+  const closeHelpModal = () => {
+    setIsHelpModalOpen(false);
+  };
 
   return (
     <div className={`${inter.className} fixed left-0 right-0 top-0 z-50`}>
@@ -212,21 +289,21 @@ export const Navbar = () => {
             </div>
 
             <div className="hidden items-center lg:flex">
-              <Link
-                href="/choose"
+              <button
+                onClick={openHelpModal}
                 className="flex h-12 w-[174px] items-center justify-center whitespace-nowrap rounded-full bg-[#0E1B33] px-5 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] transition-transform hover:scale-[0.99] active:scale-[0.97] xl:h-14 xl:w-[188px] xl:px-10 xl:text-[14px]"
               >
                 Help Me Choose
-              </Link>
+              </button>
             </div>
 
             <div className="flex items-center gap-2 lg:hidden">
-              <Link
-                href="/choose"
+              <button
+                onClick={openHelpModal}
                 className="flex h-11 items-center justify-center rounded-full bg-[#0E1B33] px-4 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)]"
               >
                 Help Me Choose
-              </Link>
+              </button>
               <button
                 aria-expanded={isMobileOpen}
                 aria-label="Toggle navigation menu"
@@ -257,6 +334,11 @@ export const Navbar = () => {
           ) : null}
         </nav>
       </div>
+
+      <HelpMeChooseModal 
+        isOpen={isHelpModalOpen} 
+        onClose={closeHelpModal} 
+      />
     </div>
   );
 };
@@ -352,9 +434,9 @@ const MobileNavItem = ({
             <a
               key={dropdownItem.title}
               href={dropdownItem.href}
-              className="flex items-start gap-3 rounded-[18px] px-3 py-3 transition-colors hover:bg-[#f7f9fb]"
+              className="group flex items-start gap-3 rounded-[18px] px-3 py-3 transition-colors hover:bg-[#f7f9fb]"
             >
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD]">
+              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
                 {dropdownItem.icon}
               </div>
               <div>
