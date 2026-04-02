@@ -19,6 +19,7 @@ const programs = [
       "Job Placement Support",
     ],
     icon: "stethoscope",
+    href: "/courses/cna",
   },
   {
     title: "Phlebotomy Training",
@@ -32,6 +33,7 @@ const programs = [
       "Externship Included",
     ],
     icon: "drop",
+    href: "#",
   },
   {
     title: "CPR & First Aid",
@@ -45,6 +47,7 @@ const programs = [
       "Valid for 2 Years",
     ],
     icon: "pulse",
+    href: "#",
   },
 ];
 
@@ -270,7 +273,7 @@ export function StudentSection({ onSelectAudience }: StudentSectionProps) {
               </ul>
 
               <Link
-                href="#"
+                href={program.href}
                 className="group/btn mt-8 flex h-[52px] items-center justify-center gap-2 rounded-[14px] border border-[#e5e7eb] bg-white px-4 py-[8px] text-[14px] font-medium text-[#0e1b33] transition-all duration-300 hover:border-[#20a9ad] hover:bg-[#20a9ad] hover:text-white"
               >
                 <span>View Upcoming Classes</span>

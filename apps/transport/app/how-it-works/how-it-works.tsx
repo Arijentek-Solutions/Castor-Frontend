@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { 
-  CalendarCheck, 
-  ShieldCheck, 
-  CreditCard, 
+import {
+  CalendarCheck,
+  ShieldCheck,
+  CreditCard,
   CheckCircle2,
   ChevronRight
 } from "lucide-react";
@@ -38,8 +38,8 @@ const steps = [
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }
   }
@@ -59,7 +59,7 @@ export function HowItWorks() {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-[1280px] mx-auto">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -68,13 +68,13 @@ export function HowItWorks() {
         >
           {/* Header */}
           <div className="text-center mb-16 relative z-10">
-            <motion.h2 
+            <motion.h2
               variants={fadeUp}
               className="text-[32px] md:text-[36px] font-bold text-[#0e1b33] tracking-[-0.36px] mb-4"
             >
               How It Works
             </motion.h2>
-            <motion.p 
+            <motion.p
               variants={fadeUp}
               className="text-[18px] text-[#6a6a67] max-w-[600px] mx-auto leading-[28px]"
             >
@@ -95,14 +95,14 @@ export function HowItWorks() {
               >
                 {/* Icon Container */}
                 <div className="relative mb-8">
-                  <div 
+                  <div
                     className="bg-white size-[80px] rounded-full flex items-center justify-center shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)] transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-6px_rgba(0,0,0,0.1)] relative z-10 cursor-pointer"
                   >
                     <div className="transition-colors duration-500 ease-in-out group-hover:text-[#1c989c]">
                       {step.icon}
                     </div>
                   </div>
-                  
+
                   {/* Step Number Badge */}
                   <div className="absolute -top-1 -right-1 bg-[#0e1b33] text-white size-6 rounded-full flex items-center justify-center text-[12px] font-bold z-20 shadow-sm border-2 border-white">
                     {step.id}

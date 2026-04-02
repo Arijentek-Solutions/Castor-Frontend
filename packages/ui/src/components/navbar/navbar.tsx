@@ -115,7 +115,7 @@ const healthInstituteItems: DropdownEntry[] = [
   {
     title: "CNA Program",
     description: "Certified Nursing Assistant training",
-    href: SITE_URLS.institute,
+    href: `${SITE_URLS.institute}/courses/cna`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 21a7 7 0 0 1-7-7V8" />
