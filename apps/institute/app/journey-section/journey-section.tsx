@@ -1,3 +1,7 @@
+"use client";
+
+import { motion, Variants } from "framer-motion";
+
 const steps = [
   {
     number: "1",
@@ -90,26 +94,77 @@ function StepIcon({ icon }: { icon: (typeof steps)[number]["icon"] }) {
   return <CapIcon />;
 }
 
+const itemVariants: Variants = {
+  initial: { opacity: 0, y: 30, scale: 0.94 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const containerVariants: Variants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 export function JourneySection() {
   return (
     <section className="px-4 pb-24 pt-2 sm:px-6 lg:px-8 lg:pb-28">
-      <div className="mx-auto max-w-[1280px] rounded-[40px] bg-[#fbf1e6] px-6 py-12 sm:px-10 lg:px-12 lg:py-14">
+      <motion.div
+        initial={{ opacity: 0, y: 40, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-10%" }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto max-w-[1280px] rounded-[40px] bg-[#fbf1e6] px-6 py-12 sm:px-10 lg:px-12 lg:py-14"
+      >
         <div className="mx-auto max-w-[620px] text-center">
-          <h2 className="whitespace-nowrap text-[2rem] font-black tracking-[-0.04em] text-[#172744] sm:text-[2.5rem] lg:text-[3rem]">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="whitespace-nowrap text-[2rem] font-black tracking-[-0.04em] text-[#172744] sm:text-[2.5rem] lg:text-[3rem]"
+          >
             Your Journey to Graduation
-          </h2>
-          <p className="mt-4 text-[17px] leading-8 text-[#857d75]">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-4 text-[17px] leading-8 text-[#857d75]"
+          >
             Our digital student portal guides you through every step, from
             enrollment to your first job.
-          </p>
+          </motion.p>
         </div>
 
         <div className="relative mt-12">
           <div className="absolute left-0 right-0 top-[28px] hidden border-t border-[#f0dcc9] lg:block" />
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-4">
+          <motion.div
+            variants={containerVariants}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            className="grid gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-4"
+          >
             {steps.map((step) => (
-              <article key={step.number} className="group relative text-center">
+              <motion.article 
+                key={step.number} 
+                variants={itemVariants}
+                className="group relative text-center"
+              >
                 <div className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-[#e7d7c8] bg-white text-[#1db0bc] shadow-[0_8px_18px_rgba(21,39,68,0.06)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_14px_26px_rgba(21,39,68,0.12)]">
                   <StepIcon icon={step.icon} />
                   <span className="absolute -right-1 -top-1 flex size-6 items-center justify-center rounded-full bg-[#172744] text-[11px] font-bold text-white">
@@ -124,11 +179,11 @@ export function JourneySection() {
                 <p className="mx-auto mt-3 max-w-[20ch] text-[13px] leading-6 text-[#9b9086]">
                   {step.description}
                 </p>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const faqs = [
   {
@@ -42,24 +43,59 @@ function ChevronIcon({ open }: { open: boolean }) {
   );
 }
 
+const fadeInUp: Variants = {
+  initial: { opacity: 0, y: 30, scale: 0.94 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const staggerContainer: Variants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number>(-1);
 
   return (
     <section className="px-4 pb-24 pt-2 sm:px-6 lg:px-8 lg:pb-28">
       <div className="mx-auto max-w-[1280px]">
-        <h2 className="text-center text-[2.35rem] font-black tracking-[-0.04em] text-[#0e1b33] sm:text-[3rem]">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center text-[2.35rem] font-black tracking-[-0.04em] text-[#0e1b33] sm:text-[3rem]"
+        >
           Frequently Asked Questions
-        </h2>
+        </motion.h2>
 
-        <div className="mx-auto mt-10 max-w-[1020px] space-y-4">
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-10%" }}
+          className="mx-auto mt-10 max-w-[1020px] space-y-4"
+        >
           {faqs.map((faq, index) => {
             const open = openIndex === index;
 
             return (
-              <article
+              <motion.article
                 key={faq.question}
-                className={`overflow-hidden rounded-[28px] border border-[#dfe5ec] bg-white transition-all duration-300 ${
+                variants={fadeInUp}
+                className={`overflow-hidden rounded-[28px] border border-[#dfe5ec] bg-white transition-shadow duration-300 ${
                   open
                     ? "shadow-[0_12px_28px_rgba(17,40,68,0.10)]"
                     : "shadow-[0_2px_8px_rgba(17,40,68,0.03)]"
@@ -74,26 +110,46 @@ export function FaqSection() {
                   <span className="text-[1.35rem] font-black tracking-[-0.03em] text-[#001f57] sm:text-[1.6rem]">
                     {faq.question}
                   </span>
-                  <span className="shrink-0 text-[#7f8694]">
-                    <ChevronIcon open={open} />
-                  </span>
+                  <motion.span 
+                    animate={{ rotate: open ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="shrink-0 text-[#7f8694]"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="size-5"
+                      aria-hidden="true"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </motion.span>
                 </button>
 
-                <div
-                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                    open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="max-w-[980px] px-6 pb-7 text-[1.08rem] leading-[1.85] text-[#566577] sm:px-8">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </div>
-              </article>
+                <AnimatePresence initial={false}>
+                  {open && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="max-w-[980px] px-6 pb-7 text-[1.08rem] leading-[1.85] text-[#566577] sm:px-8">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
