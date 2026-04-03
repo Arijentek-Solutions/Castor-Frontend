@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion, Variants } from "framer-motion";
 
 type StudentSectionProps = {
   onSelectAudience: (audience: "students" | "facilities") => void;
@@ -189,6 +190,28 @@ function ProgramIcon({ icon }: { icon: (typeof programs)[number]["icon"] }) {
   return <StethoscopeIcon />;
 }
 
+const fadeInUp: Variants = {
+  initial: { opacity: 0, y: 30, scale: 0.94 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const staggerContainer: Variants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 export function StudentSection({ onSelectAudience }: StudentSectionProps) {
   return (
     <section
@@ -196,7 +219,13 @@ export function StudentSection({ onSelectAudience }: StudentSectionProps) {
       className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24"
     >
       <div className="mx-auto max-w-[1200px]">
-        <div className="flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8 }}
+          className="flex justify-center"
+        >
           <div className="w-full max-w-[512px] rounded-full bg-[#edf7f8] p-1.5 shadow-[inset_0_0_0_1px_rgba(202,228,231,0.8)]">
             <div className="grid grid-cols-2 gap-1">
               <button
@@ -219,28 +248,42 @@ export function StudentSection({ onSelectAudience }: StudentSectionProps) {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="mx-auto mt-7 max-w-[560px] text-center">
-          <h2 className="text-[2rem] font-semibold tracking-[-0.04em] text-[#1b2f4b] sm:text-[2.45rem]">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-[2rem] font-semibold tracking-[-0.04em] text-[#1b2f4b] sm:text-[2.45rem]"
+          >
             Available Programs
-          </h2>
-          <p className="mt-3 text-[15px] leading-7 text-[#6e7d89]">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-3 text-[15px] leading-7 text-[#6e7d89]"
+          >
             Whether you&apos;re starting a new career or renewing a
             certification, we have a path for you.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
-          {programs.map((program, index) => (
-            <article
+        <motion.div
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: "-10%" }}
+          className="mt-10 grid gap-5 lg:grid-cols-3"
+        >
+          {programs.map((program) => (
+            <motion.article
               key={program.title}
+              variants={fadeInUp}
               className="group relative flex h-full flex-col rounded-[32px] border border-transparent bg-[#edf7f8] p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)] transition-all duration-500 hover:border-[#e5e7eb] hover:bg-white hover:shadow-xl sm:p-6"
-              style={{
-                animation: `cardFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) ${
-                  index * 0.05
-                }s both`,
-              }}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="inline-flex size-11 items-center justify-center rounded-full bg-white text-[#22b6c2] shadow-[0_6px_18px_rgba(34,182,194,0.12)] transition-transform duration-300">
@@ -279,9 +322,9 @@ export function StudentSection({ onSelectAudience }: StudentSectionProps) {
                 <span>View Upcoming Classes</span>
                 <ArrowRightIcon />
               </Link>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

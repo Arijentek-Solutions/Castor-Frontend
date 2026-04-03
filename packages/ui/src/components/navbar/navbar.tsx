@@ -128,7 +128,7 @@ const healthInstituteItems: DropdownEntry[] = [
   {
     title: "Phlebotomy Training",
     description: "Blood draw certification program",
-    href: SITE_URLS.institute,
+    href: `${SITE_URLS.institute}/courses/phlebotomy`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 3c3 4 5 6.5 5 10a5 5 0 1 1-10 0c0-3.5 2-6 5-10Z" />
@@ -138,13 +138,13 @@ const healthInstituteItems: DropdownEntry[] = [
   {
     title: "CPR Certification",
     description: "CPR & First Aid training",
-    href: SITE_URLS.institute,
+    href: `${SITE_URLS.institute}/courses/cpr`,
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 12h4l2-4 4 10 2-6h6" />
       </svg>
     ),
-  },
+  }
 ];
 
 const navItems: NavEntry[] = [

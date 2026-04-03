@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion, Variants } from "framer-motion";
 
 type B2BSectionProps = {
   onSelectAudience: (audience: "students" | "facilities") => void;
@@ -169,11 +170,39 @@ function FacilityIcon({
   return <BadgeCheckIcon />;
 }
 
+const fadeInUp: Variants = {
+  initial: { opacity: 0, y: 30, scale: 0.94 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const staggerContainer: Variants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 export function B2BSection({ onSelectAudience }: B2BSectionProps) {
   return (
     <section id="b2b-training" className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
       <div className="mx-auto max-w-[1320px]">
-        <div className="mb-10 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.8 }}
+          className="mb-10 flex justify-center"
+        >
           <div className="w-full max-w-[512px] rounded-full bg-[#edf7f8] p-1.5 shadow-[inset_0_0_0_1px_rgba(202,228,231,0.8)]">
             <div className="grid grid-cols-2 gap-1">
               <button
@@ -196,28 +225,59 @@ export function B2BSection({ onSelectAudience }: B2BSectionProps) {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="overflow-hidden rounded-[32px] bg-[#14233d] px-6 py-8 text-white shadow-[0_24px_60px_rgba(12,28,52,0.16)] sm:px-8 sm:py-10 lg:px-9 lg:py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="overflow-hidden rounded-[32px] bg-[#14233d] px-6 py-8 text-white shadow-[0_24px_60px_rgba(12,28,52,0.16)] sm:px-8 sm:py-10 lg:px-9 lg:py-12"
+        >
           <div className="max-w-[610px]">
-            <div className="inline-flex size-12 items-center justify-center rounded-[18px] bg-[rgba(47,71,104,0.92)] text-[#19d5e2]">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="inline-flex size-12 items-center justify-center rounded-[18px] bg-[rgba(47,71,104,0.92)] text-[#19d5e2]"
+            >
               <BuildingIcon />
-            </div>
+            </motion.div>
 
-            <h2 className="mt-8 text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-[2.5rem]">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              className="mt-8 text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-[2.5rem]"
+            >
               Workforce Training Solutions
-            </h2>
+            </motion.h2>
 
-            <p className="mt-4 max-w-[34ch] text-[16px] leading-8 text-white/80">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="mt-4 max-w-[34ch] text-[16px] leading-8 text-white/80"
+            >
               Partner with Castor Health Institute to upskill your staff. We
               offer on-site group training, customized curriculum, and
               consolidated billing for healthcare organizations.
-            </p>
+            </motion.p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <motion.div 
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              className="mt-8 grid gap-4 sm:grid-cols-2"
+            >
               {facilityFeatures.map((feature) => (
-                <article
+                <motion.article
                   key={feature.title}
+                  variants={fadeInUp}
                   className="rounded-[20px] border border-white/8 bg-[rgba(35,50,78,0.86)] p-5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.03)]"
                 >
                   <div className="text-[#19d5e2]">
@@ -229,18 +289,25 @@ export function B2BSection({ onSelectAudience }: B2BSectionProps) {
                   <p className="mt-2 max-w-[24ch] text-[13px] leading-6 text-white/58">
                     {feature.description}
                   </p>
-                </article>
+                </motion.article>
               ))}
-            </div>
+            </motion.div>
 
-            <Link
-              href="#"
-              className="mt-8 inline-flex h-[54px] items-center justify-center rounded-full bg-[#2db1bc] px-8 text-[16px] font-semibold text-white transition hover:bg-[#25a1ab]"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8, duration: 0.8 }}
             >
-              Request Corporate Training
-            </Link>
+              <Link
+                href="#"
+                className="mt-8 inline-flex h-[54px] items-center justify-center rounded-full bg-[#2db1bc] px-8 text-[16px] font-semibold text-white transition hover:bg-[#25a1ab]"
+              >
+                Request Corporate Training
+              </Link>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
