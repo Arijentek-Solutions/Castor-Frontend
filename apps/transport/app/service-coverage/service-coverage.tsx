@@ -94,7 +94,7 @@ export function ServiceCoverage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
-            className="lg:col-span-7 relative rounded-[48px] overflow-hidden group shadow-2xl border-4 border-white"
+            className="lg:col-span-7 relative rounded-[48px] overflow-hidden group shadow-2xl border-4 border-white h-[400px] lg:h-auto"
           >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.821160573926!2d-89.6917244234551!3d41.7894973712526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8809b7c57a8fffff%3A0x3548007dbb1f1c18!2s417%20E%203rd%20St%20Suite%20B%2C%20Sterling%2C%20IL%2061081%2C%20USA!5e0!3m2!1sen!2sin!4v1712036495143!5m2!1sen!2sin"
