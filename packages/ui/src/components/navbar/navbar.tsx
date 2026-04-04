@@ -194,7 +194,7 @@ const TopBar = () => {
   );
 };
 
-export const Navbar = ({ appName }: { appName?: "institute" | "ecommerce" | "services" | "transport" | "web" }) => {
+export const Navbar = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -279,7 +279,7 @@ export const Navbar = ({ appName }: { appName?: "institute" | "ecommerce" | "ser
       <div className="flex justify-center px-2 pt-2.5 sm:px-4 lg:px-6 lg:pt-4">
         <nav className="w-full max-w-[1276px] rounded-[32px] border border-[#edf0f4] bg-white/96 px-2 py-2.5 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-[20px] sm:px-4 lg:rounded-full lg:px-3 xl:px-4 lg:py-0">
           <div className="flex min-h-[56px] items-center justify-between gap-1.5 sm:gap-3 lg:h-20">
-            <Brand appName={appName} />
+            <Brand />
 
             <div className="hidden flex-1 items-center justify-center lg:flex">
               <div className="flex h-9 w-full max-w-[574px] items-center justify-between xl:max-w-[733px]">
@@ -344,15 +344,7 @@ export const Navbar = ({ appName }: { appName?: "institute" | "ecommerce" | "ser
   );
 };
 
-const Brand = ({ appName }: { appName?: string }) => {
-  const getSubtitle = () => {
-    if (appName === "institute") return "Health Institute";
-    if (appName === "ecommerce") return "Medical Supplies";
-    if (appName === "services") return "GetCare";
-    if (appName === "transport") return "Transportation";
-    return "Health Ecosystem";
-  };
-
+const Brand = () => {
   return (
     <a href={SITE_URLS.web} className="flex items-center gap-1.5 transition-opacity hover:opacity-90 sm:gap-2.5 lg:gap-2 xl:gap-3">
       <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[linear-gradient(135deg,#20A9AD_0%,#1A8B8F_100%)] text-[16px] font-black leading-7 tracking-[-0.05em] text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] sm:h-11 sm:w-11 sm:text-[20px] lg:h-10 lg:w-10 xl:h-12 xl:w-12">
@@ -363,7 +355,7 @@ const Brand = ({ appName }: { appName?: string }) => {
           CASTOR
         </div>
         <div className="truncate text-[7.5px] font-bold uppercase leading-[10px] tracking-[0.14em] text-[rgba(32,169,173,0.7)] sm:text-[9px] sm:tracking-[0.2em] lg:text-[8px] lg:tracking-[0.14em] xl:text-[10px] xl:tracking-[0.2em]">
-          {getSubtitle()}
+          Health Ecosystem
         </div>
       </div>
     </a>
