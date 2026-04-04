@@ -133,7 +133,7 @@ export function JourneySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="whitespace-nowrap text-[2rem] font-black tracking-[-0.04em] text-[#172744] sm:text-[2.5rem] lg:text-[3rem]"
+            className="text-[2rem] font-black tracking-[-0.04em] text-[#172744] sm:text-[2.5rem] lg:text-[3rem]"
           >
             Your Journey to Graduation
           </motion.h2>
