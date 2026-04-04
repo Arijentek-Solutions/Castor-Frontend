@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { useState, type ReactNode, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Phone, ChevronDown as ChevronDownIcon } from "lucide-react";
 import { SITE_URLS } from "../../config/site-urls";
 import { HelpMeChooseModal } from "../help-me-choose-modal/HelpMeChooseModal";
@@ -159,7 +160,7 @@ const navItems: NavEntry[] = [
 const TopBar = () => {
   return (
     <div className="bg-[#0E1B33] border-b border-white/10 relative z-[60]">
-      <div className="mx-auto flex h-9 sm:h-10 max-w-[1276px] items-center px-3 sm:px-6 relative">
+      <div className="mx-auto flex h-9 sm:h-10 max-w-[1276px] items-center px-2.5 sm:px-6 relative">
         {/* Phone Number: Left on mobile, Center on desktop */}
         <div className="flex items-center gap-1.5 sm:gap-2 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
           <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
@@ -175,14 +176,14 @@ const TopBar = () => {
         <div className="ml-auto flex items-center gap-2 sm:gap-6">
           <Link 
             href={`${SITE_URLS.services}/provider`} 
-            className="text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+            className="text-[10px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
           >
             Provider
           </Link>
           <div className="h-3.5 w-px bg-[rgba(32,169,173,0.4)]" />
           <Link 
             href={SITE_URLS.auth}
-            className="flex items-center gap-1 text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+            className="flex items-center gap-1 text-[10px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
           >
             <span>Sign In</span>
             <ChevronDownIcon className="h-3 w-3 sm:h-3.5 sm:w-3.5 opacity-60" />
@@ -193,7 +194,7 @@ const TopBar = () => {
   );
 };
 
-export const Navbar = () => {
+export const Navbar = ({ appName }: { appName?: "institute" | "ecommerce" | "services" | "transport" | "web" }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openMobileSection, setOpenMobileSection] = useState<string | null>(null);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -275,10 +276,10 @@ export const Navbar = () => {
   return (
     <div className={`${inter.className} fixed left-0 right-0 top-0 z-50`}>
       <TopBar />
-      <div className="flex justify-center px-3 pt-3 sm:px-4 lg:px-6 lg:pt-4">
-        <nav className="w-full max-w-[1276px] rounded-[32px] border border-[#edf0f4] bg-white/96 px-3 py-3 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-[20px] sm:px-4 lg:rounded-full lg:px-3 xl:px-4 lg:py-0">
-          <div className="flex min-h-[56px] items-center justify-between gap-3 lg:h-20">
-            <Brand />
+      <div className="flex justify-center px-2 pt-2.5 sm:px-4 lg:px-6 lg:pt-4">
+        <nav className="w-full max-w-[1276px] rounded-[32px] border border-[#edf0f4] bg-white/96 px-2 py-2.5 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur-[20px] sm:px-4 lg:rounded-full lg:px-3 xl:px-4 lg:py-0">
+          <div className="flex min-h-[56px] items-center justify-between gap-1.5 sm:gap-3 lg:h-20">
+            <Brand appName={appName} />
 
             <div className="hidden flex-1 items-center justify-center lg:flex">
               <div className="flex h-9 w-full max-w-[574px] items-center justify-between xl:max-w-[733px]">
@@ -297,10 +298,10 @@ export const Navbar = () => {
               </button>
             </div>
 
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-1.5 lg:hidden">
               <button
                 onClick={openHelpModal}
-                className="flex h-11 items-center justify-center rounded-full bg-[#0E1B33] px-4 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)]"
+                className="hidden h-10 items-center justify-center rounded-full bg-[#0E1B33] px-3.5 text-[12px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] min-[375px]:flex sm:h-11 sm:px-4 sm:text-[13px]"
               >
                 Help Me Choose
               </button>
@@ -343,19 +344,31 @@ export const Navbar = () => {
   );
 };
 
-const Brand = () => (
-  <a href={SITE_URLS.web} className="flex items-center gap-2.5 transition-opacity hover:opacity-90 lg:gap-2 xl:gap-3">
-    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[linear-gradient(135deg,#20A9AD_0%,#1A8B8F_100%)] text-[20px] font-black leading-7 tracking-[-0.05em] text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] lg:h-10 lg:w-10 xl:h-12 xl:w-12">
-      C
-    </div>
-    <div className="min-w-0">
-      <div className="text-[20px] font-black leading-7 tracking-[-0.025em] text-[#0E1B33] lg:text-[17px] lg:leading-6 xl:text-[20px] xl:leading-7">CASTOR</div>
-      <div className="text-[9px] font-bold uppercase leading-[10px] tracking-[0.2em] text-[rgba(32,169,173,0.7)] lg:text-[8px] lg:tracking-[0.14em] xl:text-[10px] xl:tracking-[0.2em]">
-        Health Ecosystem
+const Brand = ({ appName }: { appName?: string }) => {
+  const getSubtitle = () => {
+    if (appName === "institute") return "Health Institute";
+    if (appName === "ecommerce") return "Medical Supplies";
+    if (appName === "services") return "GetCare";
+    if (appName === "transport") return "Transportation";
+    return "Health Ecosystem";
+  };
+
+  return (
+    <a href={SITE_URLS.web} className="flex items-center gap-1.5 transition-opacity hover:opacity-90 sm:gap-2.5 lg:gap-2 xl:gap-3">
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[linear-gradient(135deg,#20A9AD_0%,#1A8B8F_100%)] text-[16px] font-black leading-7 tracking-[-0.05em] text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] sm:h-11 sm:w-11 sm:text-[20px] lg:h-10 lg:w-10 xl:h-12 xl:w-12">
+        C
       </div>
-    </div>
-  </a>
-);
+      <div className="min-w-0">
+        <div className="text-[16px] font-black leading-6 tracking-[-0.025em] text-[#0E1B33] sm:text-[20px] sm:leading-7 lg:text-[17px] lg:leading-6 xl:text-[20px] xl:leading-7">
+          CASTOR
+        </div>
+        <div className="truncate text-[7.5px] font-bold uppercase leading-[10px] tracking-[0.14em] text-[rgba(32,169,173,0.7)] sm:text-[9px] sm:tracking-[0.2em] lg:text-[8px] lg:tracking-[0.14em] xl:text-[10px] xl:tracking-[0.2em]">
+          {getSubtitle()}
+        </div>
+      </div>
+    </a>
+  );
+};
 
 const DesktopNavItem = ({ item }: { item: NavEntry }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
