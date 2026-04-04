@@ -219,36 +219,6 @@ export function StudentSection({ onSelectAudience }: StudentSectionProps) {
       className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24"
     >
       <div className="mx-auto max-w-[1200px]">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center"
-        >
-          <div className="w-full max-w-[512px] rounded-full bg-[#edf7f8] p-1.5 shadow-[inset_0_0_0_1px_rgba(202,228,231,0.8)]">
-            <div className="grid grid-cols-2 gap-1">
-              <button
-                type="button"
-                onClick={() => onSelectAudience("students")}
-                className="flex h-[45px] items-center justify-center gap-2 rounded-full bg-white px-5 text-[14px] font-semibold tracking-[-0.01em] text-[#20a9ad] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_0px_rgba(0,0,0,0.1)]"
-                aria-pressed="true"
-              >
-                <GraduationCapIcon />
-                <span>For Students</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => onSelectAudience("facilities")}
-                className="flex h-[45px] items-center justify-center gap-2 rounded-full px-5 text-[14px] font-semibold tracking-[-0.01em] text-[#6a6a67] transition-all duration-300"
-                aria-pressed="false"
-              >
-                <BuildingIcon />
-                <span>For Facilities (B2B)</span>
-              </button>
-            </div>
-          </div>
-        </motion.div>
 
         <div className="mx-auto mt-7 max-w-[560px] text-center">
           <motion.h2
