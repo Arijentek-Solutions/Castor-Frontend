@@ -170,8 +170,8 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
   services: [
     { label: "Home", href: SITE_URLS.services },
     { label: "Services", href: SITE_URLS.services, dropdownItems: getCareItems },
-    { label: "About Us", href: `${SITE_URLS.services}/about` },
-    { label: "Contact Us", href: `${SITE_URLS.services}/contact` },
+    { label: "Counties", href: `${SITE_URLS.services}/counties` },
+    { label: "About Us", href: `${SITE_URLS.services}/about-us` }
   ],
   institute: [
     { label: "Home", href: SITE_URLS.institute },
@@ -496,7 +496,7 @@ const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<ServiceCont
   if (!links) return null;
 
   return (
-    <div className="border-b border-[#20A9AD]/10 bg-[#EEF8F8] py-1.5 sm:py-2 flex items-center justify-center cursor-default select-none relative z-40">
+    <div className="border-b border-[#20A9AD]/10 bg-[#EEF8F8]/80 backdrop-blur-xl py-1.5 sm:py-2 flex items-center justify-center cursor-default select-none relative z-40">
       <div className="mx-auto max-w-[1276px] w-full">
         <div className="flex items-center justify-start gap-10 overflow-x-auto overflow-y-visible px-6 scrollbar-hide sm:justify-center sm:px-8 lg:overflow-visible">
           {links.map((link) => {
