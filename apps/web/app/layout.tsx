@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Navbar />
+        <Navbar serviceContext="web" />
         {children}
         <Footer />
       </body>
