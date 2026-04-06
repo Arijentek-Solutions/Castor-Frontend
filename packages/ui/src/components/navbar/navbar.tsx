@@ -162,6 +162,7 @@ const navItems: NavEntry[] = [
   { label: "Medical Supplies", href: SITE_URLS.ecommerce, desktopWidth: "lg:w-[126px] xl:w-[161px]" },
   { label: "Health Institute", href: SITE_URLS.institute, desktopWidth: "lg:w-[118px] xl:w-[153px]" },
   { label: "Transportation", href: SITE_URLS.transport, desktopWidth: "lg:w-[104px] xl:w-[130px]" },
+  { label: "About", href: `${SITE_URLS.web}/about`, desktopWidth: "lg:w-[62px] xl:w-[72px]" },
   { label: "Careers", href: `${SITE_URLS.web}/careers`, desktopWidth: "lg:w-[70px] xl:w-[81px]" },
   { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
 ];
@@ -400,7 +401,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
         setIsOpen(false);
       }
     };
-    
+
     const updatePosition = () => {
       if (triggerRef.current && isOpen) {
         const rect = triggerRef.current.getBoundingClientRect();
@@ -422,7 +423,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
 
   if (item.dropdownItems) {
     return (
-      <div 
+      <div
         ref={menuRef}
         className="relative flex items-center h-9"
         onMouseEnter={() => setIsOpen(true)}
@@ -446,8 +447,8 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
         </Link>
 
         {isOpen && (
-          <div 
-            style={window.innerWidth < 1024 ? { 
+          <div
+            style={window.innerWidth < 1024 ? {
               left: `${position.left + 10}px`,
               top: '120px'
             } : {}}
