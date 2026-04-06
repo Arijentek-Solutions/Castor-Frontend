@@ -166,15 +166,7 @@ const navItems: NavEntry[] = [
   { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
 ];
 
-const SERVICE_NAV_LINKS: Record<ServiceContext, ServiceNavLink[]> = {
-  web: [
-    { label: "Home", href: SITE_URLS.web },
-    { label: "Services", href: `${SITE_URLS.web}/#services` },
-    { label: "Mission", href: `${SITE_URLS.web}/about` },
-    { label: "News", href: `${SITE_URLS.web}/news` },
-    { label: "Careers", href: `${SITE_URLS.web}/careers` },
-    { label: "Contact Us", href: `${SITE_URLS.web}/contact` },
-  ],
+const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]> = {
   services: [
     { label: "Home", href: SITE_URLS.services },
     { label: "Services", href: SITE_URLS.services, dropdownItems: getCareItems },
@@ -388,7 +380,9 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
         isOpen={isHelpModalOpen}
         onClose={closeHelpModal}
       />
-      {serviceContext && <ServiceSubNav serviceContext={serviceContext} />}
+      {serviceContext && serviceContext !== "web" && (
+        <ServiceSubNav serviceContext={serviceContext as Exclude<ServiceContext, "web">} />
+      )}
     </div>
   );
 };
@@ -495,9 +489,11 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
   );
 };
 
-const ServiceSubNav = ({ serviceContext }: { serviceContext: ServiceContext }) => {
+const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<ServiceContext, "web"> }) => {
   const links = SERVICE_NAV_LINKS[serviceContext];
   const pathname = usePathname();
+
+  if (!links) return null;
 
   return (
     <div className="border-b border-[#20A9AD]/10 bg-[#EEF8F8] py-1.5 sm:py-2 flex items-center justify-center cursor-default select-none relative z-40">
