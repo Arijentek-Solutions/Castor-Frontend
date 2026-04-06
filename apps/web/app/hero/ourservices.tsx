@@ -122,7 +122,7 @@ const cardVariants = {
 
 export function OurServices() {
   return (
-    <section className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-white`}>
+    <section id="our-services" className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-white`}>
       <div className="mx-auto max-w-[1280px]">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
