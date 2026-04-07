@@ -158,10 +158,10 @@ const healthInstituteItems: DropdownEntry[] = [
 ];
 
 const navItems: NavEntry[] = [
-  { label: "Get Care", href: SITE_URLS.services, desktopWidth: "lg:w-[84px] xl:w-[106px]" },
-  { label: "Medical Supplies", href: SITE_URLS.ecommerce, desktopWidth: "lg:w-[126px] xl:w-[161px]" },
-  { label: "Health Institute", href: SITE_URLS.institute, desktopWidth: "lg:w-[118px] xl:w-[153px]" },
-  { label: "Transportation", href: SITE_URLS.transport, desktopWidth: "lg:w-[104px] xl:w-[130px]" },
+  { label: "Get Care", href: SITE_URLS.services, desktopWidth: "lg:w-[88px] xl:w-[106px]" },
+  { label: "Medical Supplies", href: SITE_URLS.ecommerce, desktopWidth: "lg:w-[150px] xl:w-[170px]" },
+  { label: "Health Institute", href: SITE_URLS.institute, desktopWidth: "lg:w-[150px] xl:w-[170px]" },
+  { label: "Transportation", href: SITE_URLS.transport, desktopWidth: "lg:w-[124px] xl:w-[140px]" },
   { label: "About", href: `${SITE_URLS.web}/about`, desktopWidth: "lg:w-[62px] xl:w-[72px]" },
   { label: "Careers", href: `${SITE_URLS.web}/careers`, desktopWidth: "lg:w-[70px] xl:w-[81px]" },
   { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
@@ -323,7 +323,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
             <Brand />
 
             <div className="hidden flex-1 items-center justify-center lg:flex">
-              <div className="flex h-9 w-full max-w-[574px] items-center justify-between xl:max-w-[733px]">
+              <div className="flex h-9 w-full max-w-[680px] items-center justify-between xl:max-w-[800px]">
                 {navItems.map((item) => (
                   <DesktopNavItem key={item.label} item={item} />
                 ))}
@@ -390,7 +390,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
 
 const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [position, setPosition] = useState({ left: 0 });
+  const [position, setPosition] = useState({ left: 0, bottom: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLAnchorElement>(null);
   const sharedClasses = "inline-flex h-9 items-center gap-1.5 whitespace-nowrap text-[12px] font-bold leading-none tracking-normal font-sans text-[#0E1B33]/70 transition-colors hover:text-[#20A9AD] sm:text-[13px] outline-none appearance-none bg-transparent p-0";
@@ -405,7 +405,10 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
     const updatePosition = () => {
       if (triggerRef.current && isOpen) {
         const rect = triggerRef.current.getBoundingClientRect();
-        setPosition({ left: rect.left + rect.width / 2 });
+        setPosition({ 
+          left: rect.left + rect.width / 2,
+          bottom: rect.bottom
+        });
       }
     };
 
@@ -450,7 +453,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
           <div
             style={window.innerWidth < 1024 ? {
               left: `${position.left + 10}px`,
-              top: '120px'
+              top: '55px'
             } : {}}
             className="fixed -translate-x-1/2 lg:absolute lg:left-1/2 lg:top-full lg:z-[110] pt-2"
           >
@@ -539,7 +542,7 @@ const DesktopNavItem = ({ item }: { item: NavEntry }) => {
   if (!hasDropdown) {
     return (
       <NavLink
-        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors hover:text-[#0E1B33] xl:px-4 xl:text-[14px] ${item.desktopWidth}`}
+        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors hover:text-[#0E1B33] whitespace-nowrap xl:px-4 xl:text-[14px] ${item.desktopWidth}`}
         href={item.href}
       >
         {item.label}
@@ -550,7 +553,7 @@ const DesktopNavItem = ({ item }: { item: NavEntry }) => {
   return (
     <div className={`group relative flex h-9 ${item.desktopWidth} items-center justify-center`}>
       <NavLink
-        className="flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors group-hover:text-[#0E1B33] xl:gap-1 xl:px-[14px] xl:text-[14px]"
+        className="flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors group-hover:text-[#0E1B33] whitespace-nowrap xl:gap-1 xl:px-[14px] xl:text-[14px]"
         href={item.href}
       >
         <span>{item.label}</span>
