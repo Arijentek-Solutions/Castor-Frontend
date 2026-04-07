@@ -81,6 +81,20 @@ const getCareItems: DropdownEntry[] = [
       </svg>
     ),
   },
+  {
+    title: "Pediatric Nursing",
+    description: "Specialized care for children",
+    href: `${SITE_URLS.services}/pediatric-nursing`,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 12h.01" />
+        <path d="M15 12h.01" />
+        <path d="M10 16c.5 1 1.5 1 2 1s1.5 0 2-1" />
+        <path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 1 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 1 1 0-3.6A9 9 0 0 1 5 6.3" />
+        <path d="M12 2v2" />
+      </svg>
+    ),
+  },
 ];
 
 const medicalSuppliesItems: DropdownEntry[] = [
