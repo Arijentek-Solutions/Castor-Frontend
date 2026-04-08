@@ -37,7 +37,7 @@ export function StaffingWhyChoose() {
               className="relative w-full aspect-[1216/384] rounded-[32px] overflow-hidden shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] bg-[#f0f9fa]"
             >
               <Image
-                src="/images/Staffing Healthcare/why-choose-staffing.jpg"
+                src="/images/Staffing-Healthcare/why-choose-staffing.png"
                 alt="Healthcare staffing team collaborate"
                 fill
                 className="object-cover"
