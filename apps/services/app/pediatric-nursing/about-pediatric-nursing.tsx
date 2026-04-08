@@ -38,7 +38,7 @@ export function AboutPediatricNursing() {
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[32px] shadow-2xl">
               <Image
-                src="/images/about-pediatric.jpg"
+                src="/images/Pediatric-Nursing/about-pediatric.jpg"
                 alt="Medical professional with patient"
                 fill
                 className="object-cover"

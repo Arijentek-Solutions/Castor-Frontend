@@ -5,6 +5,7 @@ import { PediatricWhyChoose } from "./pediatric-why-choose";
 import { PediatricServicesList } from "./pediatric-services-list";
 import { PediatricHiringExcellence } from "./pediatric-hiring-excellence";
 import { PediatricProfessionals } from "./pediatric-professionals";
+import { PediatricCTA } from "./pediatric-cta";
 
 export default function PediatricNursingPage() {
   return (
@@ -16,6 +17,7 @@ export default function PediatricNursingPage() {
       <PediatricServicesList />
       <PediatricProfessionals />
       <PediatricHiringExcellence />
+      <PediatricCTA />
     </main>
   );
 }
