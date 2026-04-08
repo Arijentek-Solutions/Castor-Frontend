@@ -77,84 +77,22 @@ const VeteransCareHero = () => {
                   Serving those who served. We provide specialized care coordinated directly with the VA to ensure veterans receive the benefits and support they are entitled to.
                 </motion.p>
 
-                {/* CTA Button */}
+                {/* CTA Buttons */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.8 }}
+                  className="flex flex-wrap gap-4"
                 >
-                  <Button className="bg-[#20a9ad] hover:bg-[#1a8e91] text-white px-8 py-4 h-[56px] rounded-full text-[14px] font-medium shadow-[0px_10px_15px_rgba(32,169,173,0.2)] border-none">
-                    Verify VA Benefits
+                  <Button variant="primary">
+                    Request Care
+                  </Button>
+                  <Button variant="secondary">
+                    Contact Us
                   </Button>
                 </motion.div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Details Section */}
-      <div className="max-w-[896px] mx-auto px-4 pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-[68px]"
-        >
-          <h2 className="text-[30px] font-bold text-[#0e1b33] mb-5 tracking-tight">Honoring Your Service</h2>
-          <p className="text-[18px] text-[#6a6a67] leading-[1.6] max-w-[860px]">
-            We are proud to partner with the Department of Veterans Affairs to provide quality home care to our nation's heroes. Our team is experienced in navigating the VA system to get you the care you need.
-          </p>
-        </motion.div>
-
-        {/* Program Benefits Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-[#f0f9fa] border border-[#20a9ad]/20 rounded-[32px] p-[41px] mb-8"
-        >
-          <h3 className="text-[24px] font-bold text-[#0e1b33] mb-8">Program Benefits</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[16px] gap-y-[16px]">
-            {[
-              "Coordination with VA Benefits",
-              "Service-Connected Disability Care",
-              "Homemaker / Home Health Aide Services",
-              "Respite Care for Veteran Families",
-            ].map((item, index) => (
-              <div key={index} className="flex items-center gap-[12px] h-[24px]">
-                <div className="shrink-0 size-5 flex items-center justify-center">
-                  <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5 text-[#20a9ad]">
-                    <circle cx="10" cy="10" r="10" fill="white" />
-                    <path d="M14 7L8.5 12.5L6 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <p className="text-[16px] text-[#0e1b33] font-medium leading-none">
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Community Provider Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-[#fef5ed] rounded-[32px] p-8 md:p-10 flex flex-col md:flex-row gap-[24px] items-start"
-        >
-          <div className="bg-white p-4 rounded-[24px] shadow-sm shrink-0">
-            <HeartHandshake className="w-8 h-8 text-[#f7c89a]" />
-          </div>
-          <div className="pt-2">
-            <h3 className="text-[20px] font-bold text-[#0e1b33] mb-3">Community Provider</h3>
-            <p className="text-[16px] text-[#6a6a67] leading-relaxed max-w-[760px]">
-              As an authorized community provider, we can often see veterans faster than waiting for VA internal services, ensuring no gap in care.
-            </p>
           </div>
         </motion.div>
       </div>
