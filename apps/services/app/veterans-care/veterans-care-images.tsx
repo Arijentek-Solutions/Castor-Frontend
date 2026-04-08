@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 
 const images = [
   {
-    src: "/images/after hero1/doctor.jpg",
+    src: "/images/veterans/veteran-image-3.jpg",
     alt: "Senior veteran receiving professional home care",
   },
   {
-    src: "/images/after hero1/patient.jpg",
+    src: "/images/veterans/veteran-image-4.jpg",
     alt: "Healthcare professional with veteran",
   },
 ];
