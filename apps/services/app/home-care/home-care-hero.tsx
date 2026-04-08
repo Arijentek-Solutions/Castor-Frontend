@@ -51,8 +51,8 @@ export function HomeCareHero() {
                     <div className="flex h-full items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md rounded-full px-4 shadow-sm">
                       <div className="size-4 shrink-0 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                          <path d="M12.6667 14V12.6667C12.6667 11.9594 12.3858 11.2811 11.8857 10.781C11.3856 10.281 10.7073 10 10 10H6.00004C5.2928 10 4.61452 10.281 4.11442 10.781C3.61433 11.2811 3.33337 11.9594 3.33337 12.6667V14" stroke="#F7C89A" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-                          <path d="M8.00004 7.33333C9.4728 7.33333 10.6667 6.13943 10.6667 4.66667C10.6667 3.19391 9.4728 2 8.00004 2C6.52728 2 5.33337 3.19391 5.33337 4.66667C5.33337 6.13943 6.52728 7.33333 8.00004 7.33333Z" stroke="#F7C89A" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M12.6667 14V12.6667C12.6667 11.9594 12.3858 11.2811 11.8857 10.781C11.3856 10.281 10.7073 10 10 10H6.00004C5.2928 10 4.61452 10.281 4.11442 10.781C3.61433 11.2811 3.33337 11.9594 3.33337 12.6667V14" stroke="#F7C89A" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M8.00004 7.33333C9.4728 7.33333 10.6667 6.13943 10.6667 4.66667C10.6667 3.19391 9.4728 2 8.00004 2C6.52728 2 5.33337 3.19391 5.33337 4.66667C5.33337 6.13943 6.52728 7.33333 8.00004 7.33333Z" stroke="#F7C89A" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                       </div>
                       <span className="text-[14px] font-medium text-white tracking-tight">
@@ -160,15 +160,15 @@ function HomeCareDetails() {
         >
           <div className="bg-white p-4 rounded-[24px] shadow-sm shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48" fill="none">
-              <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M24 4V8" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M24 40V44" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9.85999 9.85999L12.68 12.68" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M35.3199 35.3199L38.1399 38.1399" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M4 24H8" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M40 24H44" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12.68 35.3199L9.85999 38.1399" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M38.1399 9.85999L35.3199 12.68" stroke="#20A9AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 32C28.4183 32 32 28.4183 32 24C32 19.5817 28.4183 16 24 16C19.5817 16 16 19.5817 16 24C16 28.4183 19.5817 32 24 32Z" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M24 4V8" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M24 40V44" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9.85999 9.85999L12.68 12.68" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M35.3199 35.3199L38.1399 38.1399" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M4 24H8" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M40 24H44" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12.68 35.3199L9.85999 38.1399" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M38.1399 9.85999L35.3199 12.68" stroke="#20A9AD" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div className="pt-2">
