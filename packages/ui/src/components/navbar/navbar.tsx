@@ -82,6 +82,19 @@ const getCareItems: DropdownEntry[] = [
     ),
   },
   {
+    title: "Healthcare Staffing",
+    description: "Professional staffing for facilities",
+    href: `${SITE_URLS.services}/healthcare-staffing`,
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21V7" />
+        <path d="M5 21V11a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10" />
+        <path d="M9 21v-4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4" />
+        <path d="M3 21h18" />
+      </svg>
+    ),
+  },
+  {
     title: "Pediatric Nursing",
     description: "Specialized care for children",
     href: `${SITE_URLS.services}/pediatric-nursing`,
