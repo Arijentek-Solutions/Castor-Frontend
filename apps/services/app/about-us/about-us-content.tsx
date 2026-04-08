@@ -99,51 +99,6 @@ export function AboutUsContent() {
           </div>
         </div>
       </section>
-
-      {/* Mission & Vision Section */}
-      <section className="py-24 bg-[#f8fafa]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-[1240px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="space-y-6"
-              >
-                <div className="flex items-center gap-4 text-[#20a9ad]">
-                  <div className="p-3 bg-[#20a9ad]/10 rounded-xl">
-                    <Heart className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-[28px] font-bold text-[#0e1b33]">Our Mission</h3>
-                </div>
-                <p className="text-[18px] text-[#6a6a67] leading-[1.8] font-medium italic">
-                  "Our purpose revolves around enriching lives, starting from the very moment we connect with each individual. Rooted in genuine warmth, kindness, and a deep sense of individual pride, our unwavering commitment drives us to make a positive impact on every life we touch."
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-6"
-              >
-                <div className="flex items-center gap-4 text-[#20a9ad]">
-                  <div className="p-3 bg-[#20a9ad]/10 rounded-xl">
-                    <Globe className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-[28px] font-bold text-[#0e1b33]">Our Vision</h3>
-                </div>
-                <p className="text-[18px] text-[#6a6a67] leading-[1.8] font-medium">
-                  "Our aspiration is to deliver exceptional, patient-centered care that preserves the sense of comfort and community found within one’s own home. Through this vision, we strive to elevate the quality of care we provide, ensuring individuals can thrive in familiar surroundings while receiving the highest level of attention and support."
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
