@@ -9,7 +9,6 @@ export default function HomeCTA() {
       description="Contact us today for a free consultation and care assessment."
       buttonText="Schedule Free Consultation"
       buttonHref="/contact"
-      buttonTextColor="black"
       className="py-24"
     />
   );
