@@ -7,6 +7,7 @@ interface GetStartedCTAProps {
   title: string;
   description: string;
   buttonText?: string;
+  buttonHref?: string;
   buttonTextColor?: string;
   secondaryButtonText?: string;
   secondaryButtonHref?: string;
@@ -17,6 +18,7 @@ export function GetStartedCTA({
   title,
   description,
   buttonText = "Get Started Today",
+  buttonHref,
   buttonTextColor = "rgb(30, 158, 162)",
   secondaryButtonText,
   secondaryButtonHref,
@@ -48,6 +50,7 @@ export function GetStartedCTA({
                 variant="secondary"
                 className="bg-white hover:bg-white/95 border-none px-8 py-4 h-auto text-[16px] font-bold rounded-full shadow-[0px_20px_25px_0px_rgba(0,0,0,0.1),0px_8px_10px_0px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{ color: buttonTextColor }}
+                href={buttonHref}
               >
                 {buttonText}
               </Button>
