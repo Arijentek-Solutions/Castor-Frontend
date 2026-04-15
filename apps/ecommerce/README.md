@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Castor E-commerce Module — Stage 1 (Frontend)
 
-## Getting Started
+## 📌 Overview
 
-First, run the development server:
+The **Castor E-commerce module** is part of the unified Castor platform, designed to enable users to browse and access healthcare-related products through multiple purchasing workflows.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This Stage 1 implementation focuses on delivering a **fully functional frontend experience** using static data, while preparing the architecture for future backend integration.
+
+The system supports both traditional e-commerce interactions and healthcare-specific workflows such as insurance-based requests and administrative pricing flows.
+
+---
+
+## 🎯 Objective (Stage 1)
+
+The goal of this phase is to:
+
+* Build a complete **frontend product browsing experience**
+* Implement a **cart and checkout flow (static)**
+* Support **multiple product workflows (Self-pay, Insurance, Pricing)**
+* Ensure the system is **backend-ready without requiring refactoring**
+
+---
+
+## 🧩 Core Features
+
+### 🛍️ Product Catalog
+
+* Browse healthcare products
+* View product details
+* Categorized product listing (UI level)
+
+### 📄 Product Detail Page
+
+* Displays product information
+* Dynamically renders actions based on product type:
+
+  * Self-pay → Add to Cart
+  * Insurance → Apply via Insurance
+  * Pricing → Request Price
+
+### 🛒 Cart System
+
+* Add/remove products
+* Quantity management
+* Real-time updates using React Context
+* Persistent storage using localStorage
+
+### 💳 Checkout Flow (Static)
+
+* User enters basic details
+* Simulated order placement
+* Redirect to order success page
+
+### 🏥 Insurance Workflow
+
+* Triggered for insurance-eligible products
+* Redirects users to a form flow (Jotform integration planned)
+* No payment at this stage
+
+### 📞 Pricing Request Workflow
+
+* Users can request pricing for restricted products
+* Simple form submission (admin follow-up in later stages)
+
+---
+
+## 🧠 System Design Approach
+
+This module follows a **hybrid architecture**, combining:
+
+* Traditional e-commerce UI
+* Healthcare workflow-based interactions
+* Admin-driven processes (to be implemented in later stages)
+
+All complex workflows (insurance, pricing) are designed to integrate with external systems such as Jotform and admin review pipelines.
+
+---
+
+## ⚙️ Tech Stack
+
+* **Framework:** Next.js (App Router)
+* **Language:** TypeScript
+* **State Management:** React Context API
+* **Persistence:** localStorage
+* **Styling:** (Tailwind CSS / Custom — based on implementation)
+* **Package Manager:** pnpm (monorepo with Turborepo)
+
+---
+
+## 🧱 Project Structure
+
+```
+apps/ecommerce/
+  app/
+    products/
+    cart/
+    checkout/
+    insurance/
+    pricing-request/
+  
+  components/
+  context/
+  lib/
+    cart/
+    products/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛒 Cart Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The cart system is designed using a layered approach:
 
-## Learn More
+* **Context:** Handles live UI updates
+* **Cart Service Layer:** Manages business logic
+* **localStorage:** Provides persistence across sessions
 
-To learn more about Next.js, take a look at the following resources:
+This ensures:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Instant UI updates
+* Data retention after refresh
+* Easy migration to backend APIs in future
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🔄 Product Workflows
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The system supports three primary product types:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Self-Pay
+
+* Standard e-commerce flow
+* Add to cart → Checkout → Order success
+
+### 2. Insurance-Based
+
+* User submits request via form
+* No direct checkout
+* Admin review required (future phase)
+
+### 3. Call-for-Pricing
+
+* User submits pricing request
+* Admin provides custom pricing (future phase)
+
+---
+
+## 🧠 Key Design Principle
+
+> “Build frontend-first, but architect for backend scalability.”
+
+This ensures that the current implementation can seamlessly transition into a fully dynamic system without major refactoring.
+
+---
+
+## 📌 Summary
+
+The Stage 1 E-commerce module delivers a **complete user experience** while maintaining a **clean, scalable architecture** aligned with Castor’s multi-module ecosystem.
+
+It acts as a strong foundation for future backend-driven workflows and real-world healthcare operations.
+
+---
