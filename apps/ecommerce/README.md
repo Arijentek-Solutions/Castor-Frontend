@@ -1,162 +1,258 @@
-# 🛒 Castor E-commerce Module — Stage 1 (Frontend)
+# Castor E-commerce Module
 
-## 📌 Overview
+## Current Phase: Stage 1 - Static Frontend
 
-The **Castor E-commerce module** is part of the unified Castor platform, designed to enable users to browse and access healthcare-related products through multiple purchasing workflows.
+The Castor E-commerce module will provide a healthcare product shopping experience with support for self-pay products, insurance-based requests, and pricing-request products.
 
-This Stage 1 implementation focuses on delivering a **fully functional frontend experience** using static data, while preparing the architecture for future backend integration.
+Stage 1 focuses only on the frontend. Product data, cart behavior, checkout, insurance requests, and pricing requests will use static or mock data. Backend APIs, database integration, payments, authentication, and admin workflows are planned for Stage 2.
 
-The system supports both traditional e-commerce interactions and healthcare-specific workflows such as insurance-based requests and administrative pricing flows.
+## Stage 1 Goal
 
----
+The goal of Stage 1 is to build a complete static frontend ecommerce experience that includes:
 
-## 🎯 Objective (Stage 1)
+- Product catalog
+- Product detail pages
+- Product workflow handling
+- Cart management
+- Static checkout flow
+- Order success page
+- Insurance request flow
+- Pricing request flow
 
-The goal of this phase is to:
+The frontend should be built in a backend-ready way so static data can later be replaced with real APIs without major refactoring.
 
-* Build a complete **frontend product browsing experience**
-* Implement a **cart and checkout flow (static)**
-* Support **multiple product workflows (Self-pay, Insurance, Pricing)**
-* Ensure the system is **backend-ready without requiring refactoring**
+## Out of Scope for Stage 1
 
----
+The following items are not part of Stage 1:
 
-## 🧩 Core Features
+- Backend APIs
+- Database storage
+- Real payment processing
+- Authentication
+- Admin dashboard
+- Real insurance submission
+- Real pricing request submission
+- Email or SMS notifications
 
-### 🛍️ Product Catalog
+## Stage 1 Routes
 
-* Browse healthcare products
-* View product details
-* Categorized product listing (UI level)
+- `/` - Ecommerce landing or home screen
+- `/products` - Product listing page
+- `/products/[slug]` - Product detail page
+- `/cart` - Shopping cart
+- `/checkout` - Static checkout form
+- `/order-success` - Static order confirmation
+- `/insurance` - Insurance request flow
+- `/pricing-request` - Pricing request flow
 
-### 📄 Product Detail Page
+## Product Data Model
 
-* Displays product information
-* Dynamically renders actions based on product type:
+The product catalog will be powered by static product data during Stage 1.
 
-  * Self-pay → Add to Cart
-  * Insurance → Apply via Insurance
-  * Pricing → Request Price
+Each product should include:
 
-### 🛒 Cart System
+- Product ID
+- Slug
+- Name
+- Description
+- Category
+- Image
+- Price, if applicable
+- Product workflow type: `self-pay`, `insurance`, or `pricing-request`
+- Availability or status
 
-* Add/remove products
-* Quantity management
-* Real-time updates using React Context
-* Persistent storage using localStorage
+## Core Features
 
-### 💳 Checkout Flow (Static)
+### Product Catalog
 
-* User enters basic details
-* Simulated order placement
-* Redirect to order success page
+The product catalog should allow users to browse healthcare products using static product data.
 
-### 🏥 Insurance Workflow
+Expected catalog behavior:
 
-* Triggered for insurance-eligible products
-* Redirects users to a form flow (Jotform integration planned)
-* No payment at this stage
+- Display product cards
+- Show product image, name, category, and price or workflow label
+- Allow users to open product detail pages
+- Support category-level organization at the UI level
 
-### 📞 Pricing Request Workflow
+### Product Detail Page
 
-* Users can request pricing for restricted products
-* Simple form submission (admin follow-up in later stages)
+Each product detail page should render actions based on the product workflow type:
 
----
+- `self-pay`: show price and Add to Cart button
+- `insurance`: show Apply via Insurance action
+- `pricing-request`: show Request Pricing action
 
-## 🧠 System Design Approach
+### Cart System
 
-This module follows a **hybrid architecture**, combining:
+The cart should support:
 
-* Traditional e-commerce UI
-* Healthcare workflow-based interactions
-* Admin-driven processes (to be implemented in later stages)
+- Add product to cart
+- Remove product from cart
+- Increase or decrease quantity
+- Persist cart in `localStorage`
+- Recalculate subtotal dynamically
+- Clear cart after simulated checkout
 
-All complex workflows (insurance, pricing) are designed to integrate with external systems such as Jotform and admin review pipelines.
+Only cart-safe product data should be stored in `localStorage`. Sensitive healthcare, insurance, or personal details should not be stored there.
 
----
+### Static Checkout Flow
 
-## ⚙️ Tech Stack
+The checkout flow should collect basic non-sensitive customer details for UI simulation only.
 
-* **Framework:** Next.js (App Router)
-* **Language:** TypeScript
-* **State Management:** React Context API
-* **Persistence:** localStorage
-* **Styling:** (Tailwind CSS / Custom — based on implementation)
-* **Package Manager:** pnpm (monorepo with Turborepo)
+Stage 1 checkout should:
 
----
+- Validate required fields
+- Display order summary
+- Simulate order placement
+- Clear the cart after completion
+- Redirect to `/order-success`
 
-## 🧱 Project Structure
+No real payment or backend order creation will happen in Stage 1.
 
-```
+### Insurance Workflow
+
+Insurance-eligible products should not enter the normal cart checkout flow.
+
+Instead, users should be redirected to an insurance request page or external form placeholder. Stage 1 will only simulate this flow. Real Jotform or backend integration will be handled in Stage 2.
+
+### Pricing Request Workflow
+
+Products that require custom pricing should direct users to a pricing request form.
+
+Stage 1 will only simulate form submission. Admin review, quote generation, and notifications will be implemented in Stage 2.
+
+## Frontend Architecture
+
+Stage 1 should separate UI, state, and static data so the module can later connect to backend APIs with minimal changes.
+
+Recommended structure:
+
+- `app/` for routes
+- `components/` for reusable UI
+- `context/` for cart state
+- `lib/products/` for static product data and product helpers
+- `lib/cart/` for cart utilities and calculations
+- `types/` for shared TypeScript types
+
+## Tech Stack
+
+- Framework: Next.js App Router
+- Language: TypeScript
+- Styling: Tailwind CSS
+- Shared UI: `@castor/ui`
+- State Management: React Context API
+- Static Persistence: `localStorage`
+- Package Manager: pnpm
+- Monorepo Tooling: Turborepo
+
+## Planned Project Structure
+
+```txt
 apps/ecommerce/
   app/
+    page.tsx
+    products/
+      page.tsx
+      [slug]/
+        page.tsx
+    cart/
+      page.tsx
+    checkout/
+      page.tsx
+    order-success/
+      page.tsx
+    insurance/
+      page.tsx
+    pricing-request/
+      page.tsx
+
+  components/
     products/
     cart/
     checkout/
-    insurance/
-    pricing-request/
-  
-  components/
+
   context/
+    cart-context.tsx
+
   lib/
-    cart/
     products/
+      products.ts
+    cart/
+      cart-service.ts
+
+  types/
+    product.ts
+    cart.ts
 ```
 
----
+## Product Workflows
 
-## 🛒 Cart Architecture
-
-The cart system is designed using a layered approach:
-
-* **Context:** Handles live UI updates
-* **Cart Service Layer:** Manages business logic
-* **localStorage:** Provides persistence across sessions
-
-This ensures:
-
-* Instant UI updates
-* Data retention after refresh
-* Easy migration to backend APIs in future
-
----
-
-## 🔄 Product Workflows
-
-The system supports three primary product types:
+The system supports three primary product workflow types.
 
 ### 1. Self-Pay
 
-* Standard e-commerce flow
-* Add to cart → Checkout → Order success
+Self-pay products follow the standard ecommerce flow:
+
+- Product detail
+- Add to cart
+- Cart
+- Checkout
+- Order success
 
 ### 2. Insurance-Based
 
-* User submits request via form
-* No direct checkout
-* Admin review required (future phase)
+Insurance-based products use a request flow instead of direct checkout:
 
-### 3. Call-for-Pricing
+- Product detail
+- Apply via insurance
+- Insurance request page or form placeholder
+- Admin review in a future phase
 
-* User submits pricing request
-* Admin provides custom pricing (future phase)
+### 3. Pricing Request
 
----
+Pricing-request products require follow-up before purchase:
 
-## 🧠 Key Design Principle
+- Product detail
+- Request pricing
+- Pricing request page or form placeholder
+- Admin quote process in a future phase
 
-> “Build frontend-first, but architect for backend scalability.”
+## Stage 1 Acceptance Criteria
 
-This ensures that the current implementation can seamlessly transition into a fully dynamic system without major refactoring.
+Stage 1 is complete when:
 
----
+- Users can browse static products
+- Users can open product detail pages
+- Self-pay products can be added to cart
+- Cart quantity updates work correctly
+- Cart persists after page refresh
+- Checkout can be completed using static data
+- Order success page appears after checkout
+- Insurance products route to the insurance flow
+- Pricing-request products route to the pricing request flow
+- The UI is responsive on desktop, tablet, and mobile
+- No backend dependency is required to run the module
 
-## 📌 Summary
+## Stage 2 Backend Plan
 
-The Stage 1 E-commerce module delivers a **complete user experience** while maintaining a **clean, scalable architecture** aligned with Castor’s multi-module ecosystem.
+After Stage 1 is reviewed and approved, Stage 2 will introduce backend-driven behavior.
 
-It acts as a strong foundation for future backend-driven workflows and real-world healthcare operations.
+Planned Stage 2 items:
 
----
+- Product APIs
+- Database-backed product catalog
+- Persistent cart or session handling
+- Real order creation
+- Customer records
+- Payment integration, if required
+- Insurance request integration
+- Pricing request and quote management
+- Admin workflows
+- Email or SMS notifications
+- Authentication and access control, if required
+
+## Summary
+
+Stage 1 delivers a working static ecommerce frontend for Castor. It focuses on product browsing, cart behavior, checkout simulation, and healthcare-specific product workflows.
+
+After Stage 1 is reviewed and approved, Stage 2 will introduce backend APIs, database persistence, payment handling, admin workflows, and external form integrations.
