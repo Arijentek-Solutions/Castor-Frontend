@@ -3,6 +3,7 @@
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { SITE_URLS } from "@castor/ui";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -38,25 +39,28 @@ export function HealthcareCareers() {
             description: "6-8 weeks comprehensive training",
             icon: "/icons/healthcare/cna.svg",
             color: "teal",
+            href: `${SITE_URLS.institute}/courses/cna`,
         },
         {
             title: "Phlebotomy Training",
             description: "4-6 weeks hands-on practice",
             icon: "/icons/healthcare/Phlebotomy.svg",
             color: "teal",
+            href: `${SITE_URLS.institute}/courses/phlebotomy`,
         },
         {
             title: "CPR & First Aid",
             description: "1-day certification",
             icon: "/icons/healthcare/cpr.svg",
             color: "teal",
+            href: `${SITE_URLS.institute}/courses/cpr`,
         },
     ];
 
     return (
         <section className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-slate-800`}>
             <div className="mx-auto max-w-7xl">
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -71,7 +75,7 @@ export function HealthcareCareers() {
                     </p>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -109,7 +113,9 @@ export function HealthcareCareers() {
 
                                 <div className="mt-6">
                                     <a
-                                        href="#"
+                                        href={service.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="inline-flex items-center text-teal-400 hover:text-teal-300 font-medium"
                                     >
                                         Learn More
@@ -135,4 +141,4 @@ export function HealthcareCareers() {
             </div>
         </section>
     );
-}
+}

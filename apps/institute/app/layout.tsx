@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <Navbar serviceContext="institute" />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

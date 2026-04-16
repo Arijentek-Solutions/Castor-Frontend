@@ -10,6 +10,7 @@ import { HelpMeChooseModal } from "../help-me-choose-modal/HelpMeChooseModal";
 
 const inter = Inter({ subsets: ["latin"] });
 const HELP_MODAL_SESSION_STORAGE_KEY = "castor-help-modal-session-handled";
+import styles from "./HelpMeChooseButton.module.css";
 
 type DropdownEntry = {
   title: string;
@@ -206,8 +207,6 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
     { label: "CNA Program", href: `${SITE_URLS.institute}/courses/cna` },
     { label: "Phlebotomy", href: `${SITE_URLS.institute}/courses/phlebotomy` },
     { label: "CPR Training", href: `${SITE_URLS.institute}/courses/cpr` },
-    { label: "Student Life", href: `${SITE_URLS.institute}/students` },
-    { label: "Facilities", href: `${SITE_URLS.institute}/facilities` },
   ],
   transport: [
     { label: "Home", href: SITE_URLS.transport },
@@ -358,21 +357,11 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
             </div>
 
             <div className="hidden items-center lg:flex">
-              <button
-                onClick={openHelpModal}
-                className="flex h-12 w-[174px] items-center justify-center whitespace-nowrap rounded-full bg-[#0E1B33] px-5 text-[13px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] transition-transform hover:scale-[0.99] active:scale-[0.97] xl:h-14 xl:w-[188px] xl:px-10 xl:text-[14px]"
-              >
-                Help Me Choose
-              </button>
+              <HelpMeChooseButton className="flex" onClick={openHelpModal} />
             </div>
 
             <div className="flex items-center gap-1.5 lg:hidden">
-              <button
-                onClick={openHelpModal}
-                className="hidden h-9 items-center justify-center rounded-full bg-[#0E1B33] px-2.5 text-[11px] font-bold leading-5 text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] min-[350px]:flex sm:h-11 sm:px-4 sm:text-[13px]"
-              >
-                Help Me Choose
-              </button>
+              <HelpMeChooseButton className="hidden min-[350px]:flex" onClick={openHelpModal} />
               <button
                 aria-expanded={isMobileOpen}
                 aria-label="Toggle navigation menu"
@@ -415,6 +404,23 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
   );
 };
 
+const HelpMeChooseButton = ({
+  className = "",
+  onClick,
+}: {
+  className?: string;
+  onClick: () => void;
+}) => (
+  <button
+    className={`${styles.helpButton} ${className}`}
+    onClick={onClick}
+    style={{ fontFamily: "inherit" }}
+    type="button"
+  >
+    Help Me Choose
+  </button>
+);
+
 const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, bottom: 0 });
@@ -432,7 +438,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
     const updatePosition = () => {
       if (triggerRef.current && isOpen) {
         const rect = triggerRef.current.getBoundingClientRect();
-        setPosition({ 
+        setPosition({
           left: rect.left + rect.width / 2,
           bottom: rect.bottom
         });
