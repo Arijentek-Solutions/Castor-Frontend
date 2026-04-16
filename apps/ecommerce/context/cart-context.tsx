@@ -59,6 +59,7 @@ function writeStoredCart(items: CartItem[]) {
 export function 
 CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(readStoredCart);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     writeStoredCart(items);
@@ -105,6 +106,8 @@ CartProvider({ children }: { children: ReactNode }) {
       itemCount: totals.itemCount,
       subtotal: totals.subtotal,
       isEmpty: items.length === 0,
+      isCartOpen,
+      setIsCartOpen,
       addItem,
       removeItem,
       increaseQuantity,
@@ -117,6 +120,7 @@ CartProvider({ children }: { children: ReactNode }) {
     clearCart,
     decreaseQuantity,
     increaseQuantity,
+    isCartOpen,
     items,
     removeItem,
     updateQuantity,

@@ -26,6 +26,8 @@ export type CartTotals = {
 export type CartContextValue = CartTotals & {
   items: CartItem[];
   isEmpty: boolean;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
   addItem: (product: CartProductInput, quantity?: number) => void;
   removeItem: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
