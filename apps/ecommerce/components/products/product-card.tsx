@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { useCart } from "@/context/cart-context";
@@ -15,6 +16,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem, setIsCartOpen } = useCart();
+  const router = useRouter();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -29,6 +31,21 @@ export function ProductCard({ product }: ProductCardProps) {
       workflowType: product.workflowType,
     });
     setIsCartOpen(true);
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem({
+      productId: product.id,
+      slug: product.slug,
+      sku: product.sku,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      workflowType: product.workflowType,
+    });
+    router.push("/checkout");
   };
 
   return (
@@ -55,7 +72,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Title */}
-            <h3 className="line-clamp-1 text-[13px] font-black leading-tight text-[#0e1b33] lg:line-clamp-2 lg:min-h-[56px] lg:text-lg lg:leading-[28px]">
+            <h3 className="line-clamp-1 text-[13px] font-semibold leading-tight text-[#0e1b33] lg:line-clamp-2 lg:min-h-[56px] lg:text-lg lg:leading-[28px]">
               {product.name}
             </h3>
 
@@ -91,21 +108,32 @@ export function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
 
-          {/* Footer: Price & Add Button */}
-          <div className="mt-1 flex items-center justify-between lg:mt-auto lg:border-t lg:border-[rgba(32,169,173,0.1)] lg:pt-5">
-            <div className="text-[16px] font-black text-[#0e1b33] lg:text-2xl">
+          {/* Footer: Price, Add to Cart & Buy Now */}
+          <div className="mt-1 flex items-center justify-between gap-2 lg:mt-auto lg:border-t lg:border-[rgba(32,169,173,0.1)] lg:pt-5">
+            <div className="text-[16px] font-bold text-[#0e1b33] lg:text-2xl">
               {formatCartCurrency(product.price)}
             </div>
 
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#20a9ad] text-white shadow-lg shadow-[#20a9ad]/20 transition-all duration-300 hover:scale-110 hover:shadow-[#20a9ad]/40 active:scale-95 lg:h-12 lg:w-12"
-              aria-label={`Add ${product.name} to cart`}
-            >
-              <Plus size={16} className="lg:hidden" strokeWidth={2.5} />
-              <Plus size={24} className="hidden lg:block" strokeWidth={2.5} />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-[#20a9ad] text-white shadow-lg shadow-[#20a9ad]/20 transition-all duration-300 hover:scale-110 hover:shadow-[#20a9ad]/40 active:scale-95 lg:h-12 lg:w-12"
+                aria-label={`Add ${product.name} to cart`}
+              >
+                <ShoppingCart size={16} className="lg:hidden" strokeWidth={2.5} />
+                <ShoppingCart size={24} className="hidden lg:block" strokeWidth={2.5} />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleBuyNow}
+                className="flex h-8 items-center rounded-full bg-[#0e1b33] px-3 text-[10px] font-bold text-white shadow-lg shadow-[#0e1b33]/20 transition-all duration-300 hover:scale-105 hover:bg-[#0e1b33]/90 hover:shadow-[#0e1b33]/40 active:scale-95 lg:h-12 lg:px-5 lg:text-[13px]"
+                aria-label={`Buy ${product.name} now`}
+              >
+                Buy
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>
