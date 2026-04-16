@@ -10,7 +10,7 @@ import { useState } from "react";
 import { PRODUCTS } from "@/lib/products/products";
 import { Navbar } from "@/components/navbar";
 import { useCart } from "@/context/cart-context";
-import { formatCartCurrency } from "@/lib/products/products"; // assuming it exists or using a helper
+import { formatCartCurrency } from "@/lib/cart/cart-service";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);

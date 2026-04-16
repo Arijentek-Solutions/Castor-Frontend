@@ -41,6 +41,7 @@ export function createCartItem(
   return {
     productId: product.productId,
     slug: product.slug,
+    sku: product.sku,
     name: product.name,
     image: product.image,
     price: normalizePrice(product.price),
@@ -170,6 +171,7 @@ export function sanitizeCartItems(value: unknown): CartItem[] {
       return (
         typeof candidate.productId === "string" &&
         typeof candidate.slug === "string" &&
+        typeof candidate.sku === "string" &&
         typeof candidate.name === "string" &&
         typeof candidate.image === "string" &&
         typeof candidate.price === "number" &&

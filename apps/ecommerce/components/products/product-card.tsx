@@ -22,6 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
     addItem({
       productId: product.id,
       slug: product.slug,
+      sku: product.sku,
       name: product.name,
       image: product.image,
       price: product.price,
