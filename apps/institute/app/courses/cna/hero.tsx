@@ -7,19 +7,19 @@ import { Clock, MapPin, Calendar, GraduationCap, ChevronRight } from "lucide-rea
 
 export default function CNACourseHero() {
   return (
-    <section className="px-4 pb-20 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-24 lg:pt-40 bg-white">
+    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-44 xl:pt-52">
       <div className="mx-auto w-full max-w-[1871px]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative min-h-[700px] overflow-hidden rounded-[2.5rem] bg-[#0E1B33] shadow-[0_32px_80px_rgba(14,27,51,0.18)]"
+          className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#132540] shadow-[var(--hero-shadow)]"
         >
-          <div className="relative z-10 mx-auto px-6 py-12 flex flex-col-reverse lg:flex-row lg:min-h-[700px] lg:items-center lg:justify-between lg:px-20">
+          <div className="relative z-10 mx-auto px-6 py-12 flex flex-col-reverse lg:flex-row lg:h-[700px] lg:items-center lg:justify-between lg:px-20">
             {/* Content Side */}
             <div className="max-w-3xl lg:w-[55%]">
               {/* Badge */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
@@ -33,7 +33,7 @@ export default function CNACourseHero() {
 
               {/* Title Area */}
               <div>
-                <motion.h1 
+                <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
@@ -42,7 +42,7 @@ export default function CNACourseHero() {
                   Certified Nursing <br />
                   Assistant
                 </motion.h1>
-                <motion.h2 
+                <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
@@ -53,19 +53,19 @@ export default function CNACourseHero() {
               </div>
 
               {/* Description */}
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
                 className="mt-8 max-w-xl text-lg leading-relaxed text-white/70"
               >
-                Launch your healthcare career with our comprehensive CNA training program. 
-                Gain the essential skills and state-approved certification needed to make 
+                Launch your healthcare career with our comprehensive CNA training program.
+                Gain the essential skills and state-approved certification needed to make
                 a meaningful difference in patient care.
               </motion.p>
 
               {/* Info Details Grid */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
@@ -103,7 +103,7 @@ export default function CNACourseHero() {
               </motion.div>
 
               {/* Actions */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.8 }}
@@ -120,7 +120,7 @@ export default function CNACourseHero() {
             </div>
 
             {/* Visual Side */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}

@@ -1,6 +1,8 @@
 "use client";
 import { Inter } from "next/font/google";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { SITE_URLS } from "@castor/ui";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,7 +12,7 @@ const inter = Inter({
 function ServiceIcon({ name, color }: { name: string; color: "cyan" | "peach" }) {
   const bgClass =
     color === "cyan" ? "bg-[#20a9ad]" : "bg-[#F7C89A]";
-  
+
   const icons: Record<string, React.ReactNode> = {
     heart: (
       <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
@@ -66,6 +68,7 @@ const services = [
     items: ["Skilled Nursing Care", "Private Duty Services", "Veterans Care"],
     icon: "heart",
     color: "cyan",
+    href: SITE_URLS.services,
     background: "linear-gradient(135deg, #D5FBFF 0%, #D8FBFF 7.14%, #DBFCFF 14.29%, #DEFCFF 21.43%, #E1FCFF 28.57%, #E4FDFF 35.71%, #E7FDFF 42.86%, #EAFDFF 50%, #EDFDFF 57.14%, #F0FEFF 64.29%, #F3FEFF 71.43%, #F6FEFF 78.57%, #F9FEFF 85.71%, #FCFFFF 92.86%, #FFF 100%)",
     border: "2px solid rgba(32, 169, 173, 0.10)",
   },
@@ -75,6 +78,7 @@ const services = [
     items: ["Wheelchair Transport", "Stretcher Transport", "Ambulatory Transport"],
     icon: "truck",
     color: "peach",
+    href: SITE_URLS.transport,
     background: "linear-gradient(135deg, #FFEAD8 0%, #FFECDB 8.33%, #FFEEDF 16.67%, #FFEFE2 25%, #FFF1E5 33.33%, #FFF3E8 41.67%, #FFF5EC 50%, #FFF6EF 58.33%, #FFF8F2 66.67%, #FFFAF5 75%, #FFFCF9 83.33%, #FFFDFC 91.67%, #FFF 100%)",
     border: "2px solid rgba(247, 200, 154, 0.20)",
   },
@@ -84,6 +88,7 @@ const services = [
     items: ["Durable Medical Equipment", "Medical Supplies", "Healthcare Apparel"],
     icon: "package",
     color: "cyan",
+    href: SITE_URLS.ecommerce,
     background: "linear-gradient(135deg, #D5FBFF 0%, #D8FBFF 7.14%, #DBFCFF 14.29%, #DEFCFF 21.43%, #E1FCFF 28.57%, #E4FDFF 35.71%, #E7FDFF 42.86%, #EAFDFF 50%, #EDFDFF 57.14%, #F0FEFF 64.29%, #F3FEFF 71.43%, #F6FEFF 78.57%, #F9FEFF 85.71%, #FCFFFF 92.86%, #FFF 100%)",
     border: "2px solid rgba(32, 169, 173, 0.10)",
   },
@@ -93,6 +98,7 @@ const services = [
     items: ["CNA Certification", "Phlebotomy Training", "CPR & First Aid"],
     icon: "graduation",
     color: "peach",
+    href: SITE_URLS.institute,
     background: "linear-gradient(135deg, #FFEAD8 0%, #FFECDB 8.33%, #FFEEDF 16.67%, #FFEFE2 25%, #FFF1E5 33.33%, #FFF3E8 41.67%, #FFF5EC 50%, #FFF6EF 58.33%, #FFF8F2 66.67%, #FFFAF5 75%, #FFFCF9 83.33%, #FFFDFC 91.67%, #FFF 100%)",
     border: "2px solid rgba(247, 200, 154, 0.20)",
   },
@@ -124,7 +130,7 @@ export function OurServices() {
   return (
     <section id="our-services" className={`${inter.variable} px-4 py-16 sm:px-6 lg:px-8 bg-white`}>
       <div className="mx-auto max-w-[1280px]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -139,7 +145,7 @@ export function OurServices() {
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -162,17 +168,24 @@ export function OurServices() {
                 <div className="transition-transform duration-300 group-hover:scale-110">
                   <ServiceIcon name={service.icon} color={service.color as "cyan" | "peach"} />
                 </div>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke={service.color === "cyan" ? "#20a9ad" : "#F7C89A"}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-6 w-6 opacity-60"
+                <Link
+                  href={service.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center rounded-full p-2 transition-all duration-300 hover:opacity-100 hover:scale-110 opacity-60"
                 >
-                  <path d="M7 17 17 7M7 7h10v10" />
-                </svg>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={service.color === "cyan" ? "#20a9ad" : "#F7C89A"}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6"
+                  >
+                    <path d="M7 17 17 7M7 7h10v10" />
+                  </svg>
+                </Link>
               </div>
 
               <div className="mt-6">

@@ -7,15 +7,15 @@ import { Clock, MapPin, Calendar, Heart, ChevronRight } from "lucide-react";
 
 export default function CPRHero() {
   return (
-    <section className="px-4 pb-20 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-24 lg:pt-40 bg-white">
+    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-44 xl:pt-52">
       <div className="mx-auto w-full max-w-[1871px]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative min-h-[700px] overflow-hidden rounded-[2.5rem] bg-[#0E1B33] shadow-[0_32px_80px_rgba(14,27,51,0.18)]"
+          className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#132540] shadow-[var(--hero-shadow)]"
         >
-          <div className="relative z-10 mx-auto px-6 py-12 flex flex-col-reverse lg:flex-row lg:min-h-[700px] lg:items-center lg:justify-between lg:px-20">
+          <div className="relative z-10 mx-auto px-6 py-12 flex flex-col-reverse lg:flex-row lg:h-[700px] lg:items-center lg:justify-between lg:px-20">
             {/* Content Side */}
             <div className="max-w-3xl lg:w-[55%]">
               {/* Badge */}
