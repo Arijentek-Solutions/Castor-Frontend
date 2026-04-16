@@ -1,19 +1,23 @@
 {
-	"mcpServers": {
-		"figma-desktop": {
-			"type": "sse",
-			"url": "http://127.0.0.1:3845/mcp",
-			"disabled": false,
-			"alwaysAllow": []
-		},
-		"figma": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"figma-developer-mcp",
-				"--figma-api-key=figd_6nAQSTfAyq87VjZLhjpFlovjJfC264T55er6rphv",
-				"--stdio"
-			]
-		}
-	}
+  "mcpServers": {
+    "figma-desktop": {
+      "type": "sse",
+      "url": "http://127.0.0.1:3845/mcp",
+      "disabled": false,
+      "alwaysAllow": []
+    },
+    "figma": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "figma-developer-mcp",
+        "--figma-api-key=figd_6nAQSTfAyq87VjZLhjpFlovjJfC264T55er6rphv",
+        "--stdio"
+      ]
+    },
+    "figma-dev-mode": {
+      "type": "sse",
+      "url": "http://127.0.0.1:3845/sse"
+    }
+  }
 }

@@ -31,7 +31,7 @@ export function Navbar({
 
   return (
     <>
-      <nav className="sticky top-[136px] z-40 w-full border-b-2 border-[#20a9ad]/15 bg-white/95 backdrop-blur-md transition-all duration-300 lg:top-[172px]">
+      <nav className="sticky top-[140px] z-40 w-full border-b-2 border-[#20a9ad]/15 bg-white/95 backdrop-blur-md transition-all duration-300 sm:top-[148px] lg:top-[172px]">
         <div className="mx-auto flex h-16 items-center justify-between px-4 sm:px-8 lg:h-24 lg:max-w-[1720px] lg:px-12">
 
           {/* MOBILE LAYOUT: [Category Icon] [Search] [Cart] */}
@@ -121,7 +121,7 @@ export function Navbar({
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="absolute left-4 top-full w-60 rounded-b-2xl border-x border-b border-[#20a9ad]/10 bg-white shadow-2xl lg:hidden"
+              className="absolute left-4 top-full max-h-[50vh] w-60 overflow-y-auto rounded-b-2xl border-x border-b border-[#20a9ad]/10 bg-white shadow-2xl lg:hidden"
             >
               <div className="grid grid-cols-1 gap-0.5 p-2">
                 {["All", ...categories].map((category) => (
@@ -132,8 +132,8 @@ export function Navbar({
                       setIsMenuOpen(false);
                     }}
                     className={`flex h-8 items-center px-4 text-[11px] font-bold transition-colors rounded-lg ${selectedCategory === category
-                        ? "bg-[#20a9ad] text-white shadow-sm"
-                        : "text-[#6a6a67] active:bg-slate-100"
+                      ? "bg-[#20a9ad] text-white shadow-sm"
+                      : "text-[#6a6a67] active:bg-slate-100"
                       }`}
                   >
                     {category}

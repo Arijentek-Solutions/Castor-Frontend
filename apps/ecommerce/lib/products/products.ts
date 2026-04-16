@@ -362,7 +362,7 @@ export const PRODUCTS: Product[] = [
     workflowType: "self-pay",
   },
   {
-    id: "MSCPRC21616CS",
+    id: "MSCPRC21616CS-16x16",
     slug: "gel-foam-wheelchair-cushions-16x16",
     sku: "MSCPRC21616CS",
     name: "Medline Gel Foam Wheelchair Cushions",
