@@ -3,6 +3,7 @@ export type CartWorkflowType = "self-pay" | "insurance" | "pricing-request";
 export type CartProductInput = {
   productId: string;
   slug: string;
+  sku: string;
   name: string;
   image: string;
   price: number;
@@ -12,6 +13,7 @@ export type CartProductInput = {
 export type CartItem = {
   productId: string;
   slug: string;
+  sku: string;
   name: string;
   image: string;
   price: number;
@@ -26,6 +28,8 @@ export type CartTotals = {
 export type CartContextValue = CartTotals & {
   items: CartItem[];
   isEmpty: boolean;
+  isCartOpen: boolean;
+  setIsCartOpen: (isOpen: boolean) => void;
   addItem: (product: CartProductInput, quantity?: number) => void;
   removeItem: (productId: string) => void;
   increaseQuantity: (productId: string) => void;
