@@ -5,8 +5,8 @@ import { X, ShoppingBag, ArrowRight, Trash2, Plus, Minus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cart-context";
-import { formatCartCurrency } from "@/lib/cart/cart-service";
-import { useEffect, useRef } from "react";
+import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -25,42 +25,55 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
   } = useCart();
   
   const drawerRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
 
-  // Prevent scrolling when drawer is open
+  // Derived: consistent shipping, tax, total with checkout
+  const shippingCost = useMemo(() => calculateShipping(subtotal), [subtotal]);
+  const tax = useMemo(() => calculateTax(subtotal), [subtotal]);
+  const total = useMemo(() => Math.round((subtotal + shippingCost + tax) * 100) / 100, [subtotal, shippingCost, tax]);
+
+  // Stable onClose that also restores focus
+  const handleClose = useCallback(() => {
+    onClose();
+    // Restore focus to the element that opened the drawer
+    previousFocusRef.current?.focus();
+  }, [onClose]);
+
+  // Save the currently focused element and lock scroll when drawer opens
   useEffect(() => {
     if (isOpen) {
+      previousFocusRef.current = document.activeElement as HTMLElement;
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
 
-  // Handle click outside to close cart
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('click', handleClickOutside, true);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, [isOpen, onClose]);
-
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Drawer Panel */}
+    <>
+      {/* Backdrop — its own AnimatePresence so it reliably unmounts */}
+      <AnimatePresence>
+        {isOpen && (
           <motion.div
+            key="cart-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm"
+            onClick={handleClose}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Drawer panel — its own AnimatePresence so it reliably unmounts */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key="cart-drawer"
             ref={drawerRef}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -81,7 +94,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   </div>
                 </div>
                 <button
-                  onClick={onClose}
+                  onClick={handleClose}
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-[#6a6a67] transition-all hover:bg-slate-100 active:scale-95"
                 >
                   <X size={20} />
@@ -100,7 +113,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       Looks like you haven&apos;t added any medical supplies to your cart yet.
                     </p>
                     <button
-                      onClick={onClose}
+                      onClick={handleClose}
                       className="inline-flex h-12 items-center justify-center rounded-full bg-[#20a9ad] px-8 text-sm font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] active:scale-95"
                     >
                       Start Shopping
@@ -184,17 +197,23 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     </div>
                     <div className="flex justify-between text-sm font-bold text-[#6a6a67]">
                       <span>Shipping</span>
-                      <span className="text-[#20a9ad]">Free</span>
+                      <span className={shippingCost === 0 ? "text-[#20a9ad]" : "text-[#0e1b33]"}>
+                        {shippingCost === 0 ? "Free" : formatCartCurrency(shippingCost)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm font-bold text-[#6a6a67]">
+                      <span>Tax (est.)</span>
+                      <span className="text-[#0e1b33]">{formatCartCurrency(tax)}</span>
                     </div>
                     <div className="flex justify-between pt-3 border-t border-slate-200 text-lg font-black text-[#0e1b33]">
-                      <span>Total Amount</span>
-                      <span>{formatCartCurrency(subtotal)}</span>
+                      <span>Total</span>
+                      <span>{formatCartCurrency(total)}</span>
                     </div>
                   </div>
 
                   <Link
                     href="/checkout"
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="flex h-14 w-full items-center justify-center gap-3 rounded-full bg-[#0e1b33] px-8 font-black text-white shadow-xl shadow-[#0e1b33]/10 transition-all hover:bg-[#15294d] active:scale-[0.98]"
                   >
                     Proceed to Checkout
@@ -202,14 +221,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   </Link>
 
                   <p className="mt-4 text-center text-[11px] font-bold text-[#6a6a67]">
-                    Taxes and discounts calculated at checkout
+                    {shippingCost === 0 ? "You qualify for free shipping!" : `Free shipping on orders over ${formatCartCurrency(50)}`}
                   </p>
                 </div>
               )}
             </div>
           </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

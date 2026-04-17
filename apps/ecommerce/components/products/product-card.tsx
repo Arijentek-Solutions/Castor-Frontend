@@ -35,17 +35,17 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // Redirect to checkout with product data as query params
-    const params = new URLSearchParams({
-      id: product.id,
+    // Add item to cart first, then navigate to checkout
+    addItem({
+      productId: product.id,
       slug: product.slug,
       sku: product.sku,
       name: product.name,
       image: product.image,
-      price: product.price.toString(),
+      price: product.price,
       workflowType: product.workflowType,
     });
-    router.push(`/checkout?${params.toString()}`);
+    router.push("/checkout");
   };
 
   return (

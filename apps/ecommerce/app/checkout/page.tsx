@@ -11,17 +11,7 @@ import { PaymentSelector } from "@/components/checkout/payment-selector";
 import { ContactAddressForm } from "@/components/checkout/contact-address-form";
 import { OrderSummarySidebar } from "@/components/checkout/order-summary-sidebar";
 import type { CheckoutFormData, PaymentMethod, Order } from "@/types/checkout";
-import { formatCartCurrency } from "@/lib/cart/cart-service";
-
-// Shipping cost logic (free over $50, else $5.99)
-function calculateShipping(subtotal: number): number {
-  return subtotal >= 50 ? 0 : 5.99;
-}
-
-// Tax logic (8% flat for demo)
-function calculateTax(subtotal: number): number {
-  return Math.round(subtotal * 0.08 * 100) / 100;
-}
+import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
 
 export default function CheckoutPage() {
   const router = useRouter();

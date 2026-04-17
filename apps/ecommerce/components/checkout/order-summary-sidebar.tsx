@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import type { CartItem } from "@/types/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ShieldCheck, Lock } from "lucide-react";
@@ -25,72 +24,11 @@ export function OrderSummarySidebar({
   onUpdateQuantity,
   onRemoveItem,
 }: OrderSummarySidebarProps) {
-  const router = useRouter();
-
-  const handleRemove = (productId: string) => {
-    onRemoveItem(productId);
-    // Navigate to home page after removing item
-    router.push("/");
-  };
-
   return (
     <aside className="sticky top-28 h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:w-80">
       <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
         <ShoppingBag size={20} className="text-[#20a9ad]" />
         <h2 className="text-xl font-bold text-slate-950">Order Summary</h2>
-      </div>
-
-      {/* Cart Items */}
-      <div className="mt-4 space-y-4">
-        {items.map((item) => (
-          <div key={item.productId} className="flex gap-4">
-            <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50">
-              <Image
-                src={item.image || "/placeholder.svg"}
-                alt={item.name}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-1 flex-col justify-between">
-              <div>
-                <h4 className="line-clamp-2 text-sm font-bold text-[#0e1b33]">{item.name}</h4>
-                <p className="mt-1 text-sm font-semibold text-[#20a9ad]">{formatCartCurrency(item.price)}</p>
-              </div>
-
-              <div className="flex items-center justify-between">
-                {/* Quantity controls */}
-                <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 p-1">
-                  <button
-                    type="button"
-                    onClick={() => onUpdateQuantity(item.productId, Math.max(1, item.quantity - 1))}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
-                  >
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-6 text-center text-sm font-bold text-[#0e1b33]">{item.quantity}</span>
-                  <button
-                    type="button"
-                    onClick={() => onUpdateQuantity(item.productId, item.quantity + 1)}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
-
-                {/* Remove button - navigates to home */}
-                <button
-                  type="button"
-                  onClick={() => handleRemove(item.productId)}
-                  className="text-slate-400 transition-colors hover:text-red-500"
-                  title="Remove item and go to home"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
 
       {/* Cart Items */}
