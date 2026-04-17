@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@castor/ui";
 import { CartProvider } from "@/context/cart-context";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -32,6 +33,36 @@ export default function RootLayout({
         <CartProvider>
           <Navbar serviceContext="ecommerce" />
           {children}
+          <Toaster
+            position="top-left"
+            toastOptions={{
+              duration: 3000,
+              style: {
+                background: '#0e1b33',
+                color: '#fff',
+                borderRadius: '8px',
+                padding: '12px 16px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                marginTop: '80px',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#20a9ad',
+                  secondary: '#fff',
+                },
+              },
+              error: {
+                style: {
+                  background: '#dc2626',
+                },
+                iconTheme: {
+                  primary: '#fff',
+                  secondary: '#dc2626',
+                },
+              },
+            }}
+          />
         </CartProvider>
       </body>
     </html>

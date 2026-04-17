@@ -3,21 +3,15 @@
 import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Minus, Plus, ShoppingCart, Star, ShieldCheck, Truck, RotateCcw } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { ArrowLeft, ShoppingCart, Star, Check } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products/products";
-import { Navbar } from "@/components/navbar";
 import { useCart } from "@/context/cart-context";
-import { formatCartCurrency } from "@/lib/cart/cart-service";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const product = PRODUCTS.find((p) => p.slug === slug);
-  const { addItem, itemCount, setIsCartOpen } = useCart();
-  const [quantity, setQuantity] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
+   const { addItem } = useCart();
 
   if (!product) {
     return (
@@ -33,193 +27,304 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   }
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addItem({
-        productId: product.id,
-        sku: product.sku,
-        name: product.name,
-        slug: product.slug, // Ensure slug is passed
-        price: product.price,
-        image: product.image,
-      });
-    }
-    setIsCartOpen(true);
+    addItem({
+      productId: product.id,
+      sku: product.sku,
+      name: product.name,
+      slug: product.slug,
+      price: product.price,
+      image: product.image,
+    });
   };
 
-  // Mock categories list for the Navbar logic
-  const categories = Array.from(new Set(PRODUCTS.map((p) => p.category)));
+  const handleBuyNow = () => {
+    // Redirect to checkout with product data as query params
+    const params = new URLSearchParams({
+      id: product.id,
+      slug: product.slug,
+      sku: product.sku,
+      name: product.name,
+      image: product.image,
+      price: product.price.toString(),
+      workflowType: product.workflowType,
+    });
+    window.location.href = `/checkout?${params.toString()}`;
+  };
 
   return (
     <div className="min-h-screen bg-[#fcfcfc]">
-      <Navbar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        categories={categories}
-        selectedCategory="All"
-        onCategoryChange={() => { }}
-      />
-
-      <main className="mx-auto max-w-[1720px] px-4 pt-40 pb-20 sm:px-8 lg:px-12 lg:pt-48">
+      <main className="mx-auto max-w-[1720px] px-4 pt-[160px] pb-20 sm:px-8 sm:pt-[168px] lg:px-12 lg:pt-[192px]">
         {/* Breadcrumbs / Back Link */}
         <Link
           href="/"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-[#6a6a67] transition-colors hover:text-[#20a9ad]"
+          className="mb-12 inline-flex items-center gap-2 text-xs font-bold text-[#6a6a67] transition-colors hover:text-[#20a9ad]"
         >
           <ArrowLeft size={16} />
           Back to Catalog
         </Link>
 
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-20">
-          {/* Left: Product Image Gallery */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="w-full lg:sticky lg:top-48 lg:w-1/2"
-          >
-            <div className="relative aspect-square overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white p-8 shadow-sm lg:p-16">
-              <Image
-                src={product.image || "/ImageWithFallback.png"}
-                alt={product.name}
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-          </motion.div>
-
-          {/* Right: Product Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="w-full lg:w-1/2"
-          >
-            <div className="flex flex-col space-y-8">
-              {/* Header Info */}
-              <div className="space-y-4">
-                <div className="inline-flex items-center rounded-full bg-[#20a9ad]/10 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#20a9ad]">
-                  SKU: {product.sku}
-                </div>
-                <h1 className="text-3xl font-black leading-tight text-[#0e1b33] lg:text-5xl">
-                  {product.name}
-                </h1>
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={20}
-                        className={i < Math.floor(product.rating) ? "fill-[#ffb500] text-[#ffb500]" : "text-slate-200"}
-                      />
-                    ))}
-                    <span className="ml-2 text-sm font-bold text-[#0e1b33]">{product.rating}</span>
-                  </div>
-                  <div className="h-4 w-px bg-slate-200" />
-                  <span className="text-sm font-bold text-[#6a6a67]">{product.reviewCount} Reviews</span>
-                </div>
-              </div>
-
-              {/* Price & Quantity */}
-              <div className="rounded-[2rem] border border-slate-100 bg-white p-8 shadow-sm">
-                <div className="mb-8 flex items-end gap-2">
-                  <span className="text-4xl font-black text-[#0e1b33]">${product.price.toFixed(2)}</span>
-                  <span className="mb-1 text-sm font-bold text-[#6a6a67]">/ unit</span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-6">
-                  <div className="flex h-14 items-center gap-4 rounded-full border border-slate-100 bg-slate-50/50 p-2">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-95"
-                    >
-                      <Minus size={20} />
-                    </button>
-                    <span className="w-8 text-center text-lg font-black text-[#0e1b33]">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-95"
-                    >
-                      <Plus size={20} />
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={handleAddToCart}
-                    className="flex h-14 flex-1 items-center justify-center gap-3 rounded-full bg-[#20a9ad] px-8 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-[0.98]"
-                  >
-                    <ShoppingCart size={22} strokeWidth={2.5} />
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-
-              {/* Product Description */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-black text-[#0e1b33]">Product Description</h3>
-                <p className="text-lg leading-relaxed text-[#6a6a67]">
-                  {product.description || "No detailed description available."}
-                </p>
-              </div>
-
-              {/* Specifications Grid */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#20a9ad]">Manufacturer</span>
-                  <p className="mt-1 text-lg font-bold text-[#0e1b33]">{product.manufacturer}</p>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#20a9ad]">Weight</span>
-                  <p className="mt-1 text-lg font-bold text-[#0e1b33]">{product.weight}</p>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#20a9ad]">Category</span>
-                  <p className="mt-1 text-lg font-bold text-[#0e1b33]">{product.category}</p>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#20a9ad]">Availability</span>
-                  <p className="mt-1 text-lg font-bold text-[#20a9ad]">In Stock</p>
-                </div>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="flex flex-col gap-4 border-t border-slate-100 pt-8 sm:flex-row sm:items-center sm:gap-12">
-                <div className="flex items-center gap-3 text-[#6a6a67]">
-                  <ShieldCheck className="text-[#20a9ad]" size={24} />
-                  <span className="text-sm font-bold">Secure Purchase</span>
-                </div>
-                <div className="flex items-center gap-3 text-[#6a6a67]">
-                  <Truck className="text-[#20a9ad]" size={24} />
-                  <span className="text-sm font-bold">Fast Delivery</span>
-                </div>
-                <div className="flex items-center gap-3 text-[#6a6a67]">
-                  <RotateCcw className="text-[#20a9ad]" size={24} />
-                  <span className="text-sm font-bold">30-Day Returns</span>
+        <div className="mx-auto w-full max-w-[1216px]">
+          {/* Top row */}
+          <div className="flex flex-col gap-12 lg:flex-row">
+            {/* Left: Product Image Gallery */}
+            <div className="w-full lg:w-[584px]">
+              <div
+                className="relative h-[410.438px] w-full overflow-hidden rounded-[32px] shadow-[0px_4px_13.9px_0px_rgba(0,0,0,0.17)] pt-8 px-8"
+                style={{
+                  background:
+                    "linear-gradient(144.9deg, rgb(213, 251, 255) 0%, rgb(216, 251, 255) 7.1429%, rgb(219, 252, 255) 14.286%, rgb(222, 252, 255) 21.429%, rgb(225, 252, 255) 28.571%, rgb(228, 253, 255) 35.714%, rgb(231, 253, 255) 42.857%, rgb(234, 253, 255) 50%, rgb(237, 253, 255) 57.143%, rgb(240, 254, 255) 64.286%, rgb(243, 254, 255) 71.429%, rgb(246, 254, 255) 78.571%, rgb(249, 254, 255) 85.714%, rgb(252, 255, 255) 92.857%, rgb(255, 255, 255) 100%)",
+                }}
+              >
+                <div className="relative h-[346.438px] w-full rounded-[24px] overflow-hidden">
+                  <Image
+                    src={product.image || "/ImageWithFallback.png"}
+                    alt={product.name}
+                    fill
+                    className="object-contain rounded-[24px]"
+                    priority
+                  />
                 </div>
               </div>
             </div>
-          </motion.div>
+
+            {/* Right: Product Info */}
+            <div className="flex w-full flex-col gap-4 lg:w-[584px] lg:gap-6">
+              {/* Badge - Manufacturer */}
+              <div className="inline-flex items-center rounded-[8px] border border-[rgba(32,169,173,0.2)] bg-[rgba(32,169,173,0.1)] px-[9px] py-[3px] text-xs font-medium text-[#20a9ad] w-fit">
+                {product.manufacturer}
+              </div>
+
+              {/* Title */}
+              <h1 className="text-[36px] font-black leading-[40px] tracking-[-0.72px] text-[#0e1b33]">
+                {product.name}
+              </h1>
+
+              {/* Rating */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={20}
+                      className={
+                        i < Math.floor(product.rating)
+                          ? "fill-[#ffb500] text-[#ffb500]"
+                          : "text-slate-300"
+                      }
+                    />
+                  ))}
+                </div>
+                <span className="text-[14px] font-normal text-[#6a6a67]">
+                  ({product.reviewCount} reviews)
+                </span>
+              </div>
+
+              {/* Price */}
+              <div className="text-[30px] font-black leading-[36px] text-[#20a9ad]">
+                ${product.price.toFixed(2)}
+              </div>
+
+              {/* Mobile Only: Key Details Grid (HCPCS, Weight, Description) */}
+              <div className="flex flex-col gap-3 lg:hidden">
+                {product.hcpcs && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-[14px] font-normal text-[#6a6a67] w-24">HCPCS</span>
+                    <span className="text-[14px] font-bold text-[#0e1b33]">{product.hcpcs}</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  <span className="text-[14px] font-normal text-[#6a6a67] w-24">Weight</span>
+                  <span className="text-[14px] font-bold text-[#0e1b33]">{product.weight}</span>
+                </div>
+                {product.description && (
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">Description</span>
+                    <span className="text-[14px] font-bold text-[#0e1b33] leading-relaxed">{product.description}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Part Number / SKU */}
+              <div className="text-[16px] font-normal uppercase leading-[26px] text-[#6a6a67]">
+                Part Number - {product.sku}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-row gap-2">
+                {/* Add to Cart Button */}
+                <button
+                  onClick={handleAddToCart}
+                  className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#20a9ad] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1b8e91] transition-colors"
+                >
+                  <ShoppingCart size={18} strokeWidth={2} />
+                  <span className="text-sm">Add to Cart</span>
+                </button>
+
+                {/* Buy Now Button */}
+                <button
+                  onClick={handleBuyNow}
+                  className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#0e1b33] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1a1a1a] transition-colors"
+                >
+                  <span className="text-sm">Buy Now</span>
+                </button>
+              </div>
+
+              {/* Active Badge */}
+              {product.status === "ACTIVE" && (
+                <div className="flex h-[22px] w-fit">
+                  <div className="flex items-center rounded-[8px] border border-[#b9f8cf] bg-[#f0fdf4] px-2 py-1">
+                    <Check size={12} className="mr-1 text-[#008236]" />
+                    <span className="text-[12px] font-medium text-[#008236]">
+                      ACTIVE
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom Cards - Hidden on mobile, shown on desktop */}
+          <div className="mt-12 hidden flex-col gap-6 lg:flex-row lg:flex">
+            {/* Product Details Card */}
+            <div className="lg:w-[802.656px] rounded-[32px] border-2 border-[rgba(32,169,173,0.1)] bg-white px-[34px] pt-[34px] pb-2 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_0px_rgba(0,0,0,0.1)]">
+              <h2 className="mb-6 text-[24px] font-black tracking-[-0.24px] text-[#0e1b33]">
+                Product Details
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-normal text-[#6a6a67]">
+                    Manufacturer
+                  </span>
+                  <span className="text-[16px] font-bold text-[#0e1b33]">
+                    {product.manufacturer}
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-normal text-[#6a6a67]">
+                    SKU
+                  </span>
+                  <span className="text-[16px] font-bold text-[#0e1b33]">
+                    {product.sku}
+                  </span>
+                </div>
+                {product.partNumber && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Part Number
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.partNumber}
+                    </span>
+                  </div>
+                )}
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-normal text-[#6a6a67]">
+                    Weight
+                  </span>
+                  <span className="text-[16px] font-bold text-[#0e1b33]">
+                    {product.weight}
+                  </span>
+                </div>
+                {product.category && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Category
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.category}
+                    </span>
+                  </div>
+                )}
+                {product.group && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Group
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.group}
+                    </span>
+                  </div>
+                )}
+                <div className="col-span-2 flex flex-col">
+                  <span className="text-[14px] font-normal text-[#6a6a67]">
+                    Description
+                  </span>
+                  <span className="text-[16px] font-bold text-[#0e1b33]">
+                    {product.description}
+                  </span>
+                </div>
+                {product.hcpcs && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      HCPCS
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.hcpcs}
+                    </span>
+                  </div>
+                )}
+                {product.billingUomUnits && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Billing UOM Units
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.billingUomUnits}
+                    </span>
+                  </div>
+                )}
+                {product.uomSetName && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      UOM Set Name
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.uomSetName}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Specifications Card */}
+            <div className="lg:w-[389.344px] rounded-[32px] border-2 border-[rgba(32,169,173,0.1)] bg-white px-[34px] pt-[34px] pb-2 shadow-[0px_1px_3px_0px_rgba(0,0,0,0.1),0px_1px_2px_0px_rgba(0,0,0,0.1)]">
+              <h2 className="mb-6 text-[24px] font-black tracking-[-0.24px] text-[#0e1b33]">
+                Specifications
+              </h2>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-normal text-[#6a6a67]">
+                    Category
+                  </span>
+                  <span className="text-[16px] font-bold text-[#0e1b33]">
+                    {product.category || "N/A"}
+                  </span>
+                </div>
+                {product.group && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Group
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.group}
+                    </span>
+                  </div>
+                )}
+                {product.billingUomUnits && (
+                  <div className="flex flex-col">
+                    <span className="text-[14px] font-normal text-[#6a6a67]">
+                      Billing UOM Units
+                    </span>
+                    <span className="text-[16px] font-bold text-[#0e1b33]">
+                      {product.billingUomUnits}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-
-      {/* Mobile Sticky Add to Cart Bar */}
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-100 bg-white/80 p-4 pb-8 backdrop-blur-xl lg:hidden"
-      >
-        <div className="mx-auto flex max-w-lg items-center justify-between gap-4">
-          <div className="flex flex-col">
-            <span className="text-xs font-bold text-[#6a6a67]">Total Price</span>
-            <span className="text-xl font-black text-[#0e1b33]">${(product.price * quantity).toFixed(2)}</span>
-          </div>
-          <button
-            onClick={handleAddToCart}
-            className="flex h-12 flex-1 items-center justify-center gap-3 rounded-full bg-[#20a9ad] px-6 font-black text-white shadow-lg shadow-[#20a9ad]/20 active:scale-95"
-          >
-            <ShoppingCart size={20} strokeWidth={2.5} />
-            Add to Cart
-          </button>
-        </div>
-      </motion.div>
     </div>
   );
 }

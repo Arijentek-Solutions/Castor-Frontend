@@ -15,7 +15,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { addItem, setIsCartOpen } = useCart();
+  const { addItem } = useCart();
   const router = useRouter();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -30,31 +30,31 @@ export function ProductCard({ product }: ProductCardProps) {
       price: product.price,
       workflowType: product.workflowType,
     });
-    setIsCartOpen(true);
   };
 
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem({
-      productId: product.id,
+    // Redirect to checkout with product data as query params
+    const params = new URLSearchParams({
+      id: product.id,
       slug: product.slug,
       sku: product.sku,
       name: product.name,
       image: product.image,
-      price: product.price,
+      price: product.price.toString(),
       workflowType: product.workflowType,
     });
-    router.push("/checkout");
+    router.push(`/checkout?${params.toString()}`);
   };
 
   return (
     <Link href={`/products/${product.slug}`} className="block">
       <motion.div
-        className="group relative flex flex-row gap-3 overflow-hidden rounded-[1.25rem] border border-slate-100 bg-white p-3 shadow-sm transition-all hover:border-[#20a9ad]/30 hover:shadow-xl lg:flex-col lg:rounded-[2rem] lg:p-6"
+        className="group relative flex flex-col overflow-hidden rounded-[1.25rem] border border-slate-100 bg-white p-3 shadow-sm transition-all hover:border-[#20a9ad]/30 hover:shadow-xl lg:rounded-[2rem] lg:p-6"
       >
         {/* Product Image - Smaller on mobile */}
-        <div className="relative aspect-square w-20 shrink-0 overflow-hidden rounded-xl bg-slate-50 lg:mb-6 lg:w-full lg:rounded-2xl">
+        <div className="relative aspect-square w-20 shrink-0 overflow-hidden rounded-xl bg-slate-50 lg:mb-4 lg:w-full lg:rounded-2xl">
           <Image
             src={product.image || "/ImageWithFallback.png"}
             alt={product.name}
@@ -66,9 +66,18 @@ export function ProductCard({ product }: ProductCardProps) {
         {/* Content */}
         <div className="flex flex-1 flex-col justify-between">
           <div className="flex flex-col space-y-0.5 lg:space-y-4">
-            {/* SKU */}
-            <div className="flex items-center text-[9px] font-bold uppercase tracking-[0.3px] text-[#20a9ad] lg:text-[12px]">
-              {product.sku}
+            {/* SKU + HCPCS row */}
+            <div className="flex items-center justify-between min-h-6">
+              <div className="text-[9px] font-bold uppercase tracking-[0.3px] text-[#20a9ad] lg:text-[12px]">
+                {product.sku}
+              </div>
+              {product.hcpcs && (
+                <div className="rounded-[8px] bg-[rgba(32,169,173,0.1)] border border-[rgba(32,169,173,0.2)] px-2 py-0.5">
+                  <span className="text-[9px] font-medium text-[#20a9ad] lg:text-[11px]">
+                    HCPCS
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Title */}
@@ -76,33 +85,25 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.name}
             </h3>
 
-            {/* Review Stars & Basic Details - Now shown on mobile with smaller size */}
-            <div className="flex flex-col gap-1 lg:gap-4">
-              {/* Rating */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <svg
-                      key={i}
-                      className={`h-3 w-3 lg:h-4 lg:w-4 ${i < Math.floor(product.rating) ? "fill-[#ffb500] text-[#ffb500]" : "text-slate-200"
-                        }`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <span className="text-[10px] font-medium text-[#6a6a67] lg:text-[12px]">({product.reviewCount})</span>
+            {/* Review Stars */}
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <svg
+                    key={i}
+                    className={`h-3 w-3 lg:h-4 lg:w-4 ${i < Math.floor(product.rating) ? "fill-[#ffb500] text-[#ffb500]" : "text-slate-200"
+                      }`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
               </div>
-
-              {/* Manufacturer Mini-details */}
-              <div className="text-[10px] text-[#6a6a67] lg:text-[12px]">
-                <span className="font-semibold">{product.manufacturer}</span> &bull; <span>{product.weight}</span>
-              </div>
+              <span className="text-[10px] font-medium text-[#6a6a67] lg:text-[12px]">({product.reviewCount})</span>
             </div>
 
-            {/* Desktop Only Description - Hidden on mobile for extreme compactness */}
+            {/* Desktop Only Description */}
             <p className="hidden line-clamp-2 min-h-[40px] text-[14px] leading-[20px] text-[#6a6a67] lg:block">
               {product.description}
             </p>

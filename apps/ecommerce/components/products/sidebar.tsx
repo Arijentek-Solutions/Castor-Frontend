@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Filter } from "lucide-react";
 
 import { NeedHelpCard } from "./need-help-card";
@@ -27,31 +26,22 @@ export function Sidebar({
           <h2 className="text-[18px] font-black tracking-tight text-[#0e1b33]">Categories</h2>
         </div>
 
-        <div className="max-h-[272px] overflow-y-auto pr-1" style={{ scrollbarWidth: "thin", scrollbarColor: "#20a9ad40 transparent" }}>
-          <div className="flex flex-col gap-2">
-            {["All", ...categories].map((category) => {
-              const isActive = selectedCategory === category;
-              return (
-                <button
-                  key={category}
-                  onClick={() => onCategoryChange(category)}
-                  className={`group relative flex h-12 w-full items-center rounded-full px-6 text-left text-[14px] font-bold transition-all duration-300 ${isActive
-                    ? "bg-[#20a9ad] text-white shadow-lg shadow-[#20a9ad]/20"
-                    : "text-[#6a6a67] hover:bg-[#20a9ad]/5 hover:text-[#20a9ad]"
-                    }`}
-                >
-                  {category}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeCategory"
-                      className="absolute inset-0 rounded-full bg-[#20a9ad] -z-10"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex flex-col gap-2">
+          {["All", ...categories].map((category) => {
+            const isActive = selectedCategory === category;
+            return (
+              <button
+                key={category}
+                onClick={() => onCategoryChange(category)}
+                className={`flex h-12 w-full items-center rounded-full px-6 text-left text-[14px] font-bold transition-all duration-300 ${isActive
+                  ? "bg-[#20a9ad] text-white shadow-lg shadow-[#20a9ad]/20"
+                  : "text-[#6a6a67] hover:bg-[#20a9ad]/5 hover:text-[#20a9ad]"
+                  }`}
+              >
+                {category}
+              </button>
+            );
+          })}
         </div>
       </div>
 
