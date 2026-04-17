@@ -39,17 +39,17 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   };
 
   const handleBuyNow = () => {
-    // Add item to cart first, then navigate to checkout
-    addItem({
-      productId: product.id,
+    // Redirect directly to checkout with this product only (no cart)
+    const params = new URLSearchParams({
+      id: product.id,
       slug: product.slug,
       sku: product.sku,
       name: product.name,
       image: product.image,
-      price: product.price,
+      price: product.price.toString(),
       workflowType: product.workflowType,
     });
-    window.location.href = "/checkout";
+    window.location.href = `/checkout?${params.toString()}`;
   };
 
   return (
