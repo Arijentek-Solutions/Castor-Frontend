@@ -34,21 +34,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       slug: product.slug,
       price: product.price,
       image: product.image,
+      workflowType: product.workflowType,
     });
   };
 
   const handleBuyNow = () => {
-    // Redirect to checkout with product data as query params
-    const params = new URLSearchParams({
-      id: product.id,
+    // Add item to cart first, then navigate to checkout
+    addItem({
+      productId: product.id,
       slug: product.slug,
       sku: product.sku,
       name: product.name,
       image: product.image,
-      price: product.price.toString(),
+      price: product.price,
       workflowType: product.workflowType,
     });
-    window.location.href = `/checkout?${params.toString()}`;
+    window.location.href = "/checkout";
   };
 
   return (

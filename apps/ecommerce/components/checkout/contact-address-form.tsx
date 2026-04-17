@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Truck } from "lucide-react";
 
 type ContactAddressFormProps = {
@@ -15,7 +15,7 @@ type ContactAddressFormProps = {
     zipCode?: string;
     country?: string;
   };
- onChange?: (data: Record<string, string>) => void;
+  onChange?: (data: Record<string, string>) => void;
 };
 
 export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddressFormProps) {
@@ -30,6 +30,21 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
     zipCode: defaultValues.zipCode || "",
     country: defaultValues.country || "US",
   });
+
+  // Sync with parent when defaultValues change (e.g., saved info loaded)
+  useEffect(() => {
+    setFormData({
+      fullName: defaultValues.fullName || "",
+      email: defaultValues.email || "",
+      phone: defaultValues.phone || "",
+      addressLine1: defaultValues.addressLine1 || "",
+      addressLine2: defaultValues.addressLine2 || "",
+      city: defaultValues.city || "",
+      state: defaultValues.state || "",
+      zipCode: defaultValues.zipCode || "",
+      country: defaultValues.country || "US",
+    });
+  }, [defaultValues.fullName, defaultValues.email, defaultValues.phone, defaultValues.addressLine1, defaultValues.addressLine2, defaultValues.city, defaultValues.state, defaultValues.zipCode, defaultValues.country]);
 
   const handleChange = (field: string, value: string) => {
     const newData = { ...formData, [field]: value };

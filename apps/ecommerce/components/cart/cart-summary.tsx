@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { formatCartCurrency } from "@/lib/cart/cart-service";
+import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
 
 type CartSummaryProps = {
   itemCount: number;
@@ -8,6 +8,10 @@ type CartSummaryProps = {
 };
 
 export function CartSummary({ itemCount, subtotal }: CartSummaryProps) {
+  const shippingCost = calculateShipping(subtotal);
+  const tax = calculateTax(subtotal);
+  const total = Math.round((subtotal + shippingCost + tax) * 100) / 100;
+
   return (
     <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-28">
       <div className="border-b border-slate-200 pb-4">
@@ -25,10 +29,22 @@ export function CartSummary({ itemCount, subtotal }: CartSummaryProps) {
             {formatCartCurrency(subtotal)}
           </dd>
         </div>
+        <div className="flex items-center justify-between gap-4">
+          <dt className="text-sm text-slate-600">Shipping</dt>
+          <dd className="text-sm font-semibold text-slate-950">
+            {shippingCost === 0 ? "Free" : formatCartCurrency(shippingCost)}
+          </dd>
+        </div>
+        <div className="flex items-center justify-between gap-4">
+          <dt className="text-sm text-slate-600">Tax (est.)</dt>
+          <dd className="text-sm font-semibold text-slate-950">
+            {formatCartCurrency(tax)}
+          </dd>
+        </div>
         <div className="flex items-center justify-between gap-4 border-t border-slate-200 pt-4">
           <dt className="text-base font-bold text-slate-950">Estimated total</dt>
           <dd className="text-base font-bold text-slate-950">
-            {formatCartCurrency(subtotal)}
+            {formatCartCurrency(total)}
           </dd>
         </div>
       </dl>

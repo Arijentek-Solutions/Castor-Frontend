@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Search, ShoppingCart, Filter, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +24,9 @@ export function Navbar({
   const { itemCount, isCartOpen, setIsCartOpen } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Stable callback so CartDrawer doesn't re-run effects on every render
+  const closeCart = useCallback(() => setIsCartOpen(false), []);
 
   useEffect(() => {
     setMounted(true);
@@ -146,7 +149,7 @@ export function Navbar({
       </nav>
 
       {/* RENDER CART DRAWER */}
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
     </>
   );
 }

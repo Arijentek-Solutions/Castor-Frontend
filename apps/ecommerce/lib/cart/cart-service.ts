@@ -187,3 +187,13 @@ export function formatCartCurrency(value: number) {
     currency: "USD",
   }).format(normalizePrice(value));
 }
+
+// Shipping cost logic (free over $50, else $5.99)
+export function calculateShipping(subtotal: number): number {
+  return subtotal >= 50 ? 0 : 5.99;
+}
+
+// Tax logic (8% flat for demo)
+export function calculateTax(subtotal: number): number {
+  return Math.round(subtotal * 0.08 * 100) / 100;
+}
