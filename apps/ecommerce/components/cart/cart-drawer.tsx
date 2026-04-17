@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cart-context";
 import { formatCartCurrency } from "@/lib/cart/cart-service";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -23,6 +23,8 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     decreaseQuantity,
     isEmpty 
   } = useCart();
+  
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   // Prevent scrolling when drawer is open
   useEffect(() => {
@@ -36,21 +38,30 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     };
   }, [isOpen]);
 
+  // Handle click outside to close cart
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside, true);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 z-[100] bg-[#0e1b33]/40 backdrop-blur-sm"
-          />
-
           {/* Drawer Panel */}
           <motion.div
+            ref={drawerRef}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

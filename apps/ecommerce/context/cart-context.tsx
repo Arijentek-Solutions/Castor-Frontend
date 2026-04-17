@@ -25,6 +25,7 @@ import type {
   CartItem,
   CartProductInput,
 } from "@/types/cart";
+import toast from "react-hot-toast";
 
 const CART_STORAGE_KEY = "castor:ecommerce:cart";
 
@@ -60,20 +61,37 @@ export function
 CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(readStoredCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [removedItemName, setRemovedItemName] = useState<string | null>(null);
 
   useEffect(() => {
     writeStoredCart(items);
   }, [items]);
 
+  // Show toast when item is removed
+  useEffect(() => {
+    if (removedItemName) {
+      toast.error(`${removedItemName} removed from cart`);
+      setRemovedItemName(null);
+    }
+  }, [removedItemName]);
+
   const addItem = useCallback(
     (product: CartProductInput, quantity?: number) => {
       setItems((currentItems) => addCartItem(currentItems, product, quantity));
+      toast.success(`${product.name} added to cart`);
     },
     [],
   );
 
   const removeItem = useCallback((productId: string) => {
-    setItems((currentItems) => removeCartItem(currentItems, productId));
+    setItems((currentItems) => {
+      const itemToRemove = currentItems.find(item => item.productId === productId);
+      const newItems = removeCartItem(currentItems, productId);
+      if (itemToRemove) {
+        setRemovedItemName(itemToRemove.name);
+      }
+      return newItems;
+    });
   }, []);
 
   const increaseQuantity = useCallback((productId: string) => {

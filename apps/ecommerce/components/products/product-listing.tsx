@@ -14,10 +14,35 @@ export function ProductListing() {
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Derive unique categories from products
-    const categories = useMemo(() => {
-        return Array.from(new Set(PRODUCTS.map((p) => p.category))).sort();
-    }, []);
+    // Smooth scroll to top helper
+    const scrollToTop = () => {
+        setTimeout(() => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 0);
+    };
+
+    const handlePageChange = (page: number) => {
+        if (page === currentPage) return;
+        setCurrentPage(page);
+        scrollToTop();
+    };
+
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setCurrentPage(1);
+        scrollToTop();
+    };
+
+    const handleSearchChange = (query: string) => {
+        setSearchQuery(query);
+        setCurrentPage(1);
+        scrollToTop();
+    };
+
+     // Derive unique categories from products
+     const categories = useMemo(() => {
+         return Array.from(new Set(PRODUCTS.map((p) => p.category).filter((c): c is string => c !== undefined))).sort();
+     }, []);
 
     // Filter Logic (Search + Category)
     const processedProducts = useMemo(() => {
@@ -42,22 +67,12 @@ export function ProductListing() {
         return filtered;
     }, [selectedCategory, searchQuery]);
 
-    const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentProducts = processedProducts.slice(startIndex, endIndex);
+     const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
+     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+     const endIndex = startIndex + ITEMS_PER_PAGE;
+     const currentProducts = processedProducts.slice(startIndex, endIndex);
 
-    const handleCategoryChange = (category: string) => {
-        setSelectedCategory(category);
-        setCurrentPage(1); // Reset to first page
-    };
-
-    const handleSearchChange = (query: string) => {
-        setSearchQuery(query);
-        setCurrentPage(1); // Reset to first page
-    };
-
-    return {
+     return {
         categories,
         selectedCategory,
         searchQuery,
@@ -68,7 +83,10 @@ export function ProductListing() {
                 <div className="flex flex-col gap-8 lg:flex-row">
 
                     {/* Sticky Sidebar - Desktop Only */}
-                    <div className="hidden shrink-0 lg:sticky lg:top-[280px] lg:h-fit lg:w-[240px] lg:block">
+                    <div
+                        className="hidden shrink-0 lg:sticky lg:top-[280px] lg:h-fit lg:w-[240px] lg:block lg:max-h-[calc(100vh-280px)] lg:overflow-y-auto lg:pr-1"
+                        style={{ scrollbarWidth: "thin", scrollbarColor: "#20a9ad40 transparent" }}
+                    >
                         <Sidebar
                             categories={categories}
                             selectedCategory={selectedCategory}
@@ -103,7 +121,7 @@ export function ProductListing() {
                         {totalPages > 1 && (
                             <div className="mt-12 flex items-center justify-center gap-1.5 lg:mt-16 lg:gap-2">
                                 <button
-                                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                                    onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                                     disabled={currentPage === 1}
                                     className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-400 transition-all hover:border-[#20a9ad] hover:text-[#20a9ad] disabled:pointer-events-none disabled:opacity-30 lg:h-12 lg:w-12"
                                 >
@@ -115,7 +133,7 @@ export function ProductListing() {
                                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                         <button
                                             key={page}
-                                            onClick={() => setCurrentPage(page)}
+                                            onClick={() => handlePageChange(page)}
                                             className={`h-10 w-10 rounded-xl border transition-all text-[13px] font-bold lg:h-12 lg:w-12 lg:text-[14px] ${currentPage === page
                                                 ? "border-[#20a9ad] bg-[#20a9ad] text-white shadow-lg shadow-[#20a9ad]/20"
                                                 : "border-slate-200 text-slate-600 hover:border-[#20a9ad] hover:text-[#20a9ad]"
@@ -127,7 +145,7 @@ export function ProductListing() {
                                 </div>
 
                                 <button
-                                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                                    onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                                     disabled={currentPage === totalPages}
                                     className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-400 transition-all hover:border-[#20a9ad] hover:text-[#20a9ad] disabled:pointer-events-none disabled:opacity-30 lg:h-12 lg:w-12"
                                 >
