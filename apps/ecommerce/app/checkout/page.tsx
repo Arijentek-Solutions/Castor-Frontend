@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, CheckCircle, ArrowLeft, ShieldCheck, Truck, RotateCcw, AlertCircle, CreditCard, Smartphone } from "lucide-react";
@@ -16,6 +16,14 @@ import { PRODUCTS } from "@/lib/products/products";
 import type { Product } from "@/types/product";
 
 export default function CheckoutPage() {
+  return (
+    <Suspense>
+      <CheckoutContent />
+    </Suspense>
+  );
+}
+
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { items, subtotal, clearCart, updateQuantity, removeItem } = useCart();

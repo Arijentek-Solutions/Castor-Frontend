@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -24,6 +26,7 @@ function OrderSuccessContent() {
 
   // Initialize order from localStorage
   const [order] = useState<Order | null>(() => {
+    if (typeof window === 'undefined') return null;
     if (!orderId) return null;
     try {
       const stored = localStorage.getItem(`castor:ecommerce:order:${orderId}`);
