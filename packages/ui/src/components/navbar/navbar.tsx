@@ -267,6 +267,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
   const hasAutoOpenedHelpModal = useRef(false);
   const [shouldAutoOpenForSession, setShouldAutoOpenForSession] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleOpenModal = () => setIsHelpModalOpen(true);
@@ -351,7 +352,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
             <div className="hidden flex-1 items-center justify-center lg:flex">
               <div className="flex h-9 w-full max-w-[680px] items-center justify-between xl:max-w-[800px]">
                 {navItems.map((item) => (
-                  <DesktopNavItem key={item.label} item={item} />
+                  <DesktopNavItem key={item.label} item={item} pathname={pathname} serviceContext={serviceContext} />
                 ))}
               </div>
             </div>
@@ -381,6 +382,8 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
                   <MobileNavItem
                     key={item.label}
                     item={item}
+                    pathname={pathname}
+                    serviceContext={serviceContext}
                     isOpen={openMobileSection === item.label}
                     onToggle={() =>
                       setOpenMobileSection((current) => (current === item.label ? null : item.label))
@@ -421,12 +424,14 @@ const HelpMeChooseButton = ({
   </button>
 );
 
-const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
+const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; pathname: string; baseUrl: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, bottom: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLAnchorElement>(null);
-  const sharedClasses = "inline-flex h-9 items-center gap-1.5 whitespace-nowrap text-[12px] font-bold leading-none tracking-normal font-sans text-[#0E1B33]/70 transition-colors hover:text-[#20A9AD] sm:text-[13px] outline-none appearance-none bg-transparent p-0";
+  const baseClasses = "inline-flex h-9 items-center gap-1.5 whitespace-nowrap text-[12px] font-bold leading-none tracking-normal font-sans transition-colors outline-none appearance-none bg-transparent p-0 sm:text-[13px]";
+  const activeClasses = "text-[#20A9AD]";
+  const inactiveClasses = "text-[#0E1B33]/70 hover:text-[#20A9AD]";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -446,7 +451,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    window.addEventListener("scroll", updatePosition, true); // True to catch events in scrollable containers
+    window.addEventListener("scroll", updatePosition, true);
     window.addEventListener("resize", updatePosition);
     updatePosition();
 
@@ -456,6 +461,20 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
       window.removeEventListener("resize", updatePosition);
     };
   }, [isOpen]);
+
+  // Compute path relative to base service URL for active comparison
+  const getRelativePath = (href: string) => {
+    const rel = href.replace(baseUrl, '');
+    return rel === '' ? '/' : rel;
+  };
+
+  // Determine active state: dropdown parent is active if any child is active; leaf items use exact match
+  const isActive = (() => {
+    if (item.dropdownItems) {
+      return item.dropdownItems.some(child => pathname === getRelativePath(child.href));
+    }
+    return pathname === getRelativePath(item.href);
+  })();
 
   if (item.dropdownItems) {
     return (
@@ -470,7 +489,7 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
           href={item.href}
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className={`${sharedClasses} cursor-pointer rounded-none`}
+          className={`${baseClasses} cursor-pointer rounded-none ${isActive ? activeClasses : inactiveClasses}`}
           onClick={(e) => {
             if (window.innerWidth < 1024) {
               e.preventDefault();
@@ -478,8 +497,8 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
             }
           }}
         >
-          <span className="block leading-none">{item.label}</span>
-          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+          <span className="block">{item.label}</span>
+          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
         </Link>
 
         {isOpen && (
@@ -491,24 +510,30 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
             className="fixed -translate-x-1/2 lg:absolute lg:left-1/2 lg:top-full lg:z-[110] pt-2"
           >
             <div className="w-64 rounded-2xl border border-[#edf0f4] bg-white p-2 shadow-xl backdrop-blur-xl">
-              {item.dropdownItems.map((subItem) => (
-                <Link
-                  key={subItem.title}
-                  href={subItem.href}
-                  className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-[#f7f9fb]"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[#f0f9fa] text-[#20A9AD]">
-                    {subItem.icon}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[13px] font-bold text-[#0E1B33]">{subItem.title}</div>
-                    <div className="mt-1 whitespace-normal break-words text-[11px] leading-4 text-[#475569]">
-                      {subItem.description}
+              {item.dropdownItems.map((subItem) => {
+                const subItemActive = pathname === getRelativePath(subItem.href);
+                return (
+                  <Link
+                    key={subItem.title}
+                    href={subItem.href}
+                    className={`group flex items-start gap-3 rounded-xl p-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
+                      ? 'bg-white text-[#20A9AD]'
+                      : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+                      }`}>
+                      {subItem.icon}
                     </div>
-                  </div>
-                </Link>
-              ))}
+                    <div className="min-w-0">
+                      <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                      <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                        {subItem.description}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
@@ -519,16 +544,21 @@ const ServiceSubNavItem = ({ item }: { item: ServiceNavLink }) => {
   return (
     <Link
       href={item.href}
-      className={sharedClasses}
+      className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
     >
       <span className="block leading-none">{item.label}</span>
     </Link>
   );
 };
 
+
+
+
+
 const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<ServiceContext, "web"> }) => {
   const links = SERVICE_NAV_LINKS[serviceContext];
   const pathname = usePathname();
+  const baseUrl = SITE_URLS[serviceContext];
 
   if (!links) return null;
 
@@ -538,7 +568,7 @@ const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<ServiceCont
         <div className="flex items-center justify-start gap-10 overflow-x-auto overflow-y-visible px-6 scrollbar-hide sm:justify-center sm:px-8 lg:overflow-visible">
           {links.map((link) => {
             return (
-              <ServiceSubNavItem key={link.label} item={link} />
+              <ServiceSubNavItem key={link.label} item={link} pathname={pathname} baseUrl={baseUrl} />
             );
           })}
         </div>
@@ -569,13 +599,33 @@ const Brand = () => {
   );
 };
 
-const DesktopNavItem = ({ item }: { item: NavEntry }) => {
+const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEntry; pathname: string; serviceContext?: ServiceContext }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
+  
+  // Determine if main nav item is active based on serviceContext or pathname
+  let isActive = false;
+  if (serviceContext) {
+    // For service apps, active if this item corresponds to current serviceContext
+    const contextToLabel: Record<string, string> = {
+      services: "Get Care",
+      ecommerce: "Medical Supplies",
+      institute: "Health Institute",
+      transport: "Transportation",
+    };
+    isActive = contextToLabel[serviceContext] === item.label;
+  } else {
+    // For web app pages, compare pathname with item href (extract path from full URL)
+    const pathFromHref = item.href.replace(SITE_URLS.web, '');
+    isActive = pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+  }
 
   if (!hasDropdown) {
     return (
       <NavLink
-        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors hover:text-[#0E1B33] whitespace-nowrap xl:px-4 xl:text-[14px] ${item.desktopWidth}`}
+        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap xl:px-4 xl:text-[14px] ${isActive
+          ? "bg-[#20A9AD] text-white"
+          : "text-[#6A6A67] hover:text-[#0E1B33]"
+          } ${item.desktopWidth}`}
         href={item.href}
       >
         {item.label}
@@ -586,14 +636,17 @@ const DesktopNavItem = ({ item }: { item: NavEntry }) => {
   return (
     <div className={`group relative flex h-9 ${item.desktopWidth} items-center justify-center`}>
       <NavLink
-        className="flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 text-[#6A6A67] transition-colors group-hover:text-[#0E1B33] whitespace-nowrap xl:gap-1 xl:px-[14px] xl:text-[14px]"
+        className={`flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap xl:gap-1 xl:px-[14px] xl:text-[14px] ${isActive
+          ? "bg-[#20A9AD] text-white"
+          : "text-[#6A6A67] group-hover:text-[#0E1B33]"
+          }`}
         href={item.href}
       >
         <span>{item.label}</span>
-        <ChevronDown className="mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 group-hover:rotate-180" />
+        <ChevronDown className={`mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 group-hover:rotate-180 ${isActive ? 'opacity-100' : ''}`} />
       </NavLink>
       <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-        <DropdownMenu items={item.dropdownItems ?? []} />
+        <DropdownMenu items={item.dropdownItems ?? []} pathname={pathname} />
       </div>
     </div>
   );
@@ -603,17 +656,39 @@ const MobileNavItem = ({
   item,
   isOpen,
   onToggle,
+  pathname,
+  serviceContext,
 }: {
   item: NavEntry;
   isOpen: boolean;
   onToggle: () => void;
+  pathname: string;
+  serviceContext?: ServiceContext;
 }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
+  
+  // Determine if main nav item is active based on serviceContext or pathname
+  let isActive = false;
+  if (serviceContext) {
+    const contextToLabel: Record<string, string> = {
+      services: "Get Care",
+      ecommerce: "Medical Supplies",
+      institute: "Health Institute",
+      transport: "Transportation",
+    };
+    isActive = contextToLabel[serviceContext] === item.label;
+  } else {
+    const pathFromHref = item.href.replace(SITE_URLS.web, '');
+    isActive = pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+  }
 
   if (!hasDropdown) {
     return (
       <NavLink
-        className="flex h-11 items-center rounded-[20px] px-4 text-[14px] font-bold leading-5 text-[#0E1B33] transition-colors hover:bg-[#f7f9fb]"
+        className={`flex h-11 items-center rounded-[20px] px-4 text-[14px] font-bold leading-5 transition-colors hover:bg-[#f7f9fb] ${isActive
+          ? "bg-[#20A9AD] text-white"
+          : "text-[#0E1B33]"
+          }`}
         href={item.href}
       >
         {item.label}
@@ -622,10 +697,13 @@ const MobileNavItem = ({
   }
 
   return (
-    <div className="rounded-[22px] border border-[#edf0f4] p-1">
+    <div className={`rounded-[22px] border border-[#edf0f4] p-1 ${isActive ? 'bg-[#f0f9fa] border-[#20A9AD]' : ''}`}>
       <div className="flex items-center gap-2">
         <NavLink
-          className="flex min-w-0 flex-1 items-center rounded-[18px] px-3 py-3 text-[14px] font-bold leading-5 text-[#0E1B33]"
+          className={`flex min-w-0 flex-1 items-center rounded-[18px] px-3 py-3 text-[14px] font-bold leading-5 transition-colors ${isActive
+            ? "bg-[#20A9AD] text-white"
+            : "text-[#0E1B33]"
+            }`}
           href={item.href}
         >
           {item.label}
@@ -633,7 +711,7 @@ const MobileNavItem = ({
         <button
           aria-expanded={isOpen}
           aria-label={`Toggle ${item.label} links`}
-          className="flex h-10 w-10 items-center justify-center rounded-[18px] text-[#6A6A67] transition-colors hover:bg-[#f7f9fb]"
+          className={`flex h-10 w-10 items-center justify-center rounded-[18px] transition-colors hover:bg-[#f7f9fb] ${isActive ? 'bg-[#20A9AD] text-white' : 'text-[#6A6A67]'}`}
           onClick={onToggle}
           type="button"
         >
@@ -642,45 +720,57 @@ const MobileNavItem = ({
       </div>
       {isOpen ? (
         <div className="space-y-1 px-2 pb-2 pt-1">
-          {item.dropdownItems?.map((dropdownItem) => (
-            <a
-              key={dropdownItem.title}
-              href={dropdownItem.href}
-              className="group flex items-start gap-3 rounded-[18px] px-3 py-3 transition-colors hover:bg-[#f7f9fb]"
-            >
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
-                {dropdownItem.icon}
-              </div>
-              <div>
-                <div className="text-[14px] font-bold leading-5 text-[#17233C]">{dropdownItem.title}</div>
-                <div className="mt-1 text-[13px] leading-5 text-[#6A6A67]">{dropdownItem.description}</div>
-              </div>
-            </a>
-          ))}
+          {item.dropdownItems?.map((dropdownItem) => {
+            const subItemActive = pathname === dropdownItem.href || pathname.startsWith(dropdownItem.href);
+            return (
+              <a
+                key={dropdownItem.title}
+                href={dropdownItem.href}
+                className={`group flex items-start gap-3 rounded-[18px] px-3 py-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+              >
+                <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-colors ${subItemActive
+                  ? 'bg-white text-[#20A9AD]'
+                  : 'bg-[#eef8f8] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+                  }`}>
+                  {dropdownItem.icon}
+                </div>
+                <div className={subItemActive ? 'text-white' : ''}>
+                  <div className="text-[14px] font-bold leading-5">{dropdownItem.title}</div>
+                  <div className={`mt-1 text-[13px] leading-5 ${subItemActive ? 'text-white/80' : 'text-[#6A6A67]'}`}>{dropdownItem.description}</div>
+                </div>
+              </a>
+            );
+          })}
         </div>
       ) : null}
     </div>
   );
 };
 
-const DropdownMenu = ({ items }: { items: DropdownEntry[] }) => (
+const DropdownMenu = ({ items, pathname }: { items: DropdownEntry[]; pathname: string }) => (
   <div className="w-[286px] rounded-[28px] border border-[#edf0f4] bg-white/98 p-4 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
     <div className="space-y-2">
-      {items.map((item) => (
-        <a
-          key={item.title}
-          href={item.href}
-          className="group flex items-start gap-4 rounded-[20px] px-3 py-3 text-left transition-colors hover:bg-[#f7f9fb]"
-        >
-          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#eef8f8] text-[#20A9AD] transition-colors group-hover:bg-[#20A9AD] group-hover:text-white">
-            {item.icon}
-          </div>
-          <div>
-            <div className="text-[15px] font-bold leading-5 text-[#17233C]">{item.title}</div>
-            <div className="mt-1 text-[14px] leading-6 text-[#6A6A67]">{item.description}</div>
-          </div>
-        </a>
-      ))}
+      {items.map((item) => {
+        const isActive = pathname === item.href;
+        return (
+          <a
+            key={item.title}
+            href={item.href}
+            className={`group flex items-start gap-4 rounded-[20px] px-3 py-3 text-left transition-colors ${isActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+          >
+            <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-colors ${isActive
+              ? 'bg-white text-[#20A9AD]'
+              : 'bg-[#eef8f8] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+              }`}>
+              {item.icon}
+            </div>
+            <div>
+              <div className={`text-[15px] font-bold leading-5 ${isActive ? 'text-white' : 'text-[#17233C]'}`}>{item.title}</div>
+              <div className={`mt-1 text-[14px] leading-6 ${isActive ? 'text-white/80' : 'text-[#6A6A67]'}`}>{item.description}</div>
+            </div>
+          </a>
+        );
+      })}
     </div>
   </div>
 );
