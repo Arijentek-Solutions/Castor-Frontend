@@ -13,6 +13,9 @@ type OrderSummarySidebarProps = {
   total: number;
   onUpdateQuantity: (productId: string, quantity: number) => void;
   onRemoveItem: (productId: string) => void;
+  isBuyNowMode?: boolean;
+  buyNowQuantity?: number;
+  onBuyNowQuantityChange?: (delta: number) => void;
 };
 
 export function OrderSummarySidebar({
@@ -23,6 +26,9 @@ export function OrderSummarySidebar({
   total,
   onUpdateQuantity,
   onRemoveItem,
+  isBuyNowMode = false,
+  buyNowQuantity = 1,
+  onBuyNowQuantityChange,
 }: OrderSummarySidebarProps) {
   return (
     <aside className="sticky top-28 h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:w-80">
@@ -50,34 +56,58 @@ export function OrderSummarySidebar({
               </div>
 
               <div className="flex items-center justify-between">
-                {/* Quantity controls */}
-                <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 p-1">
-                  <button
-                    type="button"
-                    onClick={() => onUpdateQuantity(item.productId, Math.max(1, item.quantity - 1))}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
-                  >
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-6 text-center text-sm font-bold text-[#0e1b33]">{item.quantity}</span>
-                  <button
-                    type="button"
-                    onClick={() => onUpdateQuantity(item.productId, item.quantity + 1)}
-                    className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
+                {isBuyNowMode ? (
+                  /* Buy Now Mode: Custom quantity controls */
+                  <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 p-1">
+                    <button
+                      type="button"
+                      onClick={() => onBuyNowQuantityChange && onBuyNowQuantityChange(-1)}
+                      disabled={buyNowQuantity <= 1}
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-6 text-center text-sm font-bold text-[#0e1b33]">{buyNowQuantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => onBuyNowQuantityChange && onBuyNowQuantityChange(1)}
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  /* Cart Mode: Standard quantity controls */
+                  <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/50 p-1">
+                    <button
+                      type="button"
+                      onClick={() => onUpdateQuantity(item.productId, Math.max(1, item.quantity - 1))}
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-6 text-center text-sm font-bold text-[#0e1b33]">{item.quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => onUpdateQuantity(item.productId, item.quantity + 1)}
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm transition-colors hover:text-[#0e1b33] active:scale-95"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                )}
 
-                {/* Remove button */}
-                <button
-                  type="button"
-                  onClick={() => onRemoveItem(item.productId)}
-                  className="text-slate-400 transition-colors hover:text-red-500"
-                  title="Remove item"
-                >
-                  <Trash2 size={16} />
-                </button>
+                {/* Remove button - hidden in Buy Now mode */}
+                {!isBuyNowMode && (
+                  <button
+                    type="button"
+                    onClick={() => onRemoveItem(item.productId)}
+                    className="text-slate-400 transition-colors hover:text-red-500"
+                    title="Remove item"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                )}
               </div>
             </div>
           </div>

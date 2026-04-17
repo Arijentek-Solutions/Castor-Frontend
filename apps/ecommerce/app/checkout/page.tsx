@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, CheckCircle, ArrowLeft, ShieldCheck, Truck, RotateCcw, AlertCircle, CreditCard, Smartphone } from "lucide-react";
 import Link from "next/link";
@@ -12,10 +12,38 @@ import { ContactAddressForm } from "@/components/checkout/contact-address-form";
 import { OrderSummarySidebar } from "@/components/checkout/order-summary-sidebar";
 import type { CheckoutFormData, PaymentMethod, Order } from "@/types/checkout";
 import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
+import { PRODUCTS } from "@/lib/products/products";
+import type { Product } from "@/types/product";
 
 export default function CheckoutPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { items, subtotal, clearCart, updateQuantity, removeItem } = useCart();
+
+  // Get product from URL query params (Buy Now flow)
+  const productFromUrl: Product | null = (() => {
+    const id = searchParams.get("id");
+    if (!id) return null;
+    return PRODUCTS.find((p) => p.id === id) || null;
+  })();
+
+  // Local quantity state for Buy Now product (not in cart)
+  const [buyNowQuantity, setBuyNowQuantity] = useState(1);
+
+  // Determine items to display: if productFromUrl exists, show only that product; otherwise show cart items
+  const displayItems = productFromUrl
+    ? [{
+        productId: productFromUrl.id,
+        slug: productFromUrl.slug,
+        sku: productFromUrl.sku,
+        name: productFromUrl.name,
+        image: productFromUrl.image,
+        price: productFromUrl.price,
+        quantity: buyNowQuantity,
+      }]
+    : items;
+
+  const displaySubtotal = productFromUrl ? productFromUrl.price * buyNowQuantity : subtotal;
 
   const [step, setStep] = useState<"form" | "review" | "processing" | "success">("form");
   const [paymentGroup, setPaymentGroup] = useState<"cod" | "card">("cod");
@@ -47,9 +75,19 @@ export default function CheckoutPage() {
   });
 
   // Derived values
-  const shippingCost = useMemo(() => calculateShipping(subtotal), [subtotal]);
-  const tax = useMemo(() => calculateTax(subtotal), [subtotal]);
-  const total = useMemo(() => subtotal + shippingCost + tax, [subtotal, shippingCost, tax]);
+  const shippingCost = useMemo(() => calculateShipping(displaySubtotal), [displaySubtotal]);
+  const tax = useMemo(() => calculateTax(displaySubtotal), [displaySubtotal]);
+  const total = useMemo(() => displaySubtotal + shippingCost + tax, [displaySubtotal, shippingCost, tax]);
+
+  // Handlers for Buy Now flow (local quantity management)
+  const handleBuyNowQuantityChange = (delta: number) => {
+    setBuyNowQuantity((prev) => Math.max(1, prev + delta));
+  };
+
+  const handleBuyNowRemove = () => {
+    // For Buy Now, removing means going back to product page or clearing
+    router.back();
+  };
 
   // Handle form field changes
   const handleFormChange = (field: keyof CheckoutFormData, value: string | boolean) => {
@@ -139,14 +177,14 @@ export default function CheckoutPage() {
             : {}),
           ...(isUpi ? { upiId: formData.upiId } : {}),
         },
-        items: items.map((item) => ({
+        items: displayItems.map((item) => ({
           productId: item.productId,
           name: item.name,
           price: item.price,
           quantity: item.quantity,
           image: item.image,
         })),
-        subtotal,
+        subtotal: displaySubtotal,
         shippingCost,
         tax,
         total,
@@ -542,13 +580,32 @@ export default function CheckoutPage() {
 
           {/* Right: Order Summary Sidebar */}
           <OrderSummarySidebar
-            items={items}
-            subtotal={subtotal}
+            items={displayItems}
+            subtotal={displaySubtotal}
             shippingCost={shippingCost}
             tax={tax}
             total={total}
-            onUpdateQuantity={updateQuantity}
-            onRemoveItem={removeItem}
+            onUpdateQuantity={
+              productFromUrl
+                ? () => {} // Disabled for Buy Now (quantity managed locally via custom UI)
+                : updateQuantity
+            }
+            onRemoveItem={
+              productFromUrl
+                ? () => router.back() // Go back for Buy Now
+                : (productId: string) => {
+                    // Check if this is the last item before removing
+                    const willBeEmpty = items.length === 1;
+                    removeItem(productId);
+                    // Redirect to product listing if cart becomes empty
+                    if (willBeEmpty) {
+                      router.push("/");
+                    }
+                  }
+            }
+            isBuyNowMode={!!productFromUrl}
+            buyNowQuantity={buyNowQuantity}
+            onBuyNowQuantityChange={handleBuyNowQuantityChange}
           />
         </div>
 
