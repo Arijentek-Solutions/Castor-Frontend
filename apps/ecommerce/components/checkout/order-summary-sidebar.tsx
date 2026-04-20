@@ -31,7 +31,7 @@ export function OrderSummarySidebar({
   onBuyNowQuantityChange,
 }: OrderSummarySidebarProps) {
   return (
-    <aside className="sticky top-28 h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:w-80">
+    <aside className="sticky top-48 h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:w-[380px] xl:w-[420px]">
       <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
         <ShoppingBag size={20} className="text-[#20a9ad]" />
         <h2 className="text-xl font-bold text-slate-950">Order Summary</h2>

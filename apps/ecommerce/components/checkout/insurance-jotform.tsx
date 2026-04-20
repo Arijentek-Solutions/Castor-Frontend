@@ -58,9 +58,22 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
-      if (event.data?.type === "jotform:submission:complete") {
+      // JotForm sends string messages like "submission-completed:formId"
+      if (typeof event.data === "string" && event.data.includes("submission-completed")) {
         setIsFormSubmitted(true);
         onFormSubmitted();
+        return;
+      }
+      // Fallback for object-based events
+      if (event.data && typeof event.data === "object") {
+        if (
+          event.data.action === "submission-completed" ||
+          event.data.type === "jotform:submission:complete"
+        ) {
+          setIsFormSubmitted(true);
+          onFormSubmitted();
+          return;
+        }
       }
     }
 
@@ -121,11 +134,16 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
         )}
 
         {isFormSubmitted && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#dcfce7] px-4 py-3">
-            <CheckCircle size={18} className="text-[#008236]" />
-            <span className="text-sm font-bold text-[#008236]">
-              Insurance form submitted successfully
-            </span>
+          <div className="mt-6 flex items-start gap-4 rounded-xl bg-[#dcfce7] p-5">
+            <CheckCircle size={24} className="shrink-0 text-[#008236] mt-0.5" />
+            <div>
+              <p className="text-base font-bold text-[#008236] sm:text-lg">
+                Insurance form submitted successfully
+              </p>
+              <p className="mt-1 text-sm text-[#008236]/90">
+                Our team will review your application and contact you soon.
+              </p>
+            </div>
           </div>
         )}
       </div>

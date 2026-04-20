@@ -47,14 +47,14 @@ function CheckoutContent() {
   // Determine items to display: if productFromUrl exists, show only that product; otherwise show cart items
   const displayItems = productFromUrl
     ? [{
-        productId: productFromUrl.id,
-        slug: productFromUrl.slug,
-        sku: productFromUrl.sku,
-        name: productFromUrl.name,
-        image: productFromUrl.image,
-        price: productFromUrl.price,
-        quantity: buyNowQuantity,
-      }]
+      productId: productFromUrl.id,
+      slug: productFromUrl.slug,
+      sku: productFromUrl.sku,
+      name: productFromUrl.name,
+      image: productFromUrl.image,
+      price: productFromUrl.price,
+      quantity: buyNowQuantity,
+    }]
     : items;
 
   const displaySubtotal = productFromUrl ? productFromUrl.price * buyNowQuantity : subtotal;
@@ -97,25 +97,18 @@ function CheckoutContent() {
     upiId: "",
   });
 
-  // Derived values
   const shippingCost = useMemo(() => calculateShipping(displaySubtotal), [displaySubtotal]);
   const tax = useMemo(() => calculateTax(displaySubtotal), [displaySubtotal]);
   const total = useMemo(() => displaySubtotal + shippingCost + tax, [displaySubtotal, shippingCost, tax]);
-
-  // Handlers for Buy Now flow (local quantity management)
   const handleBuyNowQuantityChange = (delta: number) => {
     setBuyNowQuantity((prev) => Math.max(1, prev + delta));
   };
 
   const handleBuyNowRemove = () => {
-    // For Buy Now, removing means going back to product page or clearing
     router.back();
   };
-
-  // Handle form field changes
   const handleFormChange = (field: keyof CheckoutFormData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error for this field
     if (errors[field]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -125,7 +118,6 @@ function CheckoutContent() {
     }
   };
 
-  // Validate form
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
@@ -136,44 +128,33 @@ function CheckoutContent() {
     if (!formData.addressLine1.trim()) newErrors.addressLine1 = "Address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
     if (!formData.state.trim()) newErrors.state = "State is required";
-     if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP code is required";
-
-     // Payment validation
-     if (paymentGroup === "card") {
-       if (isUpi) {
-         if (!formData.upiId?.trim()) newErrors.upiId = "UPI ID is required";
-       } else {
-         if (!formData.cardNumber?.trim()) newErrors.cardNumber = "Card number is required";
-         if (!formData.cardExpiry?.trim()) newErrors.cardExpiry = "Expiry date is required";
-         if (!formData.cardCvv?.trim()) newErrors.cardCvv = "CVV is required";
-         if (!formData.cardName?.trim()) newErrors.cardName = "Cardholder name is required";
-       }
-     }
-
-     if (paymentGroup === "insurance" && !insuranceFormSubmitted) {
-       newErrors.insuranceForm = "Please submit the insurance claim form before continuing";
-     }
-
-     if (!formData.termsAccepted) newErrors.terms = "You must accept the terms and conditions";
-
+    if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP code is required";
+    if (paymentGroup === "card") {
+      if (isUpi) {
+        if (!formData.upiId?.trim()) newErrors.upiId = "UPI ID is required";
+      } else {
+        if (!formData.cardNumber?.trim()) newErrors.cardNumber = "Card number is required";
+        if (!formData.cardExpiry?.trim()) newErrors.cardExpiry = "Expiry date is required";
+        if (!formData.cardCvv?.trim()) newErrors.cardCvv = "CVV is required";
+        if (!formData.cardName?.trim()) newErrors.cardName = "Cardholder name is required";
+      }
+    }
+    if (paymentGroup === "insurance" && !insuranceFormSubmitted) {
+      newErrors.insuranceForm = "Please submit the insurance claim form before continuing";
+    }
+    if (!formData.termsAccepted) newErrors.terms = "You must accept the terms and conditions";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Proceed to review
   const handleContinueToReview = () => {
     if (validateForm()) {
       setStep("review");
     }
   };
-
-  // Place order
   const handlePlaceOrder = () => {
     setStep("processing");
-
-    // Simulate payment processing
     setTimeout(() => {
-      // Generate order
       const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
       const estimatedDelivery = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString("en-US", {
         weekday: "long",
@@ -218,29 +199,19 @@ function CheckoutContent() {
         createdAt: new Date().toISOString(),
         estimatedDelivery,
       };
-
-      // Store order in localStorage
       const orderKey = `castor:ecommerce:order:${orderId}`;
       localStorage.setItem(orderKey, JSON.stringify(order));
-
-      // Clear cart if not saving for later
       if (formData.saveInfo) {
-        // TODO: Save address for future
       }
       clearCart();
-
-      // Redirect to order success page
       router.push(`/order-success?orderId=${orderId}`);
     }, 2000);
   };
-  // Don't render until client is mounted and cart is loaded from localStorage
   if (!mounted) {
     return null;
   }
-
-
   return (
-    <main className="min-h-screen bg-[#f7faf9] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
+    <main className="min-h-screen bg-[#f7faf9] px-4 pt-48 pb-10 sm:px-6 lg:px-8 lg:pt-48 lg:pb-16">
       <div className="mx-auto max-w-7xl">
         {/* Back to cart link */}
         <Link
@@ -275,34 +246,6 @@ function CheckoutContent() {
         <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:gap-16">
           {/* Left: Checkout Form */}
           <div className="space-y-8">
-            {/* Progress indicator */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-full font-bold text-white ${
-                  step === "form" ? "bg-[#20a9ad]" : "bg-[#20a9ad]"
-                }`}>
-                  {step === "form" ? "1" : <CheckCircle size={20} />}
-                </div>
-                <span className="font-bold text-[#0e1b33]">Details</span>
-              </div>
-              <div className="h-1 flex-1 bg-slate-200 rounded-full mx-4">
-                <div
-                  className={`h-full rounded-full transition-all ${step === "review" || step === "processing" || step === "success" ? "w-full bg-[#20a9ad]" : "w-0"}`}
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-full font-bold ${
-                  step === "review" || step === "processing" || step === "success"
-                    ? "bg-[#20a9ad] text-white"
-                    : "bg-slate-200 text-slate-500"
-                }`}>
-                  2
-                </div>
-                <span className={`font-bold ${step === "review" || step === "processing" || step === "success" ? "text-[#0e1b33]" : "text-slate-400"}`}>
-                  Review
-                </span>
-              </div>
-            </div>
 
             {/* Step 1: Form */}
             <AnimatePresence mode="wait">
@@ -321,437 +264,439 @@ function CheckoutContent() {
                     onChange={(data) => setFormData((prev) => ({ ...prev, ...data }))}
                   />
 
-                    {/* Payment Method */}
-                    <section className="space-y-4">
-                      <PaymentSelector
-                        selected={paymentGroup}
-                        onChange={(m) => setPaymentGroup(m)}
-                        hasInsuranceItems={hasInsuranceItems}
-                      />
+                  {/* Payment Method */}
+                  <section className="space-y-4">
+                    <PaymentSelector
+                      selected={paymentGroup}
+                      onChange={(m) => setPaymentGroup(m)}
+                      hasInsuranceItems={hasInsuranceItems}
+                    />
 
-                     {/* Card/UPI Form (conditional) */}
-                     <AnimatePresence>
-                       {paymentGroup === "card" && (
-                         <motion.div
-                           initial={{ height: 0, opacity: 0 }}
-                           animate={{ height: "auto", opacity: 1 }}
-                           exit={{ height: 0, opacity: 0 }}
-                           className="overflow-hidden"
-                         >
-                           <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-6">
-                             {/* Toggle: Card vs UPI */}
-                             <div className="flex rounded-full bg-white p-1 shadow-sm">
-                               <button
-                                 type="button"
-                                 onClick={() => {
-                                   setIsUpi(false);
-                                   handleFormChange("paymentMethod", "card");
-                                 }}
-                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
-                                   !isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
-                                 }`}
-                               >
-                                 <CreditCard size={18} />
-                                 Card
-                               </button>
-                               <button
-                                 type="button"
-                                 onClick={() => {
-                                   setIsUpi(true);
-                                   handleFormChange("paymentMethod", "upi");
-                                 }}
-                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
-                                   isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
-                                 }`}
-                               >
-                                 <Smartphone size={18} />
-                                 UPI
-                               </button>
-                             </div>
+                    {/* Card/UPI Form (conditional) */}
+                    <AnimatePresence>
+                      {paymentGroup === "card" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-6">
+                            {/* Toggle: Card vs UPI */}
+                            <div className="flex rounded-full bg-white p-1 shadow-sm">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsUpi(false);
+                                  handleFormChange("paymentMethod", "card");
+                                }}
+                                className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${!isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                  }`}
+                              >
+                                <CreditCard size={18} />
+                                Card
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsUpi(true);
+                                  handleFormChange("paymentMethod", "upi");
+                                }}
+                                className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                  }`}
+                              >
+                                <Smartphone size={18} />
+                                UPI
+                              </button>
+                            </div>
 
-                             {isUpi ? (
-                               /* UPI Fields */
-                               <div className="space-y-4">
-                                 <div>
-                                   <label htmlFor="upiId" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     UPI ID
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="upiId"
-                                     name="upiId"
-                                     value={formData.upiId}
-                                     onChange={(e) => handleFormChange("upiId", e.target.value)}
-                                     placeholder="yourname@paytm"
-                                     className={`w-full rounded-xl border ${errors.upiId ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.upiId && <p className="mt-1 text-sm text-red-500">{errors.upiId}</p>}
-                                   <p className="mt-1 text-xs text-[#6a6a67]">Enter your UPI ID (e.g., name@okaxis, name@paytm)</p>
-                                 </div>
-                               </div>
-                             ) : (
-                               /* Card Fields */
-                               <div className="space-y-4">
-                                 {/* Card Number */}
-                                 <div>
-                                   <label htmlFor="cardNumber" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     Card Number
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="cardNumber"
-                                     name="cardNumber"
-                                     inputMode="numeric"
-                                     value={formData.cardNumber}
-                                     onChange={(e) => handleFormChange("cardNumber", e.target.value)}
-                                     placeholder="1234 5678 9012 3456"
-                                     maxLength={19}
-                                     className={`w-full rounded-xl border ${errors.cardNumber ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.cardNumber && <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>}
-                                 </div>
+                            {isUpi ? (
+                              /* UPI Fields */
+                              <div className="space-y-4">
+                                <div>
+                                  <label htmlFor="upiId" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    UPI ID
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="upiId"
+                                    name="upiId"
+                                    value={formData.upiId}
+                                    onChange={(e) => handleFormChange("upiId", e.target.value)}
+                                    placeholder="yourname@paytm"
+                                    className={`w-full rounded-xl border ${errors.upiId ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.upiId && <p className="mt-1 text-sm text-red-500">{errors.upiId}</p>}
+                                  <p className="mt-1 text-xs text-[#6a6a67]">Enter your UPI ID (e.g., name@okaxis, name@paytm)</p>
+                                </div>
+                              </div>
+                            ) : (
+                              /* Card Fields */
+                              <div className="space-y-4">
+                                {/* Card Number */}
+                                <div>
+                                  <label htmlFor="cardNumber" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    Card Number
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="cardNumber"
+                                    name="cardNumber"
+                                    inputMode="numeric"
+                                    value={formData.cardNumber}
+                                    onChange={(e) => handleFormChange("cardNumber", e.target.value)}
+                                    placeholder="1234 5678 9012 3456"
+                                    maxLength={19}
+                                    className={`w-full rounded-xl border ${errors.cardNumber ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.cardNumber && <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>}
+                                </div>
 
-                                 {/* Expiry & CVV */}
-                                 <div className="grid grid-cols-2 gap-4">
-                                   <div>
-                                     <label htmlFor="cardExpiry" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                       Expiry Date
-                                     </label>
-                                     <input
-                                       type="text"
-                                       id="cardExpiry"
-                                       name="cardExpiry"
-                                       inputMode="numeric"
-                                       value={formData.cardExpiry}
-                                       onChange={(e) => handleFormChange("cardExpiry", e.target.value)}
-                                       placeholder="MM/YY"
-                                       maxLength={5}
-                                       className={`w-full rounded-xl border ${errors.cardExpiry ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                     />
-                                     {errors.cardExpiry && <p className="mt-1 text-sm text-red-500">{errors.cardExpiry}</p>}
-                                   </div>
-                                   <div>
-                                     <label htmlFor="cardCvv" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                       CVV
-                                     </label>
-                                     <input
-                                       type="text"
-                                       id="cardCvv"
-                                       name="cardCvv"
-                                       inputMode="numeric"
-                                       value={formData.cardCvv}
-                                       onChange={(e) => handleFormChange("cardCvv", e.target.value)}
-                                       placeholder="123"
-                                       maxLength={4}
-                                       className={`w-full rounded-xl border ${errors.cardCvv ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                     />
-                                     {errors.cardCvv && <p className="mt-1 text-sm text-red-500">{errors.cardCvv}</p>}
-                                   </div>
-                                 </div>
+                                {/* Expiry & CVV */}
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <label htmlFor="cardExpiry" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                      Expiry Date
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="cardExpiry"
+                                      name="cardExpiry"
+                                      inputMode="numeric"
+                                      value={formData.cardExpiry}
+                                      onChange={(e) => handleFormChange("cardExpiry", e.target.value)}
+                                      placeholder="MM/YY"
+                                      maxLength={5}
+                                      className={`w-full rounded-xl border ${errors.cardExpiry ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                    />
+                                    {errors.cardExpiry && <p className="mt-1 text-sm text-red-500">{errors.cardExpiry}</p>}
+                                  </div>
+                                  <div>
+                                    <label htmlFor="cardCvv" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                      CVV
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="cardCvv"
+                                      name="cardCvv"
+                                      inputMode="numeric"
+                                      value={formData.cardCvv}
+                                      onChange={(e) => handleFormChange("cardCvv", e.target.value)}
+                                      placeholder="123"
+                                      maxLength={4}
+                                      className={`w-full rounded-xl border ${errors.cardCvv ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                    />
+                                    {errors.cardCvv && <p className="mt-1 text-sm text-red-500">{errors.cardCvv}</p>}
+                                  </div>
+                                </div>
 
-                                 {/* Cardholder Name */}
-                                 <div>
-                                   <label htmlFor="cardName" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     Cardholder Name
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="cardName"
-                                     name="cardName"
-                                     value={formData.cardName}
-                                     onChange={(e) => handleFormChange("cardName", e.target.value)}
-                                     placeholder="As shown on card"
-                                     className={`w-full rounded-xl border ${errors.cardName ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.cardName && <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>}
-                                 </div>
+                                {/* Cardholder Name */}
+                                <div>
+                                  <label htmlFor="cardName" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    Cardholder Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="cardName"
+                                    name="cardName"
+                                    value={formData.cardName}
+                                    onChange={(e) => handleFormChange("cardName", e.target.value)}
+                                    placeholder="As shown on card"
+                                    className={`w-full rounded-xl border ${errors.cardName ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.cardName && <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>}
+                                </div>
 
-                                 {/* Card Icons */}
-                                 <div className="flex items-center gap-3 pt-2">
-                                   <span className="text-xs font-bold text-[#6a6a67]">We accept:</span>
-                                   <div className="flex gap-2">
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                       VISA
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                       MC
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                         AMEX
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                         UPI
-                                     </div>
-                                   </div>
-                                 </div>
-                               </div>
-                             )}
+                                {/* Card Icons */}
+                                <div className="flex items-center gap-3 pt-2">
+                                  <span className="text-xs font-bold text-[#6a6a67]">We accept:</span>
+                                  <div className="flex gap-2">
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      VISA
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      MC
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      AMEX
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      UPI
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
 
-                             {/* Security badge */}
-                             <div className="flex items-center justify-center gap-2 pt-2 text-sm text-[#6a6a67]">
-                               <ShieldCheck size={16} className="text-[#20a9ad]" />
-                               <span>256-bit SSL encrypted payment</span>
-                             </div>
-                           </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                            {/* Security badge */}
+                            <div className="flex items-center justify-center gap-2 pt-2 text-sm text-[#6a6a67]">
+                              <ShieldCheck size={16} className="text-[#20a9ad]" />
+                              <span>256-bit SSL encrypted payment</span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                      {/* Card/UPI Form (conditional) */}
-                      <AnimatePresence>
-                       {paymentGroup === "card" && (
-                         <motion.div
-                           initial={{ height: 0, opacity: 0 }}
-                           animate={{ height: "auto", opacity: 1 }}
-                           exit={{ height: 0, opacity: 0 }}
-                           className="overflow-hidden"
-                         >
-                           <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-6">
-                             {/* Toggle: Card vs UPI */}
-                             <div className="flex rounded-full bg-white p-1 shadow-sm">
-                               <button
-                                 type="button"
-                                 onClick={() => {
-                                   setIsUpi(false);
-                                   handleFormChange("paymentMethod", "card");
-                                 }}
-                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
-                                   !isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
-                                 }`}
-                               >
-                                 <CreditCard size={18} />
-                                 Card
-                               </button>
-                               <button
-                                 type="button"
-                                 onClick={() => {
-                                   setIsUpi(true);
-                                   handleFormChange("paymentMethod", "upi");
-                                 }}
-                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
-                                   isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
-                                 }`}
-                               >
-                                 <Smartphone size={18} />
-                                 UPI
-                               </button>
-                             </div>
+                    {/* Card/UPI Form (conditional) */}
+                    <AnimatePresence>
+                      {paymentGroup === "card" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-6">
+                            {/* Toggle: Card vs UPI */}
+                            <div className="flex rounded-full bg-white p-1 shadow-sm">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsUpi(false);
+                                  handleFormChange("paymentMethod", "card");
+                                }}
+                                className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${!isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                  }`}
+                              >
+                                <CreditCard size={18} />
+                                Card
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsUpi(true);
+                                  handleFormChange("paymentMethod", "upi");
+                                }}
+                                className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                  }`}
+                              >
+                                <Smartphone size={18} />
+                                UPI
+                              </button>
+                            </div>
 
-                             {isUpi ? (
-                               /* UPI Fields */
-                               <div className="space-y-4">
-                                 <div>
-                                   <label htmlFor="upiId" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     UPI ID
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="upiId"
-                                     name="upiId"
-                                     value={formData.upiId}
-                                     onChange={(e) => handleFormChange("upiId", e.target.value)}
-                                     placeholder="yourname@paytm"
-                                     className={`w-full rounded-xl border ${errors.upiId ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.upiId && <p className="mt-1 text-sm text-red-500">{errors.upiId}</p>}
-                                   <p className="mt-1 text-xs text-[#6a6a67]">Enter your UPI ID (e.g., name@okaxis, name@paytm)</p>
-                                 </div>
-                               </div>
-                             ) : (
-                               /* Card Fields */
-                               <div className="space-y-4">
-                                 {/* Card Number */}
-                                 <div>
-                                   <label htmlFor="cardNumber" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     Card Number
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="cardNumber"
-                                     name="cardNumber"
-                                     inputMode="numeric"
-                                     value={formData.cardNumber}
-                                     onChange={(e) => handleFormChange("cardNumber", e.target.value)}
-                                     placeholder="1234 5678 9012 3456"
-                                     maxLength={19}
-                                     className={`w-full rounded-xl border ${errors.cardNumber ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.cardNumber && <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>}
-                                 </div>
+                            {isUpi ? (
+                              /* UPI Fields */
+                              <div className="space-y-4">
+                                <div>
+                                  <label htmlFor="upiId" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    UPI ID
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="upiId"
+                                    name="upiId"
+                                    value={formData.upiId}
+                                    onChange={(e) => handleFormChange("upiId", e.target.value)}
+                                    placeholder="yourname@paytm"
+                                    className={`w-full rounded-xl border ${errors.upiId ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.upiId && <p className="mt-1 text-sm text-red-500">{errors.upiId}</p>}
+                                  <p className="mt-1 text-xs text-[#6a6a67]">Enter your UPI ID (e.g., name@okaxis, name@paytm)</p>
+                                </div>
+                              </div>
+                            ) : (
+                              /* Card Fields */
+                              <div className="space-y-4">
+                                {/* Card Number */}
+                                <div>
+                                  <label htmlFor="cardNumber" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    Card Number
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="cardNumber"
+                                    name="cardNumber"
+                                    inputMode="numeric"
+                                    value={formData.cardNumber}
+                                    onChange={(e) => handleFormChange("cardNumber", e.target.value)}
+                                    placeholder="1234 5678 9012 3456"
+                                    maxLength={19}
+                                    className={`w-full rounded-xl border ${errors.cardNumber ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.cardNumber && <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>}
+                                </div>
 
-                                 {/* Expiry & CVV */}
-                                 <div className="grid grid-cols-2 gap-4">
-                                   <div>
-                                     <label htmlFor="cardExpiry" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                       Expiry Date
-                                     </label>
-                                     <input
-                                       type="text"
-                                       id="cardExpiry"
-                                       name="cardExpiry"
-                                       inputMode="numeric"
-                                       value={formData.cardExpiry}
-                                       onChange={(e) => handleFormChange("cardExpiry", e.target.value)}
-                                       placeholder="MM/YY"
-                                       maxLength={5}
-                                       className={`w-full rounded-xl border ${errors.cardExpiry ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                     />
-                                     {errors.cardExpiry && <p className="mt-1 text-sm text-red-500">{errors.cardExpiry}</p>}
-                                   </div>
-                                   <div>
-                                     <label htmlFor="cardCvv" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                       CVV
-                                     </label>
-                                     <input
-                                       type="text"
-                                       id="cardCvv"
-                                       name="cardCvv"
-                                       inputMode="numeric"
-                                       value={formData.cardCvv}
-                                       onChange={(e) => handleFormChange("cardCvv", e.target.value)}
-                                       placeholder="123"
-                                       maxLength={4}
-                                       className={`w-full rounded-xl border ${errors.cardCvv ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                     />
-                                     {errors.cardCvv && <p className="mt-1 text-sm text-red-500">{errors.cardCvv}</p>}
-                                   </div>
-                                 </div>
+                                {/* Expiry & CVV */}
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <label htmlFor="cardExpiry" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                      Expiry Date
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="cardExpiry"
+                                      name="cardExpiry"
+                                      inputMode="numeric"
+                                      value={formData.cardExpiry}
+                                      onChange={(e) => handleFormChange("cardExpiry", e.target.value)}
+                                      placeholder="MM/YY"
+                                      maxLength={5}
+                                      className={`w-full rounded-xl border ${errors.cardExpiry ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                    />
+                                    {errors.cardExpiry && <p className="mt-1 text-sm text-red-500">{errors.cardExpiry}</p>}
+                                  </div>
+                                  <div>
+                                    <label htmlFor="cardCvv" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                      CVV
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id="cardCvv"
+                                      name="cardCvv"
+                                      inputMode="numeric"
+                                      value={formData.cardCvv}
+                                      onChange={(e) => handleFormChange("cardCvv", e.target.value)}
+                                      placeholder="123"
+                                      maxLength={4}
+                                      className={`w-full rounded-xl border ${errors.cardCvv ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                    />
+                                    {errors.cardCvv && <p className="mt-1 text-sm text-red-500">{errors.cardCvv}</p>}
+                                  </div>
+                                </div>
 
-                                 {/* Cardholder Name */}
-                                 <div>
-                                   <label htmlFor="cardName" className="mb-2 block text-sm font-bold text-[#0e1b33]">
-                                     Cardholder Name
-                                   </label>
-                                   <input
-                                     type="text"
-                                     id="cardName"
-                                     name="cardName"
-                                     value={formData.cardName}
-                                     onChange={(e) => handleFormChange("cardName", e.target.value)}
-                                     placeholder="As shown on card"
-                                     className={`w-full rounded-xl border ${errors.cardName ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
-                                   />
-                                   {errors.cardName && <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>}
-                                 </div>
+                                {/* Cardholder Name */}
+                                <div>
+                                  <label htmlFor="cardName" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                    Cardholder Name
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="cardName"
+                                    name="cardName"
+                                    value={formData.cardName}
+                                    onChange={(e) => handleFormChange("cardName", e.target.value)}
+                                    placeholder="As shown on card"
+                                    className={`w-full rounded-xl border ${errors.cardName ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                  />
+                                  {errors.cardName && <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>}
+                                </div>
 
-                                 {/* Card Icons */}
-                                 <div className="flex items-center gap-3 pt-2">
-                                   <span className="text-xs font-bold text-[#6a6a67]">We accept:</span>
-                                   <div className="flex gap-2">
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                       VISA
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                       MC
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                         AMEX
-                                     </div>
-                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
-                                         UPI
-                                     </div>
-                                   </div>
-                                 </div>
-                               </div>
-                             )}
+                                {/* Card Icons */}
+                                <div className="flex items-center gap-3 pt-2">
+                                  <span className="text-xs font-bold text-[#6a6a67]">We accept:</span>
+                                  <div className="flex gap-2">
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      VISA
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      MC
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      AMEX
+                                    </div>
+                                    <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                      UPI
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
 
-                             {/* Security badge */}
-                             <div className="flex items-center justify-center gap-2 pt-2 text-sm text-[#6a6a67]">
-                               <ShieldCheck size={16} className="text-[#20a9ad]" />
-                               <span>256-bit SSL encrypted payment</span>
-                             </div>
-                           </div>
-                         </motion.div>
-                       )}
-                     </AnimatePresence>
+                            {/* Security badge */}
+                            <div className="flex items-center justify-center gap-2 pt-2 text-sm text-[#6a6a67]">
+                              <ShieldCheck size={16} className="text-[#20a9ad]" />
+                              <span>256-bit SSL encrypted payment</span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
-                     {/* Insurance JotForm (conditional) */}
-                     <AnimatePresence>
-                       {paymentGroup === "insurance" && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="overflow-hidden"
-                          >
-                            <InsuranceJotform
-                             items={displayItems
-                               .filter((item) => {
-                                 const product = PRODUCTS.find((p) => p.id === item.productId);
-                                 return product?.insuranceCovered;
-                               })
-                               .map((item) => ({
-                                 productId: item.productId,
-                                 name: item.name,
-                                 sku: item.sku,
-                                 price: item.price,
-                                 quantity: item.quantity,
-                               }))}
-                             onFormSubmitted={() => setInsuranceFormSubmitted(true)}
-                           />
-                            {errors.insuranceForm && (
-                               <p className="mt-3 flex items-center gap-2 text-sm text-red-500">
-                                 <AlertCircle size={16} />
-                                 {errors.insuranceForm}
-                               </p>
-                             )}
-                           </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </section>
-
-                  {/* Terms & Save Info */}
-                  <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.saveInfo}
-                        onChange={(e) => handleFormChange("saveInfo", e.target.checked)}
-                        className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
-                      />
-                      <span className="text-sm text-[#0e1b33]">
-                        Save my information for faster checkout next time
-                      </span>
-                    </label>
-
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.termsAccepted}
-                        onChange={(e) => handleFormChange("termsAccepted", e.target.checked)}
-                        className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
-                      />
-                      <span className="text-sm text-[#0e1b33]">
-                        I agree to the{" "}
-                        <Link href="/terms" className="text-[#20a9ad] hover:underline">
-                          Terms & Conditions
-                        </Link>{" "}
-                        and{" "}
-                        <Link href="/privacy" className="text-[#20a9ad] hover:underline">
-                          Privacy Policy
-                        </Link>
-                      </span>
-                    </label>
-
-                    {errors.terms && (
-                      <p className="flex items-center gap-2 text-sm text-red-500">
-                        <AlertCircle size={16} />
-                        {errors.terms}
-                      </p>
-                    )}
+                    {/* Insurance JotForm (conditional) */}
+                    <AnimatePresence>
+                      {paymentGroup === "insurance" && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <InsuranceJotform
+                            items={displayItems
+                              .filter((item) => {
+                                const product = PRODUCTS.find((p) => p.id === item.productId);
+                                return product?.insuranceCovered;
+                              })
+                              .map((item) => ({
+                                productId: item.productId,
+                                name: item.name,
+                                sku: item.sku,
+                                price: item.price,
+                                quantity: item.quantity,
+                              }))}
+                            onFormSubmitted={() => {
+                              setInsuranceFormSubmitted(true);
+                              clearCart();
+                            }}
+                          />
+                          {errors.insuranceForm && (
+                            <p className="mt-3 flex items-center gap-2 text-sm text-red-500">
+                              <AlertCircle size={16} />
+                              {errors.insuranceForm}
+                            </p>
+                          )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </section>
 
-                  {/* Continue Button */}
-                  <motion.button
-                    onClick={handleContinueToReview}
-                    className="w-full rounded-2xl bg-[#20a9ad] py-5 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Continue to Review
-                  </motion.button>
+                  {/* Terms & Save Info */}
+                  {paymentGroup !== "insurance" && (
+                    <>
+                      <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
+                        <label className="flex items-start gap-3 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formData.saveInfo}
+                            onChange={(e) => handleFormChange("saveInfo", e.target.checked)}
+                            className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
+                          />
+                          <span className="text-sm text-[#0e1b33]">
+                            Save my information for faster checkout next time
+                          </span>
+                        </label>
 
-                  {/* Step 2: Review */}
+                        <label className="flex items-start gap-3 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formData.termsAccepted}
+                            onChange={(e) => handleFormChange("termsAccepted", e.target.checked)}
+                            className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
+                          />
+                          <span className="text-sm text-[#0e1b33]">
+                            I agree to the{" "}
+                            <Link href="/terms" className="text-[#20a9ad] hover:underline">
+                              Terms & Conditions
+                            </Link>{" "}
+                            and{" "}
+                            <Link href="/privacy" className="text-[#20a9ad] hover:underline">
+                              Privacy Policy
+                            </Link>
+                          </span>
+                        </label>
+
+                        {errors.terms && (
+                          <p className="flex items-center gap-2 text-sm text-red-500">
+                            <AlertCircle size={16} />
+                            {errors.terms}
+                          </p>
+                        )}
+                      </section>
+
+                      {/* Continue Button */}
+                      <motion.button
+                        onClick={handleContinueToReview}
+                        className="w-full rounded-2xl bg-[#20a9ad] py-5 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        Continue to Review
+                      </motion.button>
+                    </>
+                  )}
+
                   {step === "review" && (
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -783,10 +728,10 @@ function CheckoutContent() {
                             {paymentMethod === "cod"
                               ? "Cash on Delivery"
                               : paymentMethod === "insurance"
-                              ? "Insurance Claim"
-                              : isUpi
-                              ? `UPI: ${formData.upiId}`
-                              : `Card ending in ${formData.cardNumber?.slice(-4)}`}
+                                ? "Insurance Claim"
+                                : isUpi
+                                  ? `UPI: ${formData.upiId}`
+                                  : `Card ending in ${formData.cardNumber?.slice(-4)}`}
                           </p>
                         </div>
                       </div>
@@ -827,21 +772,19 @@ function CheckoutContent() {
             total={total}
             onUpdateQuantity={
               productFromUrl
-                ? () => {} // Disabled for Buy Now (quantity managed locally via custom UI)
+                ? () => { }
                 : updateQuantity
             }
             onRemoveItem={
               productFromUrl
-                ? () => router.back() // Go back for Buy Now
+                ? () => router.back()
                 : (productId: string) => {
-                    // Check if this is the last item before removing
-                    const willBeEmpty = items.length === 1;
-                    removeItem(productId);
-                    // Redirect to product listing if cart becomes empty
-                    if (willBeEmpty) {
-                      router.push("/");
-                    }
+                  const willBeEmpty = items.length === 1;
+                  removeItem(productId);
+                  if (willBeEmpty) {
+                    router.push("/");
                   }
+                }
             }
             isBuyNowMode={!!productFromUrl}
             buyNowQuantity={buyNowQuantity}
