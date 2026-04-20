@@ -7,11 +7,13 @@ import { ArrowLeft, ShoppingCart, Star, Check } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products/products";
 import { useCart } from "@/context/cart-context";
+import { RelatedCards } from "@/components/products/related-cards";
+import { Footer } from "@castor/ui";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const product = PRODUCTS.find((p) => p.slug === slug);
-   const { addItem } = useCart();
+  const { addItem } = useCart();
 
   if (!product) {
     return (
@@ -324,8 +326,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
             </div>
           </div>
+
+          {/* Related Products */}
+          <RelatedCards currentProduct={product} />
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
