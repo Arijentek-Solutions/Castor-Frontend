@@ -24,17 +24,40 @@ function OrderSuccessContent() {
   const router = useRouter();
   const orderId = searchParams.get("orderId");
 
-  // Initialize order from localStorage
-  const [order] = useState<Order | null>(() => {
-    if (typeof window === 'undefined') return null;
-    if (!orderId) return null;
+  // Initialize order from localStorage (client-only to prevent hydration mismatch)
+  const [order, setOrder] = useState<Order | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (!orderId) return;
     try {
       const stored = localStorage.getItem(`castor:ecommerce:order:${orderId}`);
-      return stored ? JSON.parse(stored) : null;
+      if (stored) {
+        setOrder(JSON.parse(stored));
+      }
     } catch {
-      return null;
+      // Ignore errors
     }
-  });
+  }, [orderId]);
+
+  // Don't render until mounted
+  if (!mounted) {
+    return (
+      <main className="min-h-screen bg-[#f7faf9] flex items-center justify-center">
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="mx-auto mb-6 h-16 w-16"
+          >
+            <Package size={64} className="text-[#20a9ad]" />
+          </motion.div>
+          <p className="text-lg font-bold text-[#0e1b33]">Loading order details...</p>
+        </div>
+      </main>
+    );
+  }
 
   // Redirect if no orderId or order not found
   useEffect(() => {

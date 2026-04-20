@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, CheckCircle, ArrowLeft, ShieldCheck, Truck, RotateCcw, AlertCircle, CreditCard, Smartphone } from "lucide-react";
@@ -10,6 +10,7 @@ import { useCart } from "@/context/cart-context";
 import { PaymentSelector } from "@/components/checkout/payment-selector";
 import { ContactAddressForm } from "@/components/checkout/contact-address-form";
 import { OrderSummarySidebar } from "@/components/checkout/order-summary-sidebar";
+import { InsuranceJotform } from "@/components/checkout/insurance-jotform";
 import type { CheckoutFormData, PaymentMethod, Order } from "@/types/checkout";
 import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
 import { PRODUCTS } from "@/lib/products/products";
@@ -27,6 +28,11 @@ function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { items, subtotal, clearCart, updateQuantity, removeItem } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Get product from URL query params (Buy Now flow)
   const productFromUrl: Product | null = (() => {
@@ -53,13 +59,22 @@ function CheckoutContent() {
 
   const displaySubtotal = productFromUrl ? productFromUrl.price * buyNowQuantity : subtotal;
 
+  const hasInsuranceItems = useMemo(() => {
+    if (productFromUrl) return productFromUrl.insuranceCovered;
+    return items.some((item) => {
+      const product = PRODUCTS.find((p) => p.id === item.productId);
+      return product?.insuranceCovered ?? false;
+    });
+  }, [productFromUrl, items]);
+
   const [step, setStep] = useState<"form" | "review" | "processing" | "success">("form");
-  const [paymentGroup, setPaymentGroup] = useState<"cod" | "card">("cod");
+  const [paymentGroup, setPaymentGroup] = useState<"cod" | "card" | "insurance">("cod");
   const [isUpi, setIsUpi] = useState(false);
+  const [insuranceFormSubmitted, setInsuranceFormSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Derived: final payment method
-  const paymentMethod: PaymentMethod = paymentGroup === "cod" ? "cod" : isUpi ? "upi" : "card";
+  const paymentMethod: PaymentMethod = paymentGroup === "cod" ? "cod" : paymentGroup === "insurance" ? "insurance" : isUpi ? "upi" : "card";
 
   // Form state
   const [formData, setFormData] = useState<CheckoutFormData>({
@@ -135,6 +150,10 @@ function CheckoutContent() {
        }
      }
 
+     if (paymentGroup === "insurance" && !insuranceFormSubmitted) {
+       newErrors.insuranceForm = "Please submit the insurance claim form before continuing";
+     }
+
      if (!formData.termsAccepted) newErrors.terms = "You must accept the terms and conditions";
 
     setErrors(newErrors);
@@ -179,7 +198,7 @@ function CheckoutContent() {
         },
         payment: {
           method: paymentMethod,
-          status: paymentMethod === "cod" ? "pending" : "paid",
+          status: paymentMethod === "cod" || paymentMethod === "insurance" ? "pending" : "paid",
           ...(paymentMethod === "card" && !isUpi
             ? { lastFour: formData.cardNumber?.slice(-4) }
             : {}),
@@ -214,6 +233,11 @@ function CheckoutContent() {
       router.push(`/order-success?orderId=${orderId}`);
     }, 2000);
   };
+  // Don't render until client is mounted and cart is loaded from localStorage
+  if (!mounted) {
+    return null;
+  }
+
 
   return (
     <main className="min-h-screen bg-[#f7faf9] px-4 py-10 sm:px-6 lg:px-8 lg:py-16">
@@ -297,9 +321,13 @@ function CheckoutContent() {
                     onChange={(data) => setFormData((prev) => ({ ...prev, ...data }))}
                   />
 
-                   {/* Payment Method */}
-                   <section className="space-y-4">
-                     <PaymentSelector selected={paymentGroup} onChange={(m) => setPaymentGroup(m)} />
+                    {/* Payment Method */}
+                    <section className="space-y-4">
+                      <PaymentSelector
+                        selected={paymentGroup}
+                        onChange={(m) => setPaymentGroup(m)}
+                        hasInsuranceItems={hasInsuranceItems}
+                      />
 
                      {/* Card/UPI Form (conditional) */}
                      <AnimatePresence>
@@ -465,10 +493,212 @@ function CheckoutContent() {
                                <span>256-bit SSL encrypted payment</span>
                              </div>
                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      {/* Card/UPI Form (conditional) */}
+                      <AnimatePresence>
+                       {paymentGroup === "card" && (
+                         <motion.div
+                           initial={{ height: 0, opacity: 0 }}
+                           animate={{ height: "auto", opacity: 1 }}
+                           exit={{ height: 0, opacity: 0 }}
+                           className="overflow-hidden"
+                         >
+                           <div className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/50 p-6">
+                             {/* Toggle: Card vs UPI */}
+                             <div className="flex rounded-full bg-white p-1 shadow-sm">
+                               <button
+                                 type="button"
+                                 onClick={() => {
+                                   setIsUpi(false);
+                                   handleFormChange("paymentMethod", "card");
+                                 }}
+                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
+                                   !isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                 }`}
+                               >
+                                 <CreditCard size={18} />
+                                 Card
+                               </button>
+                               <button
+                                 type="button"
+                                 onClick={() => {
+                                   setIsUpi(true);
+                                   handleFormChange("paymentMethod", "upi");
+                                 }}
+                                 className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
+                                   isUpi ? "bg-[#20a9ad] text-white shadow-md" : "text-slate-600 hover:text-[#0e1b33]"
+                                 }`}
+                               >
+                                 <Smartphone size={18} />
+                                 UPI
+                               </button>
+                             </div>
+
+                             {isUpi ? (
+                               /* UPI Fields */
+                               <div className="space-y-4">
+                                 <div>
+                                   <label htmlFor="upiId" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                     UPI ID
+                                   </label>
+                                   <input
+                                     type="text"
+                                     id="upiId"
+                                     name="upiId"
+                                     value={formData.upiId}
+                                     onChange={(e) => handleFormChange("upiId", e.target.value)}
+                                     placeholder="yourname@paytm"
+                                     className={`w-full rounded-xl border ${errors.upiId ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                   />
+                                   {errors.upiId && <p className="mt-1 text-sm text-red-500">{errors.upiId}</p>}
+                                   <p className="mt-1 text-xs text-[#6a6a67]">Enter your UPI ID (e.g., name@okaxis, name@paytm)</p>
+                                 </div>
+                               </div>
+                             ) : (
+                               /* Card Fields */
+                               <div className="space-y-4">
+                                 {/* Card Number */}
+                                 <div>
+                                   <label htmlFor="cardNumber" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                     Card Number
+                                   </label>
+                                   <input
+                                     type="text"
+                                     id="cardNumber"
+                                     name="cardNumber"
+                                     inputMode="numeric"
+                                     value={formData.cardNumber}
+                                     onChange={(e) => handleFormChange("cardNumber", e.target.value)}
+                                     placeholder="1234 5678 9012 3456"
+                                     maxLength={19}
+                                     className={`w-full rounded-xl border ${errors.cardNumber ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                   />
+                                   {errors.cardNumber && <p className="mt-1 text-sm text-red-500">{errors.cardNumber}</p>}
+                                 </div>
+
+                                 {/* Expiry & CVV */}
+                                 <div className="grid grid-cols-2 gap-4">
+                                   <div>
+                                     <label htmlFor="cardExpiry" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                       Expiry Date
+                                     </label>
+                                     <input
+                                       type="text"
+                                       id="cardExpiry"
+                                       name="cardExpiry"
+                                       inputMode="numeric"
+                                       value={formData.cardExpiry}
+                                       onChange={(e) => handleFormChange("cardExpiry", e.target.value)}
+                                       placeholder="MM/YY"
+                                       maxLength={5}
+                                       className={`w-full rounded-xl border ${errors.cardExpiry ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                     />
+                                     {errors.cardExpiry && <p className="mt-1 text-sm text-red-500">{errors.cardExpiry}</p>}
+                                   </div>
+                                   <div>
+                                     <label htmlFor="cardCvv" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                       CVV
+                                     </label>
+                                     <input
+                                       type="text"
+                                       id="cardCvv"
+                                       name="cardCvv"
+                                       inputMode="numeric"
+                                       value={formData.cardCvv}
+                                       onChange={(e) => handleFormChange("cardCvv", e.target.value)}
+                                       placeholder="123"
+                                       maxLength={4}
+                                       className={`w-full rounded-xl border ${errors.cardCvv ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                     />
+                                     {errors.cardCvv && <p className="mt-1 text-sm text-red-500">{errors.cardCvv}</p>}
+                                   </div>
+                                 </div>
+
+                                 {/* Cardholder Name */}
+                                 <div>
+                                   <label htmlFor="cardName" className="mb-2 block text-sm font-bold text-[#0e1b33]">
+                                     Cardholder Name
+                                   </label>
+                                   <input
+                                     type="text"
+                                     id="cardName"
+                                     name="cardName"
+                                     value={formData.cardName}
+                                     onChange={(e) => handleFormChange("cardName", e.target.value)}
+                                     placeholder="As shown on card"
+                                     className={`w-full rounded-xl border ${errors.cardName ? "border-red-500" : "border-slate-200"} bg-white px-4 py-3 text-[#0e1b33] placeholder:text-slate-400 focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
+                                   />
+                                   {errors.cardName && <p className="mt-1 text-sm text-red-500">{errors.cardName}</p>}
+                                 </div>
+
+                                 {/* Card Icons */}
+                                 <div className="flex items-center gap-3 pt-2">
+                                   <span className="text-xs font-bold text-[#6a6a67]">We accept:</span>
+                                   <div className="flex gap-2">
+                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                       VISA
+                                     </div>
+                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                       MC
+                                     </div>
+                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                         AMEX
+                                     </div>
+                                     <div className="rounded-md bg-white px-2 py-1 text-xs font-bold text-[#0e1b33] shadow-sm border border-slate-200">
+                                         UPI
+                                     </div>
+                                   </div>
+                                 </div>
+                               </div>
+                             )}
+
+                             {/* Security badge */}
+                             <div className="flex items-center justify-center gap-2 pt-2 text-sm text-[#6a6a67]">
+                               <ShieldCheck size={16} className="text-[#20a9ad]" />
+                               <span>256-bit SSL encrypted payment</span>
+                             </div>
+                           </div>
                          </motion.div>
                        )}
                      </AnimatePresence>
-                   </section>
+
+                     {/* Insurance JotForm (conditional) */}
+                     <AnimatePresence>
+                       {paymentGroup === "insurance" && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <InsuranceJotform
+                             items={displayItems
+                               .filter((item) => {
+                                 const product = PRODUCTS.find((p) => p.id === item.productId);
+                                 return product?.insuranceCovered;
+                               })
+                               .map((item) => ({
+                                 productId: item.productId,
+                                 name: item.name,
+                                 sku: item.sku,
+                                 price: item.price,
+                                 quantity: item.quantity,
+                               }))}
+                             onFormSubmitted={() => setInsuranceFormSubmitted(true)}
+                           />
+                            {errors.insuranceForm && (
+                               <p className="mt-3 flex items-center gap-2 text-sm text-red-500">
+                                 <AlertCircle size={16} />
+                                 {errors.insuranceForm}
+                               </p>
+                             )}
+                           </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </section>
 
                   {/* Terms & Save Info */}
                   <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
@@ -552,6 +782,8 @@ function CheckoutContent() {
                           <p className="font-bold text-[#0e1b33]">
                             {paymentMethod === "cod"
                               ? "Cash on Delivery"
+                              : paymentMethod === "insurance"
+                              ? "Insurance Claim"
                               : isUpi
                               ? `UPI: ${formData.upiId}`
                               : `Card ending in ${formData.cardNumber?.slice(-4)}`}
@@ -577,7 +809,7 @@ function CheckoutContent() {
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Place Order — {formatCartCurrency(total)}
+                        Place Order â€” {formatCartCurrency(total)}
                       </motion.button>
                     </motion.div>
                   )}

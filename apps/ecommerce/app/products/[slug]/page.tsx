@@ -3,7 +3,7 @@
 import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShoppingCart, Star, Check } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products/products";
 import { useCart } from "@/context/cart-context";
@@ -37,6 +37,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       price: product.price,
       image: product.image,
       workflowType: product.workflowType,
+      insuranceCovered: product.insuranceCovered,
     });
   };
 
@@ -96,6 +97,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               <div className="inline-flex items-center rounded-[8px] border border-[rgba(32,169,173,0.2)] bg-[rgba(32,169,173,0.1)] px-[9px] py-[3px] text-xs font-medium text-[#20a9ad] w-fit">
                 {product.manufacturer}
               </div>
+
+              {product.insuranceCovered && (
+                <div className="inline-flex items-center gap-1.5 rounded-[8px] border border-[rgba(0,130,54,0.2)] bg-[#f0fdf4] px-[9px] py-[3px] text-xs font-medium text-[#008236] w-fit">
+                  <ShieldCheck size={14} />
+                  Insurance Covered
+                </div>
+              )}
 
               {/* Title */}
               <h1 className="text-[36px] font-black leading-[40px] tracking-[-0.72px] text-[#0e1b33]">
@@ -180,6 +188,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     <span className="text-[12px] font-medium text-[#008236]">
                       ACTIVE
                     </span>
+                  </div>
+                </div>
+              )}
+
+              {product.insuranceCovered && (
+                <div className="rounded-2xl border border-[rgba(0,130,54,0.15)] bg-[#f0fdf4] p-4">
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck size={20} className="mt-0.5 text-[#008236] shrink-0" />
+                    <div>
+                      <p className="text-sm font-bold text-[#0e1b33]">Eligible for Insurance Coverage</p>
+                      <p className="mt-1 text-xs text-[#6a6a67]">
+                        This product can be purchased through insurance. Select &quot;With Insurance&quot; at checkout and complete the insurance claim form.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

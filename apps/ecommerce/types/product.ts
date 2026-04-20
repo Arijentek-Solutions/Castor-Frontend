@@ -15,7 +15,7 @@ export interface Product {
   reviewCount: number;
   weight: string;
   workflowType: ProductWorkflowType;
-  // Extended fields
+  insuranceCovered: boolean;
   hcpcs?: string;
   billingUomUnits?: string;
   uomSetName?: string;

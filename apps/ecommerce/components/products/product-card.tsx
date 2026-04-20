@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { useCart } from "@/context/cart-context";
@@ -29,6 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
       image: product.image,
       price: product.price,
       workflowType: product.workflowType,
+      insuranceCovered: product.insuranceCovered,
     });
   };
 
@@ -61,6 +62,13 @@ export function ProductCard({ product }: ProductCardProps) {
             fill
             className="object-contain p-2 transition-transform duration-500 group-hover:scale-110 lg:p-4"
           />
+          {product.insuranceCovered && (
+            <div className="absolute top-1 left-1 flex items-center gap-0.5 rounded-md bg-[#f0fdf4] border border-[rgba(0,130,54,0.2)] px-1.5 py-0.5 lg:top-2 lg:left-2 lg:px-2 lg:py-1">
+              <ShieldCheck size={10} className="text-[#008236] lg:hidden" />
+              <ShieldCheck size={14} className="text-[#008236] hidden lg:block" />
+              <span className="text-[8px] font-medium text-[#008236] lg:text-[10px]">Insurance</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}
