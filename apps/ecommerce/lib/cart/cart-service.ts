@@ -27,7 +27,7 @@ function normalizeCartItem(item: CartItem): CartItem {
 }
 
 export function canAddToCart(product: CartProductInput) {
-  return !product.workflowType || product.workflowType === "self-pay";
+  return !product.workflowType || product.workflowType === "self-pay" || product.workflowType === "insurance";
 }
 
 export function createCartItem(
@@ -46,6 +46,7 @@ export function createCartItem(
     image: product.image,
     price: normalizePrice(product.price),
     quantity: clampQuantity(quantity),
+    insuranceCovered: product.insuranceCovered,
   };
 }
 

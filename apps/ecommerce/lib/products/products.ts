@@ -19,7 +19,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MSCADVHC80",
@@ -39,7 +40,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "FCE1385B",
@@ -58,7 +60,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MDR107004L",
@@ -78,7 +81,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MDR107003E",
@@ -98,7 +102,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "K1186V22E",
@@ -118,7 +123,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MDS88200D",
@@ -138,7 +144,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MDR211892R",
@@ -158,7 +165,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "KX228V21E",
@@ -178,7 +186,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDT24A10",
@@ -198,7 +207,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDTSUPAIRB42",
@@ -218,7 +228,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "COSB337",
@@ -237,10 +248,11 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
-    "id": "MDS89697",
+    "id": "COSB337",
     "slug": "medline-half-rail-for-medline-homecare-beds",
     "sku": "MDS89697",
     "name": "Medline Half Rail for Medline Homecare Beds",
@@ -257,7 +269,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "K1206V22E",
@@ -277,7 +290,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS86410W54",
@@ -297,7 +311,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS86850EBS8",
@@ -317,7 +332,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS86830EBLS8",
@@ -337,7 +353,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS808550",
@@ -357,7 +374,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "FCE1232RSRN",
@@ -377,7 +395,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS86800XW",
@@ -397,7 +416,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "FCE1232RHFQO2",
@@ -416,7 +436,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS500TPZ",
@@ -436,7 +457,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS926301",
@@ -455,7 +477,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDSBEDCART",
@@ -474,7 +497,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "K1206V22S",
@@ -494,7 +518,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSC8801EPZ",
@@ -513,7 +538,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "insurance",
+    "insuranceCovered": true
   },
   {
     "id": "MDS89697BARL",
@@ -533,7 +559,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSCPRC21816CS",
@@ -553,7 +580,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "BDD442021",
@@ -571,7 +599,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSCPRC22016CS",
@@ -591,7 +620,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSC8444H",
@@ -610,7 +640,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "COSBPR300",
@@ -629,7 +660,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS86800XWS",
@@ -649,7 +681,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "COSBPW337",
@@ -668,7 +701,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "G2-100KHX1",
@@ -688,7 +722,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "FCE42KIT",
@@ -707,7 +742,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "RLL-230A-8B",
@@ -727,7 +763,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "RLL-230A-8BG",
@@ -747,7 +784,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSC2148H",
@@ -766,7 +804,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "PVC513",
@@ -784,7 +823,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "G1-301DX2",
@@ -804,7 +844,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "FCE1232HDW",
@@ -824,7 +865,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MKNMM0049H",
@@ -842,7 +884,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "FG100M",
@@ -861,7 +904,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "FCET01RHFXW",
@@ -880,7 +924,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "HCS70004",
@@ -899,7 +944,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MSC64610EPH",
@@ -918,7 +964,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "ADC427PKH",
@@ -937,7 +984,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "MDS104015",
@@ -957,7 +1005,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   },
   {
     "id": "G3-100KBX2",
@@ -977,6 +1026,7 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "self-pay"
+    "workflowType": "self-pay",
+    "insuranceCovered": false
   }
 ];

@@ -8,6 +8,7 @@ export type CartProductInput = {
   image: string;
   price: number;
   workflowType?: CartWorkflowType;
+  insuranceCovered?: boolean;
 };
 
 export type CartItem = {
@@ -18,6 +19,7 @@ export type CartItem = {
   image: string;
   price: number;
   quantity: number;
+  insuranceCovered?: boolean;
 };
 
 export type CartTotals = {

@@ -1,4 +1,4 @@
-export type PaymentMethod = "cod" | "card" | "upi";
+export type PaymentMethod = "cod" | "card" | "upi" | "insurance";
 
 export type CheckoutFormData = {
   // Contact

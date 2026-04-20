@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { CartLineItem } from "@/components/cart/cart-item";
@@ -18,6 +19,17 @@ export default function CartPage() {
     decreaseQuantity,
     updateQuantity,
   } = useCart();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render until client is mounted and cart is loaded from localStorage
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <main className="min-h-screen bg-[#f7faf9] px-4 py-14 sm:px-6 lg:px-8 lg:py-20">

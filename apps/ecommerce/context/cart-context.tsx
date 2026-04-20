@@ -57,15 +57,29 @@ function writeStoredCart(items: CartItem[]) {
   window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
 }
 
-export function 
+export function
 CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(readStoredCart);
+  // Initialize with empty state to ensure server/client consistency
+  // Items will be loaded from localStorage after mount
+  const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [removedItemName, setRemovedItemName] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
+  // Load cart from localStorage after mount (client-only)
   useEffect(() => {
+    setMounted(true);
+    const storedCart = readStoredCart();
+    if (storedCart.length > 0) {
+      setItems(storedCart);
+    }
+  }, []);
+
+  // Persist cart to localStorage
+  useEffect(() => {
+    if (!mounted) return;
     writeStoredCart(items);
-  }, [items]);
+  }, [items, mounted]);
 
   // Show toast when item is removed
   useEffect(() => {
