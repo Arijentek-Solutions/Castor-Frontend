@@ -55,7 +55,8 @@ export function ProductListing() {
                 (p) =>
                     p.name.toLowerCase().includes(query) ||
                     p.description.toLowerCase().includes(query) ||
-                    p.sku.toLowerCase().includes(query)
+                    p.sku.toLowerCase().includes(query) ||
+                    (p.hcpcs && p.hcpcs.toLowerCase().includes(query))
             );
         }
 

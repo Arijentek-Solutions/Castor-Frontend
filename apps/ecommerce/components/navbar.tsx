@@ -52,7 +52,7 @@ export function Navbar({
               <Search size={14} className="text-slate-400" />
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Search name or HCPCS..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 className="h-full w-full bg-transparent px-2 text-[12px] text-slate-700 outline-none"
@@ -91,7 +91,7 @@ export function Navbar({
                 </div>
                 <input
                   type="text"
-                  placeholder="Search equipment, supplies..."
+                  placeholder="Search by product name or HCPCS code..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
                   className="h-full flex-1 bg-transparent pr-4 text-[14px] text-slate-700 outline-none placeholder:text-[#717182]"
