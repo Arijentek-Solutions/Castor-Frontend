@@ -6,16 +6,16 @@ import { ShieldCheck, AlertCircle, CheckCircle } from "lucide-react";
 const JOTFORM_BASE_URL = "https://form.jotform.com/261063439018050";
 
 type InsuranceItem = {
-  productId: string;
-  name: string;
-  sku: string;
-  price: number;
-  quantity: number;
+  readonly productId: string;
+  readonly name: string;
+  readonly sku: string;
+  readonly price: number;
+  readonly quantity: number;
 };
 
 type InsuranceJotformProps = {
-  items: InsuranceItem[];
-  onFormSubmitted: () => void;
+  readonly items: readonly InsuranceItem[];
+  readonly onFormSubmitted: () => void;
 };
 
 export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformProps) {
@@ -30,7 +30,6 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
   const jotformUrl = useMemo(() => {
     const params = new URLSearchParams();
 
-    // Format the product details in a readable way for the admin
     const productDetails = items.length === 1 
       ? `${items[0].name} (Qty: ${items[0].quantity})`
       : items.map((i, index) => `${index + 1}. ${i.name} (Qty: ${i.quantity})`).join("\n");
@@ -41,11 +40,7 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
     const productIds = items.map((i) => i.productId).join("; ");
     const productQuantities = items.map((i) => i.quantity).join("; ");
     const totalAmount = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-
-    // Set the specific Unique Name to our formatted string
     params.set("product", productDetails);
-
-    // Keep the rest in case they are used elsewhere
     params.set("productName", productNames);
     params.set("productSku", productSkus);
     params.set("productPrice", productPrices);
@@ -53,18 +48,21 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
     params.set("productQuantity", productQuantities);
     params.set("totalAmount", `$${totalAmount.toFixed(2)}`);
     params.set("itemCount", items.length.toString());
-    return `${JOTFORM_BASE_URL}?${params.toString().replace(/\+/g, "%20")}`;
+    return `${JOTFORM_BASE_URL}?${params.toString().replaceAll("+", "%20")}`;
   }, [items]);
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
-      // JotForm sends string messages like "submission-completed:formId"
+      const expectedOrigin = new URL(JOTFORM_BASE_URL).origin;
+      if (event.origin !== expectedOrigin) {
+        return;
+      }
       if (typeof event.data === "string" && event.data.includes("submission-completed")) {
         setIsFormSubmitted(true);
         onFormSubmitted();
         return;
       }
-      // Fallback for object-based events
+
       if (event.data && typeof event.data === "object") {
         if (
           event.data.action === "submission-completed" ||
