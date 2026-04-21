@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, Filter, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, Filter, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useCart } from "@/context/cart-context";

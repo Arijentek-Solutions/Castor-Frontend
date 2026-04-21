@@ -23,8 +23,6 @@ function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get("orderId");
-
-  // Initialize order from localStorage (client-only to prevent hydration mismatch)
   const [order, setOrder] = useState<Order | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -41,7 +39,6 @@ function OrderSuccessContent() {
     }
   }, [orderId]);
 
-  // Don't render until mounted
   if (!mounted) {
     return (
       <main className="min-h-screen bg-[#f7faf9] flex items-center justify-center">
@@ -59,7 +56,6 @@ function OrderSuccessContent() {
     );
   }
 
-  // Redirect if no orderId or order not found
   useEffect(() => {
     if (!orderId) {
       router.push("/");
