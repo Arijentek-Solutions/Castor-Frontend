@@ -763,48 +763,50 @@ function CheckoutContent() {
             </AnimatePresence>
           </div>
 
-          {/* Right: Order Summary Sidebar */}
-          <OrderSummarySidebar
-            items={displayItems}
-            subtotal={displaySubtotal}
-            shippingCost={shippingCost}
-            tax={tax}
-            total={total}
-            onUpdateQuantity={
-              productFromUrl
-                ? () => { }
-                : updateQuantity
-            }
-            onRemoveItem={
-              productFromUrl
-                ? () => router.back()
-                : (productId: string) => {
-                  const willBeEmpty = items.length === 1;
-                  removeItem(productId);
-                  if (willBeEmpty) {
-                    router.push("/");
+          {/* Right: Order Summary Sidebar — order-first on mobile so it appears above the form */}
+          <div className="order-first lg:order-none">
+            <OrderSummarySidebar
+              items={displayItems}
+              subtotal={displaySubtotal}
+              shippingCost={shippingCost}
+              tax={tax}
+              total={total}
+              onUpdateQuantity={
+                productFromUrl
+                  ? () => { }
+                  : updateQuantity
+              }
+              onRemoveItem={
+                productFromUrl
+                  ? () => router.back()
+                  : (productId: string) => {
+                    const willBeEmpty = items.length === 1;
+                    removeItem(productId);
+                    if (willBeEmpty) {
+                      router.push("/");
+                    }
                   }
-                }
-            }
-            isBuyNowMode={!!productFromUrl}
-            buyNowQuantity={buyNowQuantity}
-            onBuyNowQuantityChange={handleBuyNowQuantityChange}
-          />
-        </div>
+              }
+              isBuyNowMode={!!productFromUrl}
+              buyNowQuantity={buyNowQuantity}
+              onBuyNowQuantityChange={handleBuyNowQuantityChange}
+            />
+          </div>
 
-        {/* Trust signals */}
-        <div className="mx-auto mt-16 flex max-w-4xl flex-wrap items-center justify-center gap-8 border-t border-slate-200 pt-8 text-sm text-[#6a6a67]">
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={20} className="text-[#20a9ad]" />
-            <span className="font-bold">Secure Checkout</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Truck size={20} className="text-[#20a9ad]" />
-            <span className="font-bold">Free Shipping over $50</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <RotateCcw size={20} className="text-[#20a9ad]" />
-            <span className="font-bold">30-Day Returns</span>
+          {/* Trust signals */}
+          <div className="mx-auto mt-16 flex max-w-4xl flex-wrap items-center justify-center gap-8 border-t border-slate-200 pt-8 text-sm text-[#6a6a67]">
+            <div className="flex items-center gap-2">
+              <ShieldCheck size={20} className="text-[#20a9ad]" />
+              <span className="font-bold">Secure Checkout</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Truck size={20} className="text-[#20a9ad]" />
+              <span className="font-bold">Free Shipping over $50</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <RotateCcw size={20} className="text-[#20a9ad]" />
+              <span className="font-bold">30-Day Returns</span>
+            </div>
           </div>
         </div>
       </div>
