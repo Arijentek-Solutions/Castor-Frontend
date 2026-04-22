@@ -34,7 +34,7 @@ export function Navbar({
 
   return (
     <>
-      <nav className="sticky top-[140px] z-40 w-full border-b-2 border-[#20a9ad]/15 bg-white/95 backdrop-blur-md transition-all duration-300 sm:top-[148px] lg:top-[172px]">
+      <nav className="sticky top-[92px] z-40 w-full border-b-2 border-[#20a9ad]/15 bg-white/95 backdrop-blur-md transition-all duration-300 sm:top-[96px] lg:top-[120px]">
         <div className="mx-auto flex h-16 items-center justify-between px-4 sm:px-8 lg:h-24 lg:max-w-[1720px] lg:px-12">
 
           {/* MOBILE LAYOUT: [Category Icon] [Search] [Cart] */}

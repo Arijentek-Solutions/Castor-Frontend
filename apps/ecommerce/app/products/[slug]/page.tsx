@@ -57,7 +57,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="min-h-screen bg-[#fcfcfc]">
-      <main className="mx-auto max-w-[1720px] px-4 pt-[160px] pb-20 sm:px-8 sm:pt-[168px] lg:px-12 lg:pt-[192px]">
+      <main className="mx-auto max-w-[1720px] px-4 pt-[110px] pb-20 sm:px-8 sm:pt-[120px] lg:px-12 lg:pt-[140px]">
         {/* Breadcrumbs / Back Link */}
         <Link
           href="/"
