@@ -52,7 +52,9 @@ export function OrderSummarySidebar({
             <div className="flex flex-1 flex-col justify-between">
               <div>
                 <h4 className="line-clamp-2 text-sm font-bold text-[#0e1b33]">{item.name}</h4>
-                <p className="mt-1 text-sm font-semibold text-[#20a9ad]">{formatCartCurrency(item.price)}</p>
+                <p className="mt-1 text-sm font-semibold text-[#20a9ad]">
+                  {item.workflowType === "pricing-request" ? "Call for Pricing" : formatCartCurrency(item.price)}
+                </p>
               </div>
 
               <div className="flex items-center justify-between">

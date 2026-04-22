@@ -1,11 +1,12 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck, Minus, Plus } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products/products";
+import { formatCartCurrency } from "@/lib/cart/cart-service";
 import { useCart } from "@/context/cart-context";
 import { RelatedCards } from "@/components/products/related-cards";
 import { Footer } from "@castor/ui";
@@ -14,6 +15,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const { slug } = use(params);
   const product = PRODUCTS.find((p) => p.slug === slug);
   const { addItem } = useCart();
+  const [quantity, setQuantity] = useState(1);
 
   if (!product) {
     return (
@@ -38,7 +40,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       image: product.image,
       workflowType: product.workflowType,
       insuranceCovered: product.insuranceCovered,
-    });
+    }, quantity);
   };
 
   const handleBuyNow = () => {
@@ -131,8 +133,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
 
               {/* Price */}
-              <div className="text-[30px] font-black leading-[36px] text-[#20a9ad]">
-                ${product.price.toFixed(2)}
+              <div className="text-[24px] font-black leading-[36px] text-[#20a9ad]">
+                {product.workflowType !== "pricing-request" && formatCartCurrency(product.price)}
               </div>
 
               {/* Mobile Only: Key Details Grid (HCPCS, Weight, Description) */}
@@ -160,6 +162,32 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 Part Number - {product.sku}
               </div>
 
+              {/* Quantity Selector */}
+              <div className="flex flex-col gap-3">
+                <span className="text-sm font-bold text-[#0e1b33]">Quantity</span>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-colors hover:bg-[#20a9ad] hover:text-white active:scale-95"
+                    >
+                      <Minus size={16} />
+                    </button>
+                    <span className="w-8 text-center text-base font-bold text-[#0e1b33]">
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.min(99, quantity + 1))}
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-600 transition-colors hover:bg-[#20a9ad] hover:text-white active:scale-95"
+                    >
+                      <Plus size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               {/* Action Buttons */}
               <div className="flex flex-row gap-2">
                 {/* Add to Cart Button */}
@@ -171,13 +199,25 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   <span className="text-sm">Add to Cart</span>
                 </button>
 
-                {/* Buy Now Button */}
-                <button
-                  onClick={handleBuyNow}
-                  className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#0e1b33] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1a1a1a] transition-colors"
-                >
-                  <span className="text-sm">Buy Now</span>
-                </button>
+                {/* Buy Now / Call for Pricing Button */}
+                {product.workflowType === "pricing-request" ? (
+                  <button
+                    onClick={() => {
+                      const jotformUrl = `https://form.jotform.com/261111682493051?productName=${encodeURIComponent(product.name)}&productId=${encodeURIComponent(product.id)}&quantity=${quantity}&source=Call%20for%20Pricing`;
+                      window.open(jotformUrl, "_blank");
+                    }}
+                    className="flex h-13 flex-[2] items-center justify-center gap-2 rounded-full bg-[#F7C89A] px-3 font-bold text-[#0e1b33] shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#eeb67a] transition-colors"
+                  >
+                    <span className="text-sm">Call for Pricing</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleBuyNow}
+                    className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#0e1b33] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1a1a1a] transition-colors"
+                  >
+                    <span className="text-sm">Buy Now</span>
+                  </button>
+                )}
               </div>
 
               {/* Active Badge */}

@@ -10,6 +10,7 @@ import { CheckCircle, Package, Truck, ShoppingBag, HelpCircle } from "lucide-rea
 
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import type { Order } from "@/types/checkout";
+import { SITE_URLS } from "@castor/ui";
 
 // Animation Variants - Cinematic, slow smooth reveal
 const containerVariants = {
@@ -226,7 +227,7 @@ function OrderSuccessContent() {
                   <p className="text-sm text-[#6a6a67]">Our specialists are available 24/7</p>
                 </div>
               </div>
-              <a href="http://localhost:3004/contact" className="text-[#00696c] font-bold hover:underline">
+              <a href={`${SITE_URLS.web}/contact`} className="text-[#00696c] font-bold hover:underline">
                 Contact Concierge
               </a>
             </motion.div>

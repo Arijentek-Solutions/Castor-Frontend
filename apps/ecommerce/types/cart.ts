@@ -19,6 +19,7 @@ export type CartItem = {
   image: string;
   price: number;
   quantity: number;
+  workflowType?: CartWorkflowType;
   insuranceCovered?: boolean;
 };
 

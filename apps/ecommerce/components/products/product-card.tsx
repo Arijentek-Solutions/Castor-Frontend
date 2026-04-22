@@ -36,7 +36,6 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    // Redirect directly to checkout with this product only (no cart)
     const params = new URLSearchParams({
       id: product.id,
       slug: product.slug,
@@ -117,13 +116,9 @@ export function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
 
-          {/* Footer: Price, Add to Cart & Buy Now */}
+          {/* Footer: Cart, Price & Action Button */}
           <div className="mt-1 flex items-center justify-between gap-2 lg:mt-auto lg:border-t lg:border-[rgba(32,169,173,0.1)] lg:pt-5">
-            <div className="text-[16px] font-bold text-[#0e1b33] lg:text-2xl">
-              {formatCartCurrency(product.price)}
-            </div>
-
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={handleAddToCart}
@@ -134,14 +129,35 @@ export function ProductCard({ product }: ProductCardProps) {
                 <ShoppingCart size={24} className="hidden lg:block" strokeWidth={2.5} />
               </button>
 
-              <button
-                type="button"
-                onClick={handleBuyNow}
-                className="flex h-8 items-center rounded-full bg-[#0e1b33] px-3 text-[10px] font-bold text-white shadow-lg shadow-[#0e1b33]/20 transition-all duration-300 hover:scale-105 hover:bg-[#0e1b33]/90 hover:shadow-[#0e1b33]/40 active:scale-95 lg:h-12 lg:px-5 lg:text-[13px]"
-                aria-label={`Buy ${product.name} now`}
-              >
-                Buy
-              </button>
+              <div className="text-[14px] font-bold text-[#0e1b33] lg:text-xl">
+                {product.workflowType !== "pricing-request" && formatCartCurrency(product.price)}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {product.workflowType === "pricing-request" ? (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const jotformUrl = `https://form.jotform.com/261111682493051?productName=${encodeURIComponent(product.name)}&productId=${encodeURIComponent(product.id)}&quantity=1&source=Call%20for%20Pricing`;
+                    window.open(jotformUrl, "_blank");
+                  }}
+                  className="flex h-8 items-center rounded-full bg-[#F7C89A] px-6 text-[10px] font-bold text-[#0e1b33] shadow-lg shadow-[#F7C89A]/20 transition-all duration-300 hover:scale-105 hover:bg-[#eeb67a] hover:shadow-[#F7C89A]/40 active:scale-95 lg:h-12 lg:px-10 lg:text-[13px]"
+                >
+                  Call for Pricing
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleBuyNow}
+                  className="flex h-8 items-center rounded-full bg-[#0e1b33] px-6 text-[10px] font-bold text-white shadow-lg shadow-[#0e1b33]/20 transition-all duration-300 hover:scale-105 hover:bg-[#0e1b33]/90 hover:shadow-[#0e1b33]/40 active:scale-95 lg:h-12 lg:px-10 lg:text-[13px]"
+                  aria-label={`Buy ${product.name} now`}
+                >
+                  Buy
+                </button>
+              )}
             </div>
           </div>
         </div>
