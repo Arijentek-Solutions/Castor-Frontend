@@ -3,7 +3,8 @@
 import { useState, useMemo, Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, ArrowLeft, ShieldCheck, Truck, RotateCcw, AlertCircle, CreditCard, Smartphone } from "lucide-react";
+import { ShoppingBag, ArrowLeft, ShieldCheck, AlertCircle, CreditCard, Smartphone } from "lucide-react";
+import toast from "react-hot-toast";
 import Link from "next/link";
 import { useCart } from "@/context/cart-context";
 import { PaymentSelector } from "@/components/checkout/payment-selector";
@@ -96,9 +97,7 @@ function validateCheckoutForm(
     newErrors.insuranceForm = "Please submit the insurance claim form before continuing";
   }
 
-  if (!formData.termsAccepted) {
-    newErrors.terms = "You must accept the terms and conditions";
-  }
+
 
   return newErrors;
 }
@@ -259,7 +258,29 @@ function useCheckoutState() {
   const handleContinueToReview = () => {
     const newErrors = validateCheckoutForm(formData, paymentGroup, isUpi, insuranceFormSubmitted);
     setErrors(newErrors);
-    if (Object.keys(newErrors).length === 0) setStep("review");
+    
+    if (Object.keys(newErrors).length > 0) {
+      toast.error("Please fill in all required fields");
+      
+      // Scroll to first error
+      setTimeout(() => {
+        const firstErrorField = document.querySelector(".border-red-500");
+        if (firstErrorField) {
+          firstErrorField.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 100);
+      return;
+    }
+    
+    setStep("review");
+    
+    // Scroll to review section
+    setTimeout(() => {
+      const reviewSection = document.getElementById("review-section");
+      if (reviewSection) {
+        reviewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
   };
 
   const handlePlaceOrder = () => {
@@ -312,23 +333,39 @@ function CheckoutContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7faf9] px-4 pt-48 pb-10 sm:px-6 lg:px-8 lg:pt-48 lg:pb-16">
+    <main className="min-h-screen bg-[#f7faf9] px-4 pt-[110px] pb-10 sm:px-6 lg:px-8 lg:pt-[140px] lg:pb-16">
       <div className="mx-auto max-w-7xl">
         {/* Back to cart link */}
         <Link
-          href="/cart"
+          href="/"
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-[#6a6a67] transition-colors hover:text-[#20a9ad]"
         >
           <ArrowLeft size={16} />
-          Back to cart
+          Back to shop
         </Link>
 
         {/* Processing state overlay */}
         {step === "processing" && <ProcessingOverlay />}
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:gap-16">
-          {/* Left: Checkout Form */}
-          <div className="space-y-8">
+        <div className="grid gap-10 lg:grid-cols-[1fr_400px] lg:gap-16 items-start">
+          {/* Order Summary Sidebar - Top on mobile, Right on desktop */}
+          <div className="lg:order-2">
+            <OrderSummarySidebar
+              items={displayItems}
+              subtotal={displaySubtotal}
+              shippingCost={shippingCost}
+              tax={tax}
+              total={total}
+              onUpdateQuantity={handleUpdateQuantity}
+              onRemoveItem={handleRemoveItem}
+              isBuyNowMode={!!productFromUrl}
+              buyNowQuantity={buyNowQuantity}
+              onBuyNowQuantityChange={handleBuyNowQuantityChange}
+            />
+          </div>
+
+          {/* Checkout Form - Bottom on mobile, Left on desktop */}
+          <div className="space-y-8 lg:order-1">
             <AnimatePresence mode="wait">
               {(step === "form" || step === "review") && (
                 <motion.div
@@ -343,6 +380,8 @@ function CheckoutContent() {
                       ...(formData.saveInfo ? formData : {}),
                     }}
                     onChange={(data) => setFormData((prev) => ({ ...prev, ...data }))}
+                    onFieldChange={handleFormChange}
+                    errors={errors}
                   />
 
                   {/* Payment Method */}
@@ -404,12 +443,9 @@ function CheckoutContent() {
                     </AnimatePresence>
                   </section>
 
-                  {/* Terms & Save Info */}
+                  {/* Continue Button */}
                   {paymentGroup !== "insurance" && (
                     <TermsSaveSection 
-                      formData={formData} 
-                      handleFormChange={handleFormChange} 
-                      errors={errors} 
                       onContinue={handleContinueToReview}
                     />
                   )}
@@ -428,45 +464,9 @@ function CheckoutContent() {
               )}
             </AnimatePresence>
           </div>
-
-          {/* Right: Order Summary Sidebar */}
-          <OrderSummarySidebar
-            items={displayItems}
-            subtotal={displaySubtotal}
-            shippingCost={shippingCost}
-            tax={tax}
-            total={total}
-            onUpdateQuantity={handleUpdateQuantity}
-            onRemoveItem={handleRemoveItem}
-            isBuyNowMode={!!productFromUrl}
-            buyNowQuantity={buyNowQuantity}
-            onBuyNowQuantityChange={handleBuyNowQuantityChange}
-          />
         </div>
 
-        {/* Trust signals */}
-        <div className="mx-auto mt-16 flex max-w-4xl flex-wrap items-center justify-center gap-8 border-t border-slate-200 pt-8 text-sm text-[#6a6a67]">
-          <div className="flex items-center gap-2">
-            <ShieldCheck size={20} className="text-[#20a9ad]" />
-            <span className="font-bold">Secure Checkout</span>
-          </div>
 
-          {/* Trust signals */}
-          <div className="mx-auto mt-16 flex max-w-4xl flex-wrap items-center justify-center gap-8 border-t border-slate-200 pt-8 text-sm text-[#6a6a67]">
-            <div className="flex items-center gap-2">
-              <ShieldCheck size={20} className="text-[#20a9ad]" />
-              <span className="font-bold">Secure Checkout</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Truck size={20} className="text-[#20a9ad]" />
-              <span className="font-bold">Free Shipping over $50</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <RotateCcw size={20} className="text-[#20a9ad]" />
-              <span className="font-bold">30-Day Returns</span>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
   );
@@ -680,66 +680,16 @@ function CardUpiForm({ isUpi, setIsUpi, formData, handleFormChange, errors }: Ca
   );
 }
 
-interface TermsSaveSectionProps {
-  formData: CheckoutFormData;
-  handleFormChange: (field: keyof CheckoutFormData, value: string | boolean) => void;
-  errors: Record<string, string>;
-  onContinue: () => void;
-}
-
-function TermsSaveSection({ formData, handleFormChange, errors, onContinue }: TermsSaveSectionProps) {
+function TermsSaveSection({ onContinue }: { onContinue: () => void }) {
   return (
-    <>
-      <section className="space-y-3 rounded-2xl border border-slate-200 bg-white p-6">
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={formData.saveInfo}
-            onChange={(e) => handleFormChange("saveInfo", e.target.checked)}
-            className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
-          />
-          <span className="text-sm text-[#0e1b33]">
-            Save my information for faster checkout next time
-          </span>
-        </label>
-
-        <label className="flex items-start gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={formData.termsAccepted}
-            onChange={(e) => handleFormChange("termsAccepted", e.target.checked)}
-            className="mt-1 h-5 w-5 rounded border-slate-300 text-[#20a9ad] focus:ring-[#20a9ad]"
-          />
-          <span className="text-sm text-[#0e1b33]">
-            I agree to the{" "}
-            <Link href="/terms" className="text-[#20a9ad] hover:underline">
-              Terms & Conditions
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy" className="text-[#20a9ad] hover:underline">
-              Privacy Policy
-            </Link>
-          </span>
-        </label>
-
-        {errors.terms && (
-          <p className="flex items-center gap-2 text-sm text-red-500">
-            <AlertCircle size={16} />
-            {errors.terms}
-          </p>
-        )}
-      </section>
-
-      {/* Continue Button */}
-      <motion.button
-        onClick={onContinue}
-        className="w-full rounded-2xl bg-[#20a9ad] py-5 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
-      >
-        Continue to Review
-      </motion.button>
-    </>
+    <motion.button
+      onClick={onContinue}
+      className="w-full rounded-2xl bg-[#20a9ad] py-5 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      Continue to Review
+    </motion.button>
   );
 }
 
@@ -755,6 +705,7 @@ interface ReviewOrderStepProps {
 function ReviewOrderStep({ formData, paymentMethod, isUpi, total, setStep, onPlaceOrder }: ReviewOrderStepProps) {
   return (
     <motion.div
+      id="review-section"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"

@@ -37,9 +37,7 @@ The following items are not part of Stage 1:
 ## Stage 1 Routes
 
 - `/` - Ecommerce landing or home screen
-- `/products` - Product listing page
 - `/products/[slug]` - Product detail page
-- `/cart` - Shopping cart
 - `/checkout` - Static checkout form
 - `/order-success` - Static order confirmation
 - `/insurance` - Insurance request flow
@@ -155,8 +153,6 @@ apps/ecommerce/
       page.tsx
       [slug]/
         page.tsx
-    cart/
-      page.tsx
     checkout/
       page.tsx
     order-success/
@@ -194,8 +190,7 @@ The system supports three primary product workflow types.
 Self-pay products follow the standard ecommerce flow:
 
 - Product detail
-- Add to cart
-- Cart
+- Add to cart (Drawer)
 - Checkout
 - Order success
 

@@ -6,10 +6,34 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { CheckCircle, Package, Truck, RotateCcw, ShoppingBag, Home, HelpCircle } from "lucide-react";
+import { CheckCircle, Package, Truck, ShoppingBag, HelpCircle } from "lucide-react";
 
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import type { Order } from "@/types/checkout";
+
+// Animation Variants - Cinematic, slow smooth reveal
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.2,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
 
 export default function OrderSuccessPage() {
   return (
@@ -39,34 +63,15 @@ function OrderSuccessContent() {
     }
   }, [orderId]);
 
-  if (!mounted) {
-    return (
-      <main className="min-h-screen bg-[#f7faf9] flex items-center justify-center">
-        <div className="text-center">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="mx-auto mb-6 h-16 w-16"
-          >
-            <Package size={64} className="text-[#20a9ad]" />
-          </motion.div>
-          <p className="text-lg font-bold text-[#0e1b33]">Loading order details...</p>
-        </div>
-      </main>
-    );
-  }
-
   useEffect(() => {
-    if (!orderId) {
-      router.push("/");
-      return;
+    if (mounted) {
+      if (!orderId || !order) {
+        router.push("/");
+      }
     }
-    if (!order) {
-      router.push("/");
-    }
-  }, [orderId, order, router]);
+  }, [mounted, orderId, order, router]);
 
-  if (!order) {
+  if (!mounted || !order) {
     return (
       <main className="min-h-screen bg-[#f7faf9] flex items-center justify-center">
         <div className="text-center">
@@ -84,245 +89,183 @@ function OrderSuccessContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7faf9] px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl">
+    <main className="min-h-screen bg-[#f8fafb] px-4 pt-[110px] pb-16 sm:px-6 lg:px-8 lg:pt-[140px]">
+      <motion.div 
+        className="mx-auto max-w-5xl"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
         {/* Success Hero */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 overflow-hidden rounded-2xl bg-white p-8 text-center shadow-sm lg:p-12"
+          variants={fadeUpVariants}
+          className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#20a9ad]/10">
-            <CheckCircle size={48} className="text-[#20a9ad]" />
+          <div className="max-w-2xl">
+            <h1 className="mb-4 text-4xl font-black text-[#0e1b33] tracking-tight lg:text-6xl">
+              Order Confirmed
+            </h1>
+            <p className="text-lg text-[#6a6a67] leading-relaxed">
+              Your medical supplies are being prepared with care. We&apos;ve sent a summary to your inbox.
+            </p>
           </div>
-          <h1 className="mb-2 text-4xl font-black text-[#0e1b33] lg:text-5xl">
-            Order Confirmed!
-          </h1>
-          <p className="text-lg text-[#6a6a67]">
-            Thank you for your purchase. Your order has been placed successfully.
-          </p>
-          <div className="mx-auto mt-6 max-w-md rounded-full bg-slate-100 px-6 py-3">
-            <p className="text-sm font-semibold text-slate-600">Order Number</p>
-            <p className="text-xl font-black text-[#0e1b33] tracking-wider">{order.id}</p>
+          
+          <div className="flex-shrink-0">
+            <div className="rounded-2xl bg-white p-6 shadow-sm border border-slate-100">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-[#00696c] mb-1">Order Id</p>
+              <p className="text-xl font-bold text-[#0e1b33] tracking-tight">{order.id}</p>
+            </div>
           </div>
         </motion.div>
 
-        {/* Order Details */}
-        <div className="grid gap-6 lg:grid-cols-2">
-          {/* Left Column */}
-          <div className="space-y-6">
-            {/* Delivery Info */}
+        <div className="grid gap-10 lg:grid-cols-3">
+          {/* Main Info Column */}
+          <div className="lg:col-span-2 space-y-10">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 }}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+              variants={fadeUpVariants}
+              className="relative overflow-hidden rounded-[2.5rem] bg-white/70 p-8 shadow-2xl shadow-[#00696c]/5 backdrop-blur-xl border border-white/40"
             >
-              <div className="mb-4 flex items-center gap-3">
-                <Truck className="text-[#20a9ad]" size={24} />
-                <h2 className="text-lg font-bold text-[#0e1b33]">Estimated Delivery</h2>
-              </div>
-              <p className="text-lg font-bold text-[#0e1b33]">{order.estimatedDelivery}</p>
-              <p className="text-sm text-[#6a6a67]">Standard shipping (5-7 business days)</p>
-            </motion.div>
-
-            {/* Shipping Address */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-            >
-              <h2 className="mb-4 text-lg font-bold text-[#0e1b33]">Shipping Address</h2>
-              <div className="space-y-1 text-[#6a6a67]">
-                <p className="font-bold text-[#0e1b33]">{order.customer.fullName}</p>
-                <p>{order.shippingAddress.addressLine1}</p>
-                {order.shippingAddress.addressLine2 && <p>{order.shippingAddress.addressLine2}</p>}
-                <p>
-                  {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode}
-                </p>
-                <p>{order.shippingAddress.country}</p>
-                <p className="pt-2">{order.customer.phone}</p>
-                <p>{order.customer.email}</p>
-              </div>
-            </motion.div>
-
-            {/* Payment Summary */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-            >
-              <h2 className="mb-4 text-lg font-bold text-[#0e1b33]">Payment</h2>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[#6a6a67]">Method</span>
-                  <span className="font-bold text-[#0e1b33]">
-                    {order.payment.method === "cod" ? "Cash on Delivery" : order.payment.method === "upi" ? "UPI" : "Card"}
-                  </span>
-                </div>
-                {order.payment.lastFour && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#6a6a67]">Card ending in</span>
-                    <span className="font-bold text-[#0e1b33]">•••• {order.payment.lastFour}</span>
-                  </div>
-                )}
-                {order.payment.upiId && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-[#6a6a67]">UPI ID</span>
-                    <span className="font-bold text-[#0e1b33]">{order.payment.upiId}</span>
-                  </div>
-                )}
-                <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                  <span className="text-[#0e1b33]">Payment Status</span>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-bold ${
-                      order.payment.status === "paid"
-                        ? "bg-green-100 text-green-700"
-                        : "bg-amber-100 text-amber-700"
-                    }`}
-                  >
-                    {order.payment.status === "paid" ? "Paid" : "Pending (COD)"}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Right Column */}
-          <div className="space-y-6">
-            {/* Order Items */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-            >
-              <h2 className="mb-4 text-lg font-bold text-[#0e1b33]">Order Items ({order.items.length})</h2>
-              <div className="space-y-4">
-                {order.items.map((item) => (
-                  <div key={`${item.productId}-${item.quantity}`} className="flex gap-4">
-                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-slate-100 bg-slate-50">
-                      {/* Placeholder for image */}
-                      <div className="flex h-full items-center justify-center">
-                        <ShoppingBag size={24} className="text-slate-300" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-[#0e1b33]">{item.name}</h4>
-                      <p className="text-sm text-[#6a6a67]">
-                        Qty: {item.quantity} × {formatCartCurrency(item.price)}
-                      </p>
-                    </div>
-                    <div className="font-bold text-[#0e1b33]">
-                      {formatCartCurrency(item.price * item.quantity)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Price Breakdown */}
-              <div className="mt-6 space-y-2 border-t border-slate-100 pt-4">
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#6a6a67]">Subtotal</span>
-                  <span className="font-semibold text-[#0e1b33]">{formatCartCurrency(order.subtotal)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#6a6a67]">Shipping</span>
-                  <span className="font-semibold text-[#0e1b33]">{formatCartCurrency(order.shippingCost)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-[#6a6a67]">Tax</span>
-                  <span className="font-semibold text-[#0e1b33]">{formatCartCurrency(order.tax)}</span>
-                </div>
-                <div className="flex justify-between border-t border-slate-200 pt-2">
-                  <span className="text-base font-bold text-[#0e1b33]">Total</span>
-                  <span className="text-xl font-black text-[#0e1b33]">{formatCartCurrency(order.total)}</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Next Steps */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
-            >
-              <h2 className="mb-4 text-lg font-bold text-[#0e1b33]">What&apos;s Next?</h2>
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#20a9ad]/10 text-[#20a9ad]">
-                    <Package size={20} />
-                  </div>
-                  <div>
-                    <p className="font-bold text-[#0e1b33]">Order Confirmation Email</p>
-                    <p className="text-sm text-[#6a6a67]">
-                      We&apos;ve sent a confirmation to {order.customer.email}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#20a9ad]/10 text-[#20a9ad]">
+              {/* Delivery Estimation */}
+              <div className="mb-10 grid grid-cols-1 sm:grid-cols-2 gap-px rounded-3xl bg-slate-100 p-px overflow-hidden border border-slate-100">
+                <div className="flex items-center gap-4 bg-white p-6">
+                  <div className="h-10 w-10 rounded-xl bg-[#00696c]/10 flex items-center justify-center text-[#00696c]">
                     <Truck size={20} />
                   </div>
                   <div>
-                    <p className="font-bold text-[#0e1b33]">Shipping Update</p>
-                    <p className="text-sm text-[#6a6a67]">
-                      You&apos;ll receive tracking info once your order ships
-                    </p>
+                    <p className="text-xs font-medium text-[#6a6a67]">Estimated Arrival</p>
+                    <p className="text-base font-bold text-[#0e1b33]">{order.estimatedDelivery}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-[#20a9ad]/10 text-[#20a9ad]">
-                    <RotateCcw size={20} />
+                <div className="flex items-center gap-4 bg-white p-6">
+                  <div className="h-10 w-10 rounded-xl bg-[#00696c]/10 flex items-center justify-center text-[#00696c]">
+                    <Package size={20} />
                   </div>
                   <div>
-                    <p className="font-bold text-[#0e1b33]">Easy Returns</p>
-                    <p className="text-sm text-[#6a6a67]">
-                      30-day hassle-free returns. No questions asked.
-                    </p>
+                    <p className="text-xs font-medium text-[#6a6a67]">Shipping Method</p>
+                    <p className="text-base font-bold text-[#0e1b33]">Priority Medical Express</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Items */}
+              <div className="space-y-8">
+                <h3 className="text-xl font-bold text-[#0e1b33] flex items-center gap-3">
+                  Your Package
+                  <span className="text-sm font-normal text-[#6a6a67] bg-slate-100 px-3 py-1 rounded-full">{order.items.length} items</span>
+                </h3>
+                
+                <div className="divide-y divide-slate-100">
+                  {order.items.map((item) => (
+                    <div 
+                      key={`${item.productId}-${item.quantity}`} 
+                      className="py-6 flex gap-6 items-center group"
+                    >
+                      <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl bg-slate-50 border border-slate-100 transition-transform group-hover:scale-105">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold text-[#0e1b33] mb-1">{item.name}</h4>
+                        <p className="text-[#6a6a67]">Qty: {item.quantity}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-black text-[#0e1b33]">{formatCartCurrency(item.price * item.quantity)}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Total Summary */}
+              <div className="mt-12 rounded-3xl bg-slate-50 p-8">
+                <div className="space-y-4">
+                  <div className="flex justify-between text-[#6a6a67]">
+                    <span>Subtotal</span>
+                    <span className="font-bold text-[#0e1b33]">{formatCartCurrency(order.subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-[#6a6a67]">
+                    <span>Shipping & Handling</span>
+                    <span className="font-bold text-[#00696c]">Free</span>
+                  </div>
+                  <div className="flex justify-between text-[#6a6a67]">
+                    <span>Medical Tax</span>
+                    <span className="font-bold text-[#0e1b33]">{formatCartCurrency(order.tax)}</span>
+                  </div>
+                  <div className="pt-6 border-t border-slate-200 flex justify-between items-end">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest text-[#6a6a67]">Total Amount</p>
+                      <p className="text-4xl font-black text-[#0e1b33]">{formatCartCurrency(order.total)}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs font-bold text-[#00696c] mb-1 flex items-center justify-end gap-1">
+                        <CheckCircle size={12} /> Securely Paid
+                      </p>
+                      <p className="text-sm font-bold text-[#0e1b33]">
+                        {order.payment.method === "cod" ? "Cash on Delivery" : order.payment.method === "upi" ? `UPI: ${order.payment.upiId}` : `Card Ending in ${order.payment.lastFour}`}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="flex flex-col gap-3 sm:flex-row"
+            {/* Support Section */}
+            <motion.div 
+              variants={fadeUpVariants}
+              className="flex items-center justify-between p-8 rounded-[2rem] bg-[#00696c]/5 border border-[#00696c]/10"
             >
+              <div className="flex items-center gap-4">
+                <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center text-[#00696c] shadow-sm">
+                  <HelpCircle size={24} />
+                </div>
+                <div>
+                  <p className="font-bold text-[#0e1b33]">Need medical assistance with your order?</p>
+                  <p className="text-sm text-[#6a6a67]">Our specialists are available 24/7</p>
+                </div>
+              </div>
+              <a href="http://localhost:3004/contact" className="text-[#00696c] font-bold hover:underline">
+                Contact Concierge
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Action Buttons */}
+            <motion.div variants={fadeUpVariants}>
               <Link
-                href="/products"
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-[#20a9ad] px-8 py-4 font-black text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1b8e91] hover:shadow-[#20a9ad]/40 active:scale-98"
+                href="/"
+                className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[#00696c] px-8 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-[#004f51] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <ShoppingBag size={20} />
                 Continue Shopping
               </Link>
-              <Link
-                href="/"
-                className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-8 py-4 font-black text-[#0e1b33] transition-colors hover:bg-slate-50"
-              >
-                <Home size={20} />
-                Back to Home
-              </Link>
             </motion.div>
 
-            {/* Help */}
-            <div className="flex items-center justify-center gap-2 text-sm text-[#6a6a67]">
-              <HelpCircle size={16} />
-              <span>Questions about your order?</span>
-              <Link href="/contact" className="font-bold text-[#20a9ad] hover:underline">
-                Contact Support
-              </Link>
-            </div>
+            {/* Address Summary */}
+            <motion.div 
+              variants={fadeUpVariants}
+              className="rounded-3xl bg-white p-8 border border-slate-100 shadow-sm space-y-6"
+            >
+              <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#6a6a67]">Shipping Destination</h3>
+              <div className="space-y-4">
+                <p className="text-lg font-bold text-[#0e1b33]">{order.customer.fullName}</p>
+                <div className="text-sm text-[#6a6a67] space-y-1 leading-relaxed">
+                  <p>{order.shippingAddress.addressLine1}</p>
+                  <p>{order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.zipCode}</p>
+                  <div className="pt-3 flex items-center gap-2 text-[#0e1b33] font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00696c]"></span>
+                    {order.customer.phone}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 }

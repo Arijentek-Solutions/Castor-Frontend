@@ -54,7 +54,7 @@ const serviceCards = [
 
 export function Hero() {
   return (
-    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-44 xl:pt-52">
+    <section className="px-4 pb-14 pt-20 sm:px-6 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-28 xl:pt-32">
       <div className="mx-auto w-full max-w-[1871px]">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}

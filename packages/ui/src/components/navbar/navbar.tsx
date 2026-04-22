@@ -400,7 +400,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
         isOpen={isHelpModalOpen}
         onClose={closeHelpModal}
       />
-      {serviceContext && serviceContext !== "web" && (
+      {serviceContext && serviceContext !== "web" && serviceContext !== "ecommerce" && (
         <ServiceSubNav serviceContext={serviceContext as Exclude<ServiceContext, "web">} />
       )}
     </div>

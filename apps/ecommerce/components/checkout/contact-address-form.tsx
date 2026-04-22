@@ -16,9 +16,11 @@ type ContactAddressFormProps = {
     country?: string;
   };
   onChange?: (data: Record<string, string>) => void;
+  onFieldChange?: (field: any, value: string) => void;
+  errors?: Record<string, string>;
 };
 
-export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddressFormProps) {
+export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange, errors = {} }: ContactAddressFormProps) {
   const [formData, setFormData] = useState({
     fullName: defaultValues.fullName || "",
     email: defaultValues.email || "",
@@ -50,6 +52,7 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
     const newData = { ...formData, [field]: value };
     setFormData(newData);
     onChange?.(newData);
+    onFieldChange?.(field, value);
   };
 
   return (
@@ -70,9 +73,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
               required
               value={formData.fullName}
               onChange={(e) => handleChange("fullName", e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+              className={`w-full rounded-xl border ${
+                errors.fullName ? "border-red-500 ring-red-500/20" : "border-slate-200"
+              } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="John Doe"
             />
+            {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
           </div>
 
           <div>
@@ -86,9 +92,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
               required
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+              className={`w-full rounded-xl border ${
+                errors.email ? "border-red-500 ring-red-500/20" : "border-slate-200"
+              } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="john@example.com"
             />
+            {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
           </div>
         </div>
 
@@ -103,9 +112,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
             required
             value={formData.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+            className={`w-full rounded-xl border ${
+              errors.phone ? "border-red-500 ring-red-500/20" : "border-slate-200"
+            } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
             placeholder="+1 (555) 123-4567"
           />
+          {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
           <p className="mt-1 text-xs text-[#6a6a67]">For delivery updates and order notifications</p>
         </div>
       </section>
@@ -129,9 +141,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
               required
               value={formData.addressLine1}
               onChange={(e) => handleChange("addressLine1", e.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+              className={`w-full rounded-xl border ${
+                errors.addressLine1 ? "border-red-500 ring-red-500/20" : "border-slate-200"
+              } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="123 Main Street, Apt 4"
             />
+            {errors.addressLine1 && <p className="mt-1 text-xs text-red-500">{errors.addressLine1}</p>}
           </div>
 
           <div>
@@ -161,9 +176,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
                 required
                 value={formData.city}
                 onChange={(e) => handleChange("city", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+                className={`w-full rounded-xl border ${
+                  errors.city ? "border-red-500 ring-red-500/20" : "border-slate-200"
+                } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="New York"
               />
+              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
             </div>
 
             <div>
@@ -177,9 +195,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
                 required
                 value={formData.state}
                 onChange={(e) => handleChange("state", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+                className={`w-full rounded-xl border ${
+                  errors.state ? "border-red-500 ring-red-500/20" : "border-slate-200"
+                } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="NY"
               />
+              {errors.state && <p className="mt-1 text-xs text-red-500">{errors.state}</p>}
             </div>
 
             <div>
@@ -193,9 +214,12 @@ export function ContactAddressForm({ defaultValues = {}, onChange }: ContactAddr
                 required
                 value={formData.zipCode}
                 onChange={(e) => handleChange("zipCode", e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20"
+                className={`w-full rounded-xl border ${
+                  errors.zipCode ? "border-red-500 ring-red-500/20" : "border-slate-200"
+                } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="10001"
               />
+              {errors.zipCode && <p className="mt-1 text-xs text-red-500">{errors.zipCode}</p>}
             </div>
           </div>
 
