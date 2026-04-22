@@ -60,8 +60,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "insurance",
-    "insuranceCovered": true
+    "workflowType": "pricing-request",
+    "insuranceCovered": false
   },
   {
     "id": "MDR107004L",
@@ -248,11 +248,11 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "insurance",
-    "insuranceCovered": true
+    "workflowType": "pricing-request",
+    "insuranceCovered": false
   },
   {
-    "id": "COSB337",
+    "id": "MDS89697",
     "slug": "medline-half-rail-for-medline-homecare-beds",
     "sku": "MDS89697",
     "name": "Medline Half Rail for Medline Homecare Beds",
@@ -374,8 +374,8 @@ export const PRODUCTS: Product[] = [
     "image": "/ImageWithFallback.png",
     "rating": 4.5,
     "reviewCount": 30,
-    "workflowType": "insurance",
-    "insuranceCovered": true
+    "workflowType": "pricing-request",
+    "insuranceCovered": false
   },
   {
     "id": "FCE1232RSRN",

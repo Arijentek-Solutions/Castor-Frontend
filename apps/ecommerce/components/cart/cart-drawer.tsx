@@ -177,7 +177,11 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                               </button>
                             </div>
                             <span className="text-sm font-black text-[#0e1b33]">
-                              {formatCartCurrency(item.price * item.quantity)}
+                              {item.workflowType === "pricing-request" ? (
+                                <span className="text-[#20a9ad]">Call for Pricing</span>
+                              ) : (
+                                formatCartCurrency(item.price * item.quantity)
+                              )}
                             </span>
                           </div>
                         </div>
