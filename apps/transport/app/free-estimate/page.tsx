@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { SimpleHero } from "@castor/ui";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ReservationPage() {
+export default function FreeEstimatePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLoad = () => {
@@ -18,8 +18,8 @@ export default function ReservationPage() {
         <div className="mx-auto max-w-[1530px]">
           <SimpleHero 
             subtitle="Castor Transport"
-            title="Reservation"
-            description="Book your ride quickly and securely"
+            title="Free Estimate"
+            description="Request a free estimate tailored to your needs"
           />
         </div>
       </section>
@@ -37,18 +37,18 @@ export default function ReservationPage() {
                   className="absolute inset-0 flex flex-col items-center pt-[400px] bg-white z-10"
                 >
                   <div className="w-12 h-12 border-4 border-[#20a9ad] border-t-transparent rounded-full animate-spin mb-4" />
-                  <p className="text-[#0e1b33] font-medium animate-pulse">Loading Reservation Form...</p>
+                  <p className="text-[#0e1b33] font-medium animate-pulse">Loading Estimate Form...</p>
                 </motion.div>
               )}
             </AnimatePresence>
 
             <iframe
-              id="JotFormIFrame-261122620065040"
-              title="Transport Reservation Form"
+              id="JotFormIFrame-261123389184055"
+              title="Transport Free Estimate Form"
               onLoad={handleLoad}
               allowFullScreen
               allow="geolocation; microphone; camera"
-              src="https://form.jotform.com/261122620065040"
+              src="https://form.jotform.com/261123389184055"
               style={{
                 width: "100%",
                 height: "100%",
