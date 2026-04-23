@@ -20,7 +20,7 @@ export function Hero() {
           className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#0e1b33] shadow-[var(--hero-shadow)]"
         >
           <Image
-            src="/transport-hero.png"
+            src="/images/hero/transport-hero.png"
             alt="Medical staff providing transportation support"
             width={1530}
             height={630}
@@ -80,11 +80,11 @@ export function Hero() {
                   transition={{ delay: 0.8, duration: 0.8 }}
                 >
                   <HeroActions>
-                    <Button href="#">
-                      Request A Ride
+                    <Button variant="primary">
+                      Book a Ride
                     </Button>
                     <Button href="#" variant="secondary">
-                      Partner With Us
+                      Service Areas
                     </Button>
                   </HeroActions>
                 </motion.div>
