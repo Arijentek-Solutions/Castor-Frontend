@@ -210,10 +210,12 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
   ],
   transport: [
     { label: "Home", href: SITE_URLS.transport },
-    { label: "Service Coverage", href: `${SITE_URLS.transport}/service-coverage` },
-    { label: "Fleet", href: `${SITE_URLS.transport}/fleet` },
-    { label: "Safety", href: `${SITE_URLS.transport}/safety` },
-    { label: "Booking", href: `${SITE_URLS.transport}/booking` },
+    { label: "About Us", href: `${SITE_URLS.transport}/about-us` },
+    { label: "Services", href: `${SITE_URLS.transport}/services` },
+    { label: "Reservation", href: `${SITE_URLS.transport}/booking` },
+    { label: "Free Estimate", href: `${SITE_URLS.transport}/estimate` },
+    { label: "Careers", href: `${SITE_URLS.transport}/careers` },
+    { label: "Contact Us", href: `${SITE_URLS.transport}/contact` },
   ],
   ecommerce: [
     { label: "Shop All", href: SITE_URLS.ecommerce },
@@ -601,7 +603,7 @@ const Brand = () => {
 
 const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEntry; pathname: string; serviceContext?: ServiceContext }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
-  
+
   // Determine if main nav item is active based on serviceContext or pathname
   let isActive = false;
   if (serviceContext) {
@@ -666,7 +668,7 @@ const MobileNavItem = ({
   serviceContext?: ServiceContext;
 }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
-  
+
   // Determine if main nav item is active based on serviceContext or pathname
   let isActive = false;
   if (serviceContext) {
