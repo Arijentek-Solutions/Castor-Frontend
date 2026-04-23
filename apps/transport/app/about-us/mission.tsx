@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const Mission = () => {
@@ -18,8 +19,8 @@ const Mission = () => {
                     <img
                         src="/images/about-us/img1.png"
                         alt="Our Mission"
-                        className="w-full h-full object-cover"
-                        data-node-id="281:102"
+                        fill
+                        className="object-cover"
                     />
                 </motion.div>
                 <motion.div 

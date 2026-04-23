@@ -500,7 +500,7 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
           }}
         >
           <span className="block">{item.label}</span>
-          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
+          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-300 ease-out ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
         </Link>
 
         {isOpen && (

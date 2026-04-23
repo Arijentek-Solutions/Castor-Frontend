@@ -33,8 +33,8 @@ const Vision = () => {
                     <img
                         src="/images/about-us/img2.png"
                         alt="Our Vision"
-                        className="w-full h-full object-cover"
-                        data-node-id="281:111"
+                        fill
+                        className="object-cover"
                     />
                 </motion.div>
             </div>
