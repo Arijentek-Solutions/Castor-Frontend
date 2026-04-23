@@ -211,7 +211,7 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
   transport: [
     { label: "Home", href: SITE_URLS.transport },
     { label: "About Us", href: `${SITE_URLS.transport}/about-us` },
-    { label: "Services", href: `${SITE_URLS.transport}/services` },
+    { label: "Services", href: `${SITE_URLS.transport}/service` },
     { label: "Reservation", href: `${SITE_URLS.transport}/booking` },
     { label: "Free Estimate", href: `${SITE_URLS.transport}/estimate` },
     { label: "Careers", href: `${SITE_URLS.transport}/careers` },
@@ -500,7 +500,7 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
           }}
         >
           <span className="block">{item.label}</span>
-          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
+          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-300 ease-out ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
         </Link>
 
         {isOpen && (

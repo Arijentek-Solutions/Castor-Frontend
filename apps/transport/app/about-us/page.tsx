@@ -7,7 +7,7 @@ import Purpose from "./purpose";
 import Mission from "./mission";
 import Vision from "./vision";
 import HowItWork from "./how-it-work";
-import BookOnline from "./book-online";
+import { CTASection } from "../hero/cta-section";
 
 export default function AboutUsPage() {
     return (
@@ -19,7 +19,7 @@ export default function AboutUsPage() {
             <Mission />
             <Vision />
             <HowItWork />
-            <BookOnline />
+            <CTASection />
         </main>
     );
 }
