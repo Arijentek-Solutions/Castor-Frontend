@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const WhoAreWe = () => {
     return (
-        <section className="relative w-full bg-white pt-[44px] pb-[80px]" data-node-id="281:76">
+        <section className="relative w-full bg-white pt-[100px] pb-[80px]" data-node-id="281:76">
             <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
