@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
-import { ShieldCheck, AlertCircle, CheckCircle } from "lucide-react";
+import { ShieldCheck, AlertCircle, CheckCircle, Loader2 } from "lucide-react";
 
 const JOTFORM_BASE_URL = "https://form.jotform.com/261063439018050";
 
@@ -20,6 +20,7 @@ type InsuranceJotformProps = {
 
 export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformProps) {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -113,19 +114,26 @@ export function InsuranceJotform({ items, onFormSubmitted }: InsuranceJotformPro
         </div>
 
         {mounted ? (
-          <div className="overflow-hidden rounded-xl border border-slate-200">
+          <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+            {isLoading && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 backdrop-blur-[2px]">
+                <Loader2 className="h-10 w-10 animate-spin text-[#20a9ad]" />
+                <p className="mt-4 text-sm font-medium text-[#6a6a67]">Loading insurance form...</p>
+              </div>
+            )}
             <iframe
               ref={iframeRef}
               src={jotformUrl}
               title="Insurance Claim Form"
               className="h-[600px] w-full border-0"
+              onLoad={() => setIsLoading(false)}
               allow="camera; microphone; geolocation"
             />
           </div>
         ) : (
           <div className="overflow-hidden rounded-xl border border-slate-200 h-[600px] flex items-center justify-center bg-slate-50">
             <div className="text-center">
-              <ShieldCheck size={40} className="text-[#008236]/20 mx-auto mb-3" />
+              <Loader2 className="h-10 w-10 animate-spin text-[#20a9ad] mx-auto mb-3" />
               <p className="text-sm text-[#6a6a67]">Loading insurance form...</p>
             </div>
           </div>

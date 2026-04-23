@@ -3,12 +3,14 @@
 import { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck, Minus, Plus } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck, Minus, Plus, HelpCircle } from "lucide-react";
 
 import { PRODUCTS } from "@/lib/products/products";
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import { useCart } from "@/context/cart-context";
 import { RelatedCards } from "@/components/products/related-cards";
+import { PricingModal } from "@/components/products/pricing-modal";
+import { EnquiryModal } from "@/components/products/enquiry-modal";
 import { Footer } from "@castor/ui";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -16,6 +18,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const product = PRODUCTS.find((p) => p.slug === slug);
   const { addItem } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
+  const [isEnquiryModalOpen, setIsEnquiryModalOpen] = useState(false);
 
   if (!product) {
     return (
@@ -189,35 +193,43 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-row gap-2">
-                {/* Add to Cart Button */}
-                <button
-                  onClick={handleAddToCart}
-                  className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#20a9ad] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1b8e91] transition-colors"
-                >
-                  <ShoppingCart size={18} strokeWidth={2} />
-                  <span className="text-sm">Add to Cart</span>
-                </button>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-row gap-2">
+                  {/* Add to Cart Button */}
+                  <button
+                    onClick={handleAddToCart}
+                    className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#20a9ad] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1b8e91] transition-colors"
+                  >
+                    <ShoppingCart size={18} strokeWidth={2} />
+                    <span className="text-sm">Add to Cart</span>
+                  </button>
 
-                {/* Buy Now / Call for Pricing Button */}
-                {product.workflowType === "pricing-request" ? (
-                  <button
-                    onClick={() => {
-                      const jotformUrl = `https://form.jotform.com/261111682493051?productName=${encodeURIComponent(product.name)}&productId=${encodeURIComponent(product.id)}&quantity=${quantity}&source=Call%20for%20Pricing`;
-                      window.open(jotformUrl, "_blank");
-                    }}
-                    className="flex h-13 flex-[2] items-center justify-center gap-2 rounded-full bg-[#F7C89A] px-3 font-bold text-[#0e1b33] shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#eeb67a] transition-colors"
-                  >
-                    <span className="text-sm">Call for Pricing</span>
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleBuyNow}
-                    className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#0e1b33] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1a1a1a] transition-colors"
-                  >
-                    <span className="text-sm">Buy Now</span>
-                  </button>
-                )}
+                  {/* Buy Now / Call for Pricing Button */}
+                  {product.workflowType === "pricing-request" ? (
+                    <button
+                      onClick={() => setIsPricingModalOpen(true)}
+                      className="flex h-13 flex-[2] items-center justify-center gap-2 rounded-full bg-[#F7C89A] px-3 font-bold text-[#0e1b33] shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#eeb67a] transition-colors"
+                    >
+                      <span className="text-sm">Call for Pricing</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleBuyNow}
+                      className="flex h-13 flex-1 items-center justify-center gap-2 rounded-full bg-[#0e1b33] px-3 font-bold text-white shadow-[0px_4px_10px_rgba(0,0,0,0.1)] hover:bg-[#1a1a1a] transition-colors"
+                    >
+                      <span className="text-sm">Buy Now</span>
+                    </button>
+                  )}
+                </div>
+
+                {/* Enquiry Button */}
+                <button
+                  onClick={() => setIsEnquiryModalOpen(true)}
+                  className="flex h-13 w-full items-center justify-center gap-2 rounded-full border-2 border-[#20a9ad] bg-white px-3 font-bold text-[#20a9ad] shadow-[0px_4px_10px_rgba(0,0,0,0.05)] hover:bg-[#f0fdfa] transition-colors"
+                >
+                  <HelpCircle size={18} strokeWidth={2} />
+                  <span className="text-sm">Product Enquiry</span>
+                </button>
               </div>
 
               {/* Active Badge */}
@@ -393,6 +405,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           <RelatedCards currentProduct={product} />
         </div>
       </main>
+
+      <PricingModal
+        isOpen={isPricingModalOpen}
+        onClose={() => setIsPricingModalOpen(false)}
+        productName={product.name}
+        productId={product.id}
+        quantity={quantity}
+      />
+      <EnquiryModal
+        isOpen={isEnquiryModalOpen}
+        onClose={() => setIsEnquiryModalOpen(false)}
+        productName={product.name}
+        productId={product.id}
+        quantity={quantity}
+        enquiryUrl={product.enquiryUrl}
+      />
       <Footer />
     </div>
   );

@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 import { useCart } from "@/context/cart-context";
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import type { Product } from "@/types/product";
+import { PricingModal } from "./pricing-modal";
 
 interface ProductCardProps {
   product: Product;
@@ -17,6 +19,7 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const router = useRouter();
+  const [isPricingModalOpen, setIsPricingModalOpen] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -141,8 +144,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const jotformUrl = `https://form.jotform.com/261111682493051?productName=${encodeURIComponent(product.name)}&productId=${encodeURIComponent(product.id)}&quantity=1&source=Call%20for%20Pricing`;
-                    window.open(jotformUrl, "_blank");
+                    setIsPricingModalOpen(true);
                   }}
                   className="flex h-8 items-center rounded-full bg-[#F7C89A] px-6 text-[10px] font-bold text-[#0e1b33] shadow-lg shadow-[#F7C89A]/20 transition-all duration-300 hover:scale-105 hover:bg-[#eeb67a] hover:shadow-[#F7C89A]/40 active:scale-95 lg:h-12 lg:px-10 lg:text-[13px]"
                 >
@@ -162,6 +164,13 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
       </motion.div>
+
+      <PricingModal
+        isOpen={isPricingModalOpen}
+        onClose={() => setIsPricingModalOpen(false)}
+        productName={product.name}
+        productId={product.id}
+      />
     </Link>
   );
 }

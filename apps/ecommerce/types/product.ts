@@ -21,4 +21,5 @@ export interface Product {
   uomSetName?: string;
   status?: string;
   partNumber?: string;
+  enquiryUrl?: string;
 }
