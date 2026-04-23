@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { motion } from "framer-motion";
 
 const HowItWork = () => {
@@ -27,22 +26,40 @@ const HowItWork = () => {
   return (
     <section className="bg-white py-[80px] px-4 sm:px-6 lg:px-[141px]" data-node-id="281:112">
       <div className="mx-auto max-w-[1280px] text-center">
-        <h2 className="text-[44px] font-bold text-[#0e1b33] leading-[54px]" data-node-id="281:113">
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-[44px] font-bold text-[#0e1b33] leading-[54px]" 
+          data-node-id="281:113"
+        >
           How It Works
-        </h2>
-        <p className="mt-4 text-[#6a6a67] text-[18px] mb-[60px]" data-node-id="281:114">
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="mt-4 text-[#6a6a67] text-[18px] mb-[60px]" 
+          data-node-id="281:114"
+        >
           Simple, reliable booking in three easy steps
-        </p>
+        </motion.p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {steps.map((step, index) => (
             <motion.div
               key={step.number}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="flex flex-col items-center"
+              transition={{ 
+                delay: 0.4 + (index * 0.2), 
+                duration: 0.8, 
+                ease: "easeOut" 
+              }}
+              className="flex flex-col items-center p-4 rounded-2xl"
             >
               <div 
                 className="relative flex items-center justify-center w-[68px] h-[68px] rounded-full bg-[#20a9ad] text-white text-[28px] font-bold mb-6 shadow-lg"
