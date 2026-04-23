@@ -37,8 +37,7 @@ const ReservationForm = () => {
           id="JotFormIFrame-261122620065040"
           title="Transport Reservation Form"
           onLoad={handleLoad}
-          allowtransparency="true"
-          allowFullScreen={true}
+          allowFullScreen
           allow="geolocation; microphone; camera"
           src="https://form.jotform.com/261122620065040"
           style={{
@@ -47,9 +46,9 @@ const ReservationForm = () => {
             border: "none",
             backgroundColor: "#ffffff",
             opacity: isLoading ? 0 : 1,
-            transition: "opacity 0.5s ease-in-out"
+            transition: "opacity 0.5s ease-in-out",
+            overflow: "hidden"
           }}
-          scrolling="no"
         />
       </div>
       <script
