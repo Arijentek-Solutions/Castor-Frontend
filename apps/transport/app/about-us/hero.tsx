@@ -9,6 +9,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative flex h-[340px] flex-col items-center justify-center overflow-hidden rounded-[40px] bg-[#0e1b33] text-center"
         >
           <div className="relative z-10 px-6">

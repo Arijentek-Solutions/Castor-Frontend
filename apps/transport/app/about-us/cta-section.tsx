@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+
 import { GetStartedCTA } from "@castor/ui";
 
-const BookOnline = () => {
+export function CTASection() {
   return (
     <GetStartedCTA
       title="Need a Ride Today?"
@@ -15,4 +15,4 @@ const BookOnline = () => {
   );
 };
 
-export default BookOnline;
+export default CTASection;
