@@ -6,7 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cart-context";
 import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
-import { useEffect, useRef, useMemo, useCallback } from "react";
+import { useEffect, useRef, useMemo, useCallback, useState } from "react";
+import { PricingModal } from "../products/pricing-modal";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -23,6 +24,8 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     decreaseQuantity,
     isEmpty 
   } = useCart();
+  
+  const [selectedPricingProduct, setSelectedPricingProduct] = useState<{name: string, id: string, quantity: number} | null>(null);
   
   const drawerRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -178,7 +181,12 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             </div>
                             <span className="text-sm font-black text-[#0e1b33]">
                               {item.workflowType === "pricing-request" ? (
-                                <span className="text-[#20a9ad]">Call for Pricing</span>
+                                <button
+                                  onClick={() => setSelectedPricingProduct({ name: item.name, id: item.productId, quantity: item.quantity })}
+                                  className="text-[#20a9ad] hover:underline"
+                                >
+                                  Call for Pricing
+                                </button>
                               ) : (
                                 formatCartCurrency(item.price * item.quantity)
                               )}
@@ -233,6 +241,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <PricingModal
+        isOpen={!!selectedPricingProduct}
+        onClose={() => setSelectedPricingProduct(null)}
+        productName={selectedPricingProduct?.name || ""}
+        productId={selectedPricingProduct?.id || ""}
+        quantity={selectedPricingProduct?.quantity || 1}
+      />
     </>
   );
 }

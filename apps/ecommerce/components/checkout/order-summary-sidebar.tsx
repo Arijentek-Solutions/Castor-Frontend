@@ -4,6 +4,8 @@ import { formatCartCurrency } from "@/lib/cart/cart-service";
 import type { CartItem } from "@/types/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ShieldCheck, Lock } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { PricingModal } from "../products/pricing-modal";
 
 type OrderSummarySidebarProps = {
   items: CartItem[];
@@ -30,6 +32,8 @@ export function OrderSummarySidebar({
   buyNowQuantity = 1,
   onBuyNowQuantityChange,
 }: OrderSummarySidebarProps) {
+  const [selectedPricingProduct, setSelectedPricingProduct] = useState<{name: string, id: string, quantity: number} | null>(null);
+
   return (
     <aside className="sticky top-48 h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm lg:w-[380px] xl:w-[420px]">
       <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
@@ -53,7 +57,16 @@ export function OrderSummarySidebar({
               <div>
                 <h4 className="line-clamp-2 text-sm font-bold text-[#0e1b33]">{item.name}</h4>
                 <p className="mt-1 text-sm font-semibold text-[#20a9ad]">
-                  {item.workflowType === "pricing-request" ? "Call for Pricing" : formatCartCurrency(item.price)}
+                  {item.workflowType === "pricing-request" ? (
+                    <button
+                      onClick={() => setSelectedPricingProduct({ name: item.name, id: item.productId, quantity: item.quantity })}
+                      className="hover:underline"
+                    >
+                      Call for Pricing
+                    </button>
+                  ) : (
+                    formatCartCurrency(item.price)
+                  )}
                 </p>
               </div>
 
@@ -169,6 +182,13 @@ export function OrderSummarySidebar({
           <span>Encrypted</span>
         </div>
       </div>
+      <PricingModal
+        isOpen={!!selectedPricingProduct}
+        onClose={() => setSelectedPricingProduct(null)}
+        productName={selectedPricingProduct?.name || ""}
+        productId={selectedPricingProduct?.id || ""}
+        quantity={selectedPricingProduct?.quantity || 1}
+      />
     </aside>
   );
 }
