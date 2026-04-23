@@ -8,14 +8,15 @@ const Mission = () => {
         <section className="bg-[#f0f9fa] py-[80px] px-4 sm:px-6 lg:px-[141px]" data-node-id="281:100">
             <div className="mx-auto max-w-[1280px] flex flex-col md:flex-row items-center gap-[84px]">
                 <motion.div 
-                    initial={{ opacity: 0, x: -50 }}
+                    initial={{ opacity: 0, x: -40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
-                    className="w-full md:w-[520px] h-[360px] overflow-hidden rounded-[12px] bg-[#d1e5e8] shrink-0 relative" 
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    whileHover={{ scale: 1.05 }}
+                    className="w-full md:w-[520px] h-[360px] overflow-hidden rounded-[12px] bg-[#d1e5e8] shrink-0 cursor-pointer shadow-md hover:shadow-xl transition-shadow duration-300" 
                     data-node-id="281:101"
                 >
-                    <Image
+                    <img
                         src="/images/about-us/img1.png"
                         alt="Our Mission"
                         fill
@@ -23,10 +24,10 @@ const Mission = () => {
                     />
                 </motion.div>
                 <motion.div 
-                    initial={{ opacity: 0, x: 50 }}
+                    initial={{ opacity: 0, x: 40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     className="flex-1 max-w-[580px]" 
                     data-node-id="281:103"
                 >

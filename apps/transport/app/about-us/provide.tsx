@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { motion } from "framer-motion";
 
 const Provide = () => {
   const services = [
@@ -27,15 +27,25 @@ const Provide = () => {
 
   return (
     <section className="bg-[#f0f9fa] py-[60px] px-4 sm:px-6 lg:px-[141px]" data-node-id="281:79">
-      <div className="mx-auto max-w-[1280px]">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="mx-auto max-w-[1280px]"
+      >
         <h2 className="text-center font-bold text-[#0e1b33] text-[44px] leading-[54px] mb-[30px]" data-node-id="281:80">
           What Castor Provides
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-[32px]">
           {services.map((service) => (
-            <div
+            <motion.div
               key={service.title}
-              className="relative bg-white rounded-[12px] p-[24px] h-[184px] overflow-hidden shadow-sm border-t-[4px] border-[#20a9ad]"
+              whileHover={{ 
+                y: -8,
+                transition: { type: "spring", stiffness: 300, damping: 20 }
+              }}
+              className="relative bg-white rounded-[12px] p-[24px] h-[184px] overflow-hidden shadow-sm border-t-[4px] border-[#20a9ad] cursor-default"
               data-node-id={service.id}
             >
               <h3 className="font-semibold text-[#0e1b33] text-[16px] mb-[16px]">
@@ -44,10 +54,10 @@ const Provide = () => {
               <p className="text-[#6a6a67] text-[14px] leading-[22px]">
                 {service.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

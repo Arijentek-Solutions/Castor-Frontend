@@ -211,8 +211,8 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
   transport: [
     { label: "Home", href: SITE_URLS.transport },
     { label: "About Us", href: `${SITE_URLS.transport}/about-us` },
-    { label: "Services", href: `${SITE_URLS.transport}/service` },
-    { label: "Reservation", href: `${SITE_URLS.transport}/booking` },
+    { label: "Services", href: `${SITE_URLS.transport}/services` },
+    { label: "Reservation", href: `${SITE_URLS.transport}/reservation` },
     { label: "Free Estimate", href: `${SITE_URLS.transport}/estimate` },
     { label: "Careers", href: `${SITE_URLS.transport}/careers` },
     { label: "Contact Us", href: `${SITE_URLS.transport}/contact` },
