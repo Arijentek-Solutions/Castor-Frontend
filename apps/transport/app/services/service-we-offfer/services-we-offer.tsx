@@ -6,44 +6,44 @@ import Link from "next/link";
 
 const services = [
     {
-        title: "Non-Emergency Medical Transportation (NEMT)",
+        title: "Non-Emergency Medical Transportation",
         image: "/images/service/img1.png",
-        href: "/service/service-we-offfer/medical-transportation",
+        href: "/services/service-we-offfer/medical-transportation",
     },
     {
         title: "Wheelchair Vans",
         image: "/images/service/img2.png",
-        href: "/service/service-we-offfer/wheelchar-vans",
+        href: "/services/service-we-offfer/wheelchar-vans",
     },
     {
         title: "Independent Living Transportation",
         image: "/images/service/img3.png",
-        href: "/service/service-we-offfer/living-transportation",
+        href: "/services/service-we-offfer/living-transportation",
     },
     {
         title: "Doctor's Appointment",
         image: "/images/service/img4.png",
-        href: "/service/service-we-offfer/doctor-appointment",
+        href: "/services/service-we-offfer/doctor-appointment",
     },
     {
         title: "Assistance in Admission and Discharge",
         image: "/images/service/img5.png",
-        href: "/service/service-we-offfer/admission-and-discharge",
+        href: "/services/service-we-offfer/admission-and-discharge",
     },
     {
         title: "In-Town Transport",
         image: "/images/service/img6.png",
-        href: "/service/service-we-offfer/intown-transportation",
+        href: "/services/service-we-offfer/intown-transportation",
     },
     {
         title: "Dialysis Appointment",
         image: "/images/service/img7.png",
-        href: "/service/service-we-offfer/dialysis-appointment",
+        href: "/services/service-we-offfer/dialysis-appointment",
     },
     {
         title: "Local and Long-Distance Transportation",
         image: "/images/service/img8.png",
-        href: "/service/service-we-offfer/local-transportation",
+        href: "/services/service-we-offfer/local-transportation",
     },
 ];
 
@@ -79,13 +79,13 @@ const ServicesWeOffer = () => {
                                     className="object-cover"
                                 />
                             </div>
-                            <div className="flex flex-1 flex-col items-center px-4 py-4">
+                            <div className="flex flex-1 flex-col items-center gap-4 px-4 py-4">
                                 <p className="text-center text-[14px] font-semibold leading-[20px] text-[#0e1b33]">
                                     {service.title}
                                 </p>
                                 <Link
                                     href={service.href}
-                                    className="mt-3 inline-flex items-center rounded-full bg-[#20a9ad] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a8f92]"
+                                    className="mt-auto inline-flex items-center rounded-full bg-[#20a9ad] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a8f92]"
                                 >
                                     Learn More
                                 </Link>
