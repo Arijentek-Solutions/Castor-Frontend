@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
+import Hero from "./hero";
 
 export default function InTownTransportationPage() {
     return (
         <main className="min-h-screen bg-white">
-            <h1>In-Town Transport</h1>
+            <Hero />
         </main>
     );
 }
