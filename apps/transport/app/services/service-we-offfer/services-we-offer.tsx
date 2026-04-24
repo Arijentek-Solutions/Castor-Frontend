@@ -13,7 +13,7 @@ const services = [
     {
         title: "Wheelchair Vans",
         image: "/images/service/img2.png",
-        href: "/services/service-we-offfer/wheelchar-vans",
+        href: "/services/service-we-offfer/wheelchair-vans",
     },
     {
         title: "Independent Living Transportation",
