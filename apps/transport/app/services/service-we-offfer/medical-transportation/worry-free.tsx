@@ -18,7 +18,7 @@ const WorryFree = () => {
                     >
                         <div className="relative h-[280px] w-full overflow-hidden rounded-[13px] sm:h-[400px] lg:h-[552px]">
                             <Image
-                                src="/images/service/NEMT/img1.png"
+                                src="/images/service/nemt.png"
                                 alt="Medical transportation vehicle"
                                 fill
                                 className="object-cover object-center"

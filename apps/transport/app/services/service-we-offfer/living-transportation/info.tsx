@@ -18,7 +18,7 @@ const Info = () => {
                     >
                         <div className="relative h-[280px] w-full overflow-hidden rounded-[12px] bg-[#d1e5e8] sm:h-[380px] lg:h-[500px]">
                             <Image
-                                src="/images/service/LIVING=TRANSPORTATION/img1.png"
+                                src="/images/service/living-transportation.png"
                                 alt="Independent living transportation"
                                 fill
                                 className="object-cover object-center"
