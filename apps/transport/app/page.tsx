@@ -6,7 +6,6 @@ import { MissionSection } from "./hero/mission-section";
 import { VisionSection } from "./hero/vision-section";
 import { HowItWorksSection } from "./hero/how-it-works-section";
 import { CTASection } from "./hero/cta-section";
-import { ServiceCoverage } from "./service-coverage/service-coverage";
 
 export default function Home() {
   return (
@@ -18,7 +17,6 @@ export default function Home() {
       <VisionSection />
       <HowItWorksSection />
       <CTASection />
-      <ServiceCoverage />
     </main>
   );
 }

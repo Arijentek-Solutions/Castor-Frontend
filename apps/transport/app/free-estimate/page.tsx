@@ -27,7 +27,7 @@ export default function FreeEstimatePage() {
       {/* Form Section */}
       <section className="px-4 pb-20 pt-10 bg-white">
         <div className="mx-auto max-w-[1280px]">
-          <div className="w-full h-[1800px] bg-white relative">
+          <div className="w-full h-[1900px] md:h-[1700px] bg-[#f0f9fa] relative rounded-[16px] overflow-hidden shadow-[0_4_24_rgba(0,0,0,0.08)] border border-[rgba(0,0,0,0.12)]">
             <AnimatePresence>
               {isLoading && (
                 <motion.div 

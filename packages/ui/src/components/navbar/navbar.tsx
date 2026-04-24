@@ -214,7 +214,6 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
     { label: "Services", href: `${SITE_URLS.transport}/services` },
     { label: "Reservation", href: `${SITE_URLS.transport}/reservation` },
     { label: "Free Estimate", href: `${SITE_URLS.transport}/free-estimate` },
-    { label: "Careers", href: `${SITE_URLS.transport}/careers` },
     { label: "Contact Us", href: `${SITE_URLS.transport}/contact` },
   ],
   ecommerce: [
