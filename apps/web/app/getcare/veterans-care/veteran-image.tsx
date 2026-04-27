@@ -15,7 +15,7 @@ export default function VeteranImage() {
           className="relative h-[250px] sm:h-[350px] md:h-[450px] lg:h-[480px] w-full rounded-[32px] overflow-hidden shadow-lg"
         >
           <Image
-            src="/images/veterans/veteran-image-2.png"
+            src="/images/getcare/veterans/veteran-image-2.png"
             alt="Veteran receiving compassionate care from a caregiver"
             fill
             className="object-cover"

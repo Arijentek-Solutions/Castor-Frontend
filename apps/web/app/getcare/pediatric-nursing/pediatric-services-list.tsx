@@ -99,7 +99,7 @@ export function PediatricServicesList() {
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[32px] shadow-2xl">
                   <Image
-                    src="/images/Pediatric-Nursing/pediatric-nursing-care1.png"
+                    src="/images/getcare/pediatric-nursing/pediatric-nursing-care1.png"
                     alt="Pediatric nursing care"
                     fill
                     className="object-cover transition-transform duration-700 hover:scale-105"
@@ -107,7 +107,7 @@ export function PediatricServicesList() {
                 </div>
                 <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[32px] shadow-2xl">
                   <Image
-                    src="/images/Pediatric-Nursing/pediatric-nursing-care2.png"
+                    src="/images/getcare/pediatric-nursing/pediatric-nursing-care2.png"
                     alt="Pediatric nursing support"
                     fill
                     className="object-cover transition-transform duration-700 hover:scale-105"

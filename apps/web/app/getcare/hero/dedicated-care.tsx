@@ -64,7 +64,7 @@ export default function DedicatedCare() {
           >
             <div className="relative aspect-[4/3] w-full rounded-[32px] overflow-hidden shadow-[0_32px_64px_-12px_rgba(0,0,0,0.15)] group">
               <Image
-                src="/images/hero/image1.jpg"
+                src="/images/getcare/general/image1.jpg"
                 alt="Dedicated Care"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

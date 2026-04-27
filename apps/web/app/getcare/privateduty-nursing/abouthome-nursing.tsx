@@ -41,7 +41,7 @@ export default function AboutHomeNursing() {
             className="flex-1 w-full lg:max-w-[480px] h-[384px] relative rounded-[32px] overflow-hidden shadow-2xl group shrink-0"
           >
             <Image
-              src="/images/private duty nursing/private-nursing-1.jpg"
+              src="/images/getcare/private-duty-nursing/private-nursing-1.jpg"
               alt="Healthcare professional providing specialized nursing care"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -46,7 +46,7 @@ export function JoinOurTeam() {
         >
           <div className="w-full h-full min-h-[400px] relative overflow-hidden rounded-[32px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
             <img 
-              src="/images/smile.png"
+              src="/images/main/smile.png"
               alt="Build Your Career with Castor"
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[125%] max-w-none object-cover"
             />

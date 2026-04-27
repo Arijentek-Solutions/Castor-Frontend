@@ -28,7 +28,7 @@ const WhereWeTakeYou = () => {
                     >
                         <div className="relative h-[280px] w-full overflow-hidden rounded-[13px] sm:h-[400px] lg:h-[557px]">
                             <Image
-                                src="/images/service/nemt-2.png"
+                                src="/images/transport/services/nemt-2.png"
                                 alt="Healthcare facility destination"
                                 fill
                                 className="object-cover object-center"

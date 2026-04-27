@@ -32,7 +32,7 @@ const Vision = () => {
                     data-node-id="281:110"
                 >
                     <Image
-                        src="/images/about-us/img2.png"
+                        src="/images/transport/about-us/img2.png"
                         alt="Our Vision"
                         fill
                         className="object-cover"

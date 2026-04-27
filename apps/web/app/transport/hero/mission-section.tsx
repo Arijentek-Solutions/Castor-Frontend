@@ -16,7 +16,7 @@ export function MissionSection() {
             className="relative h-[360px] w-full max-w-[520px] overflow-hidden rounded-[24px]"
           >
             <Image
-              src="/images/hero/Image2.png"
+              src="/images/transport/hero/Image2.png"
               alt="Our Mission"
               fill
               className="object-cover"

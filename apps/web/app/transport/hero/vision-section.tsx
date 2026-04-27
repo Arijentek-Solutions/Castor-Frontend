@@ -32,7 +32,7 @@ export function VisionSection() {
           >
              <div className="relative h-full w-full overflow-hidden">
               <Image
-                src="/images/hero/Image3.png"
+                src="/images/transport/hero/Image3.png"
                 alt="Our Vision"
                 fill
                 className="object-cover"

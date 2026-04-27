@@ -33,7 +33,7 @@ export function MedicalSupplies() {
             description: "Lightweight aluminum frame, easy to fold for transport. Ideal for travel and occasional use.",
             price: "$189.99",
             reviews: 124,
-            image: "/images/medicalsupllies/product1.png",
+            image: "/images/main/medical-supplies/product1.png",
             inStock: true,
         },
         {
@@ -41,7 +41,7 @@ export function MedicalSupplies() {
             description: "Full-featured semi-electric bed with adjustable head and foot sections. Mattress included.",
             price: "$899.00",
             reviews: 45,
-            image: "/images/medicalsupllies/product2.png",
+            image: "/images/main/medical-supplies/product2.png",
             inStock: true,
         },
         {
@@ -49,7 +49,7 @@ export function MedicalSupplies() {
             description: "Sturdy, height-adjustable walker with comfortable hand grips and non-slip rubber tips.",
             price: "$45.50",
             reviews: 312,
-            image: "/images/medicalsupllies/product3.png",
+            image: "/images/main/medical-supplies/product3.png",
             inStock: true,
         },
     ];

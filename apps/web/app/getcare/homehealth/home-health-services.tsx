@@ -95,7 +95,7 @@ export function HomeHealthServices() {
             <div className="relative aspect-[3/2] w-full">
               <div className="absolute inset-0 rounded-[32px] overflow-hidden shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
                 <Image
-                  src="/images/Home-Health/image1.jpg"
+                  src="/images/getcare/home-health/image1.jpg"
                   alt="Castor Home Health Services"
                   fill
                   className="object-cover"

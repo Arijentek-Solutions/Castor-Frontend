@@ -22,7 +22,7 @@ export default function CareersPage() {
               className="absolute inset-0"
             >
               <Image
-                src="/images/hero/careers-hero.png"
+                src="/images/main/careers-hero.png"
                 alt="Careers at Castor Health"
                 fill
                 priority

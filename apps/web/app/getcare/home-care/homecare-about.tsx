@@ -37,7 +37,7 @@ export default function HomeCareAbout() {
             className="flex-1 w-full lg:max-w-[576px] h-[384px] relative rounded-[32px] overflow-hidden shadow-2xl group shrink-0"
           >
             <Image
-              src="/images/home-care/image1.jpg"
+              src="/images/getcare/home-care/image1.jpg"
               alt="Personal care and companionship support"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
