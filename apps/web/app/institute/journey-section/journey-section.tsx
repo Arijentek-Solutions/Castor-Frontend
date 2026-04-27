@@ -94,30 +94,30 @@ function StepIcon({ icon }: { icon: (typeof steps)[number]["icon"] }) {
   return <CapIcon />;
 }
 
-const itemVariants: Variants = {
-  initial: { opacity: 0, y: 30, scale: 0.94 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
-
-const containerVariants: Variants = {
-  initial: {},
-  animate: {
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.1,
-    },
-  },
-};
-
 export function JourneySection() {
+  const itemVariants: Variants = {
+    initial: { opacity: 0, y: 30, scale: 0.94 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const containerVariants: Variants = {
+    initial: {},
+    animate: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
   return (
     <section className="px-4 pb-24 pt-2 sm:px-6 lg:px-8 lg:pb-28">
       <motion.div

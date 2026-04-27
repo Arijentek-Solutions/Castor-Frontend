@@ -170,29 +170,29 @@ function FacilityIcon({
   return <BadgeCheckIcon />;
 }
 
-const fadeInUp: Variants = {
-  initial: { opacity: 0, y: 30, scale: 0.94 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
-
-const staggerContainer: Variants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.1,
-    },
-  },
-};
-
 export function B2BSection({ onSelectAudience }: B2BSectionProps) {
+  const fadeInUp: Variants = {
+    initial: { opacity: 0, y: 30, scale: 0.94 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const staggerContainer: Variants = {
+    animate: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
   return (
     <section id="b2b-training" className="px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
       <div className="mx-auto max-w-[1320px]">

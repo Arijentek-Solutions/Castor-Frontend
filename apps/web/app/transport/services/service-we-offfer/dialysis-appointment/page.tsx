@@ -2,7 +2,7 @@
 import React from "react";
 import Hero from "./hero";
 import Info from "./info";
-import { CTASection } from "@/app/hero/cta-section";
+import { CTASection } from "@/app/transport/services/cta-section";
 
 export default function DialysisAppointmentPage() {
     return (

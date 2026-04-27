@@ -32,38 +32,38 @@ const featureCards = [
   },
 ];
 
-const slideIn: Variants = {
-  initial: { opacity: 0, x: -30 },
-  animate: { 
-    opacity: 1, 
-    x: 0,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
-  }
-};
-
-const popIn: Variants = {
-  initial: { opacity: 0, y: 30, scale: 0.95 },
-  animate: { 
-    opacity: 1, 
-    y: 0, 
-    scale: 1,
-    transition: { 
-      duration: 1.2, 
-      ease: [0.22, 1, 0.36, 1] 
-    } 
-  }
-};
-
-const staggerContainer: Variants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1
-    }
-  }
-};
-
 export default function CPRCurriculum() {
+  const slideIn: Variants = {
+    initial: { opacity: 0, x: -30 },
+    animate: { 
+      opacity: 1, 
+      x: 0,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
+    }
+  };
+
+  const popIn: Variants = {
+    initial: { opacity: 0, y: 30, scale: 0.95 },
+    animate: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.22, 1, 0.36, 1] 
+      } 
+    }
+  };
+
+  const staggerContainer: Variants = {
+    animate: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
   return (
     <section className="relative px-4 py-24 sm:px-6 lg:px-8 bg-[linear-gradient(154.861deg,rgba(213,251,255,0.2)_0%,rgb(255,255,255)_100%)]">
       <div className="mx-auto max-w-[1300px]">
