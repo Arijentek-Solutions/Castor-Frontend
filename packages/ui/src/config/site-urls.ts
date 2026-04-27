@@ -1,8 +1,12 @@
-const WEB_BASE =
-  process.env.NEXT_PUBLIC_WEB_URL || 'https://castor-main.vercel.app';
+const isLocal = process.env.NODE_ENV === 'development';
 
-const ECOMMERCE_BASE =
-  process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://castor-ecommerce.vercel.app';
+const WEB_BASE = isLocal 
+  ? 'http://localhost:3004' 
+  : (process.env.NEXT_PUBLIC_WEB_URL || 'https://castor-main.vercel.app');
+
+const ECOMMERCE_BASE = isLocal 
+  ? 'http://localhost:3005' 
+  : (process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://castor-ecommerce.vercel.app');
 
 export const SITE_URLS = {
   // Root domain — web corporate homepage

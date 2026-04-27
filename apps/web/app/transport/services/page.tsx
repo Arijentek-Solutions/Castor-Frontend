@@ -2,7 +2,7 @@
 import React from "react";
 import Header from "./header";
 import Paragraph from "./pragraph";
-import ServicesWeOffer from "./service-we-offfer/services-we-offer";
+import ServicesWeOffer from "./service-we-offer/services-we-offer";
 import HowItWork from "./how-it-work";
 import CTASection from "./cta-section";
 

@@ -8,42 +8,42 @@ const services = [
     {
         title: "Non-Emergency Medical Transportation",
         image: "/images/service/img1.png",
-        href: "/services/service-we-offfer/medical-transportation",
+        href: "/transport/services/service-we-offer/medical-transportation",
     },
     {
         title: "Wheelchair Vans",
         image: "/images/service/img2.png",
-        href: "/services/service-we-offfer/wheelchair-vans",
+        href: "/transport/services/service-we-offer/wheelchair-vans",
     },
     {
         title: "Independent Living Transportation",
         image: "/images/service/img3.png",
-        href: "/services/service-we-offfer/living-transportation",
+        href: "/transport/services/service-we-offer/living-transportation",
     },
     {
         title: "Doctor's Appointment",
         image: "/images/service/img4.png",
-        href: "/services/service-we-offfer/doctor-appointment",
+        href: "/transport/services/service-we-offer/doctor-appointment",
     },
     {
         title: "Assistance in Admission and Discharge",
         image: "/images/service/img5.png",
-        href: "/services/service-we-offfer/admission-and-discharge",
+        href: "/transport/services/service-we-offer/admission-and-discharge",
     },
     {
         title: "In-Town Transport",
         image: "/images/service/img6.png",
-        href: "/services/service-we-offfer/intown-transportation",
+        href: "/transport/services/service-we-offer/intown-transportation",
     },
     {
         title: "Dialysis Appointment",
         image: "/images/service/img7.png",
-        href: "/services/service-we-offfer/dialysis-appointment",
+        href: "/transport/services/service-we-offer/dialysis-appointment",
     },
     {
         title: "Local and Long-Distance Transportation",
         image: "/images/service/img8.png",
-        href: "/services/service-we-offfer/local-transportation",
+        href: "/transport/services/service-we-offer/local-transportation",
     },
 ];
 
