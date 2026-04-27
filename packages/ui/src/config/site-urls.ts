@@ -1,8 +1,17 @@
+const WEB_BASE =
+  process.env.NEXT_PUBLIC_WEB_URL || 'https://castor.com';
+
+const ECOMMERCE_BASE =
+  process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://castor-ecommerce.vercel.app';
+
 export const SITE_URLS = {
-  auth: process.env.NEXT_PUBLIC_AUTH_URL || 'https://castor-auth.vercel.app',
-  services: process.env.NEXT_PUBLIC_SERVICES_URL || 'https://castor-getcare.vercel.app',
-  ecommerce: process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://castor-ecommerce.vercel.app',
-  institute: process.env.NEXT_PUBLIC_INSTITUTE_URL || 'https://castor-institute.vercel.app',
-  transport: process.env.NEXT_PUBLIC_TRANSPORT_URL || 'https://castor-transport.vercel.app',
-  web: process.env.NEXT_PUBLIC_WEB_URL || 'https://castor-main.vercel.app',
+  // Root domain — web corporate homepage
+  web: WEB_BASE,
+  // Path-based sections under the same domain
+  services:  `${WEB_BASE}/getcare`,
+  institute: `${WEB_BASE}/institute`,
+  transport: `${WEB_BASE}/transport`,
+  auth:      `${WEB_BASE}/auth`,
+  // Ecommerce stays on its own separate domain
+  ecommerce: ECOMMERCE_BASE,
 } as const;

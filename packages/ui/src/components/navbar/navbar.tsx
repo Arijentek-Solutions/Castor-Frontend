@@ -463,10 +463,10 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
     };
   }, [isOpen]);
 
-  // Compute path relative to base service URL for active comparison
-  const getRelativePath = (href: string) => {
-    const rel = href.replace(baseUrl, '');
-    return rel === '' ? '/' : rel;
+  // Extract pathname from URL for active comparison
+  const getRelativePath = (href: string): string => {
+    try { return new URL(href).pathname || '/'; }
+    catch { return href || '/'; }
   };
 
   // Determine active state: dropdown parent is active if any child is active; leaf items use exact match
@@ -600,24 +600,35 @@ const Brand = () => {
   );
 };
 
+const getPathname = (url: string): string => {
+  try { return new URL(url).pathname; }
+  catch { return url; }
+};
+
 const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEntry; pathname: string; serviceContext?: ServiceContext }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
 
   // Determine if main nav item is active based on serviceContext or pathname
   let isActive = false;
-  if (serviceContext) {
-    // For service apps, active if this item corresponds to current serviceContext
-    const contextToLabel: Record<string, string> = {
-      services: "Get Care",
-      ecommerce: "Medical Supplies",
-      institute: "Health Institute",
-      transport: "Transportation",
-    };
+  const contextToLabel: Record<string, string> = {
+    services: "Get Care",
+    ecommerce: "Medical Supplies",
+    institute: "Health Institute",
+    transport: "Transportation",
+  };
+
+  if (serviceContext && contextToLabel[serviceContext]) {
     isActive = contextToLabel[serviceContext] === item.label;
-  } else {
-    // For web app pages, compare pathname with item href (extract path from full URL)
-    const pathFromHref = item.href.replace(SITE_URLS.web, '');
-    isActive = pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+  }
+
+  if (!isActive) {
+    const pathFromHref = getPathname(item.href);
+    if (pathFromHref === '/') {
+      isActive = pathname === '/' && item.label !== "Medical Supplies";
+    } else {
+      isActive =
+        pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+    }
   }
 
   if (!hasDropdown) {
@@ -667,20 +678,26 @@ const MobileNavItem = ({
   serviceContext?: ServiceContext;
 }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
-
-  // Determine if main nav item is active based on serviceContext or pathname
   let isActive = false;
-  if (serviceContext) {
-    const contextToLabel: Record<string, string> = {
-      services: "Get Care",
-      ecommerce: "Medical Supplies",
-      institute: "Health Institute",
-      transport: "Transportation",
-    };
+  const contextToLabel: Record<string, string> = {
+    services: "Get Care",
+    ecommerce: "Medical Supplies",
+    institute: "Health Institute",
+    transport: "Transportation",
+  };
+
+  if (serviceContext && contextToLabel[serviceContext]) {
     isActive = contextToLabel[serviceContext] === item.label;
-  } else {
-    const pathFromHref = item.href.replace(SITE_URLS.web, '');
-    isActive = pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+  }
+
+  if (!isActive) {
+    const pathFromHref = getPathname(item.href);
+    if (pathFromHref === '/') {
+      isActive = pathname === '/' && item.label !== "Medical Supplies";
+    } else {
+      isActive =
+        pathname === pathFromHref || pathname.startsWith(pathFromHref + '/');
+    }
   }
 
   if (!hasDropdown) {
@@ -752,7 +769,7 @@ const DropdownMenu = ({ items, pathname }: { items: DropdownEntry[]; pathname: s
   <div className="w-[286px] rounded-[28px] border border-[#edf0f4] bg-white/98 p-4 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
     <div className="space-y-2">
       {items.map((item) => {
-        const isActive = pathname === item.href;
+        const isActive = pathname === getPathname(item.href);
         return (
           <a
             key={item.title}
