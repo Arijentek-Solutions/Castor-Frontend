@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 const comprehensiveServices = [
   {
@@ -57,27 +57,27 @@ const comprehensiveServices = [
   },
 ];
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.98, y: 20 },
-  visible: { 
-    opacity: 1, 
-    scale: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" }
-  },
-};
-
 export function ComprehensiveServices() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.98, y: 20 },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    },
+  };
+
   return (
     <section className="bg-white py-24 px-8 sm:px-12 lg:px-20">
       <div className="mx-auto max-w-[1240px]">

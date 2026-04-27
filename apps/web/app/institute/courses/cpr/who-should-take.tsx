@@ -38,29 +38,29 @@ const targetAudience = [
   },
 ];
 
-const popIn: Variants = {
-  initial: { opacity: 0, y: 40, scale: 0.9 },
-  animate: { 
-    opacity: 1, 
-    y: 0, 
-    scale: 1,
-    transition: { 
-      duration: 1.2, 
-      ease: [0.22, 1, 0.36, 1] 
-    } 
-  }
-};
-
-const staggerContainer: Variants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.25,
-      delayChildren: 0.1
-    }
-  }
-};
-
 export default function CPRWhoShouldTake() {
+  const popIn: Variants = {
+    initial: { opacity: 0, y: 40, scale: 0.9 },
+    animate: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.22, 1, 0.36, 1] 
+      } 
+    }
+  };
+
+  const staggerContainer: Variants = {
+    animate: {
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.1
+      }
+    }
+  };
+
   return (
     <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-[1300px]">

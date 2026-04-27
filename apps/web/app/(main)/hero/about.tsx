@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -56,29 +56,29 @@ function ArrowRightIcon() {
   );
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1] as const, // Custom quintic ease-out for premium feel
-    },
-  },
-};
-
 export function AboutCastorSection() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1], // Custom quintic ease-out for premium feel
+      },
+    },
+  };
+
   return (
     <section
       className={`${inter.variable} px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20`}
