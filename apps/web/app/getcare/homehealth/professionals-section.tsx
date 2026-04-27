@@ -19,7 +19,7 @@ export function ProfessionalsSection() {
             <div className="relative aspect-[3/2] w-full">
               <div className="absolute inset-0 rounded-[32px] overflow-hidden shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)]">
                 <Image
-                  src="/images/Home-Health/image2.jpg"
+                  src="/images/getcare/home-health/image2.jpg"
                   alt="Our Skilled and Trained Professionals"
                   fill
                   className="object-cover"

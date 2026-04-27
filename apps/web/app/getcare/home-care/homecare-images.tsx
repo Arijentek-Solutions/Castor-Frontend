@@ -16,7 +16,7 @@ export default function HomeCareImages() {
             className="relative h-[384px] rounded-[32px] overflow-hidden shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] group"
           >
             <Image
-              src="/images/home-care/image2.jpg"
+              src="/images/getcare/home-care/image2.jpg"
               alt="Home Care Services Support"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -30,7 +30,7 @@ export default function HomeCareImages() {
             className="relative h-[384px] rounded-[32px] overflow-hidden shadow-[0px_25px_50px_-12px_rgba(0,0,0,0.25)] group"
           >
             <Image
-              src="/images/home-care/image3.jpg"
+              src="/images/getcare/home-care/image3.jpg"
               alt="Caregiver Support"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"

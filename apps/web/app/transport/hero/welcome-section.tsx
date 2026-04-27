@@ -34,7 +34,7 @@ export function WelcomeSection() {
             className="relative h-[380px] w-full max-w-[520px] overflow-hidden rounded-[24px] lg:justify-self-end"
           >
             <Image
-              src="/images/hero/Image1.png"
+              src="/images/transport/hero/Image1.png"
               alt="Castor Medical Transportation Vehicle"
               fill
               className="object-cover"

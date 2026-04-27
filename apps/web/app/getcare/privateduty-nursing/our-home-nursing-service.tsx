@@ -76,7 +76,7 @@ export default function OurHomeNursingService() {
             className="relative h-[320px] rounded-[32px] overflow-hidden shadow-xl"
           >
             <Image
-              src="/images/private duty nursing/private-nusing-2.jpg"
+              src="/images/getcare/private-duty-nursing/private-nusing-2.jpg"
               alt="Home Nursing Care"
               fill
               className="object-cover"
@@ -90,7 +90,7 @@ export default function OurHomeNursingService() {
             className="relative h-[320px] rounded-[32px] overflow-hidden shadow-xl"
           >
             <Image
-              src="/images/private duty nursing/private-nursing-3.jpg"
+              src="/images/getcare/private-duty-nursing/private-nursing-3.jpg"
               alt="Medical Care"
               fill
               className="object-cover"

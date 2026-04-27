@@ -19,7 +19,7 @@ export function PrivateDutyHero() {
           >
             {/* Background Image */}
             <Image
-              src="/images/hero/privateduty-nursing.png"
+              src="/images/getcare/private-duty-nursing/privateduty-nursing.png"
               alt="Private Duty Nursing"
               fill
               className="h-full w-full object-cover object-center opacity-60"

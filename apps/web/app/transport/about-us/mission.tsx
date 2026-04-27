@@ -17,7 +17,7 @@ const Mission = () => {
                     data-node-id="281:101"
                 >
                     <Image
-                        src="/images/about-us/img1.png"
+                        src="/images/transport/about-us/img1.png"
                         alt="Our Mission"
                         fill
                         className="object-cover"

@@ -18,7 +18,7 @@ export function HomeHealthHero() {
           >
             {/* Background Image */}
             <Image
-              src="/images/hero/getcare-hero.png"
+              src="/images/getcare/general/getcare-hero.png"
               alt="Home Health Care"
               fill
               className="h-full w-full object-cover object-center"

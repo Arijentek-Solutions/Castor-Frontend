@@ -19,7 +19,7 @@ export function PediatricNursingHero() {
           >
             {/* Background Image */}
             <Image
-              src="/images/hero/pediatric.png"
+              src="/images/getcare/pediatric-nursing/pediatric.png"
               alt="Pediatric Nursing Services"
               fill
               className="h-full w-full object-cover object-center opacity-70"

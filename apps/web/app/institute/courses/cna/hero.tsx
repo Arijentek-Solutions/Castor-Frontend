@@ -127,7 +127,7 @@ export default function CNACourseHero() {
               className="relative mt-16 aspect-square w-full max-w-[640px] overflow-hidden rounded-[40px] lg:mt-0 lg:w-[45%] isolate z-0"
             >
               <Image
-                src="/cna.png"
+                src="/images/institute/cna.png"
                 alt="Students practicing CNA skills"
                 fill
                 className="object-cover rounded-[36px]"

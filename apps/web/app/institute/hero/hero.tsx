@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button, HeroActions } from "@castor/ui";
 import { motion } from "framer-motion";
 
-const studentIcon = "/studenticon.svg";
+const studentIcon = "/images/institute/studenticon.svg";
 
 export function Hero() {
   return (
@@ -17,7 +17,7 @@ export function Hero() {
         >
           <div className="absolute inset-0 z-0 bg-[#0e1b33]">
             <Image
-              src="/institute-hero.png"
+              src="/images/institute/institute-hero.png"
               alt="Castor Health Institute students and clinicians"
               fill
               className="object-cover object-center opacity-90"

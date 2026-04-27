@@ -37,7 +37,7 @@ const VeteransCareDescription = () => {
             className="flex-1 w-full lg:max-w-[576px] relative h-[384px] rounded-[32px] overflow-hidden"
           >
             <Image
-              src="/images/veterans/veteran-image-1.png"
+              src="/images/getcare/veterans/veteran-image-1.png"
               alt="Veteran care at home"
               fill
               className="object-cover"

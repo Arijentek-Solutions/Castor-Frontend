@@ -21,7 +21,7 @@ export function Hero() {
         >
           <div className="absolute inset-0 z-0 bg-[#0e1b33]">
             <Image
-              src="/images/hero/transport-hero.png"
+              src="/images/transport/hero/transport-hero.png"
               alt="Medical staff providing transportation support"
               fill
               className="object-cover object-[center_18%] opacity-90"

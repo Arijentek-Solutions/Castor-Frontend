@@ -39,7 +39,7 @@ export function AboutHealthcareStaffing() {
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[32px] shadow-2xl">
               <Image
-                src="/images/Staffing-Healthcare/about-staffing-healthcare.png"
+                src="/images/getcare/healthcare-staffing/about-staffing-healthcare.png"
                 alt="Healthcare Staffing Collaboration"
                 fill
                 className="object-cover"

@@ -21,7 +21,7 @@ export default function ContactPage() {
               className="absolute inset-0"
             >
               <Image
-                src="/images/hero/contact-hero.png"
+                src="/images/main/contact-hero.png"
                 alt="Contact Castor"
                 fill
                 priority

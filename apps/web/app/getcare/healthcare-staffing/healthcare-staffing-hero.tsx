@@ -18,7 +18,7 @@ const HealthcareStaffingHero = () => {
         >
           {/* Background Image */}
           <Image
-            src="/images/hero/staffing-healthcare.png"
+            src="/images/getcare/healthcare-staffing/staffing-healthcare.png"
             alt="Healthcare Staffing"
             fill
             className="h-full w-full object-cover object-center opacity-70"

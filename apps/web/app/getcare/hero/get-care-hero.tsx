@@ -15,7 +15,7 @@ export function GetCareHero() {
         >
           <div className="absolute inset-0 z-0 bg-[#0e1b33]">
             <Image
-              src="/images/hero/getcare-hero.png"
+              src="/images/getcare/general/getcare-hero.png"
               alt="Nurse supporting an elderly woman at home"
               fill
               priority
