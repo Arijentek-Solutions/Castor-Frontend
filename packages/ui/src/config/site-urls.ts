@@ -1,5 +1,5 @@
 const WEB_BASE =
-  process.env.NEXT_PUBLIC_WEB_URL || 'https://castor.com';
+  process.env.NEXT_PUBLIC_WEB_URL || 'https://castor-main.vercel.app';
 
 const ECOMMERCE_BASE =
   process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://castor-ecommerce.vercel.app';

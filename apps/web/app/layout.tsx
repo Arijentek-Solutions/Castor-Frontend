@@ -18,7 +18,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor-main.vercel.app"),
   title: {
     template: "%s | Castor Health",
     default: "Castor Health — Complete Healthcare Ecosystem",

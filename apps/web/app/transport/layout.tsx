@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Navbar, Footer } from "@castor/ui";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor-main.vercel.app"),
   title: {
     template: "%s | Castor Transportation",
     default: "Castor Medical Transportation | Safe & Reliable NEMT",
