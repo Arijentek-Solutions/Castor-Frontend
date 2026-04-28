@@ -17,6 +17,7 @@ type DropdownEntry = {
   description: string;
   href: string;
   icon: ReactNode;
+  subItems?: DropdownEntry[];
 };
 
 type NavEntry = {
@@ -204,9 +205,84 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
   ],
   institute: [
     { label: "Home", href: SITE_URLS.institute },
-    { label: "CNA Program", href: `${SITE_URLS.institute}/courses/cna` },
-    { label: "Phlebotomy", href: `${SITE_URLS.institute}/courses/phlebotomy` },
-    { label: "CPR Training", href: `${SITE_URLS.institute}/courses/cpr` },
+    { label: "About Us", href: `${SITE_URLS.institute}/about-us` },
+    {
+      label: "Courses", href: `${SITE_URLS.institute}/courses`, dropdownItems: [
+        {
+          title: "Courses Offered",
+          description: "Browse our training programs",
+          href: `${SITE_URLS.institute}/courses`,
+          icon: (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          ),
+          subItems: [
+            {
+              title: "CNA Program",
+              description: "Certified Nursing Assistant training",
+              href: `${SITE_URLS.institute}/courses/cna`,
+              icon: (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 21a7 7 0 0 1-7-7V8" />
+                  <path d="M5 11a4 4 0 1 1 8 0v3" />
+                  <path d="M15 10h4" />
+                  <path d="M17 8v4" />
+                </svg>
+              ),
+            },
+            {
+              title: "Phlebotomy Training",
+              description: "Blood draw certification program",
+              href: `${SITE_URLS.institute}/courses/phlebotomy`,
+              icon: (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3c3 4 5 6.5 5 10a5 5 0 1 1-10 0c0-3.5 2-6 5-10Z" />
+                </svg>
+              ),
+            },
+            {
+              title: "Dual Enrollment",
+              description: "High school college credit program",
+              href: `${SITE_URLS.institute}/courses/dual-enrollment`,
+              icon: (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                  <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                </svg>
+              ),
+            },
+            {
+              title: "CPR Certification",
+              description: "CPR & First Aid training",
+              href: `${SITE_URLS.institute}/courses/cpr`,
+              icon: (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 12h4l2-4 4 10 2-6h6" />
+                </svg>
+              ),
+            },
+          ],
+        },
+        {
+          title: "Course Schedules",
+          description: "View class timetables",
+          href: `${SITE_URLS.institute}/schedules`,
+          icon: (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          ),
+        },
+      ]
+    },
+    { label: "FAQ", href: `${SITE_URLS.institute}/faq` },
+    { label: "Contact Us", href: `${SITE_URLS.institute}/contact` },
+    { label: "Enroll Now", href: `${SITE_URLS.institute}/enroll-now` },
   ],
   transport: [
     { label: "Home", href: SITE_URLS.transport },
@@ -427,8 +503,9 @@ const HelpMeChooseButton = ({
 
 const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; pathname: string; baseUrl: string }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [hoveredParent, setHoveredParent] = useState<string | null>(null);
   const [position, setPosition] = useState({ left: 0, bottom: 0 });
-  const menuRef = useRef<HTMLDivElement>(null);
+  const subMenuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLAnchorElement>(null);
   const baseClasses = "inline-flex h-9 items-center gap-1.5 whitespace-nowrap text-[12px] font-bold leading-none tracking-normal font-sans transition-colors outline-none appearance-none bg-transparent p-0 sm:text-[13px]";
   const activeClasses = "text-[#20A9AD]";
@@ -436,8 +513,9 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (subMenuRef.current && !subMenuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        setHoveredParent(null);
       }
     };
 
@@ -463,27 +541,48 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
     };
   }, [isOpen]);
 
-  // Extract pathname from URL for active comparison
   const getRelativePath = (href: string): string => {
     try { return new URL(href).pathname || '/'; }
     catch { return href || '/'; }
   };
 
-  // Determine active state: dropdown parent is active if any child is active; leaf items use exact match
   const isActive = (() => {
     if (item.dropdownItems) {
-      return item.dropdownItems.some(child => pathname === getRelativePath(child.href));
+      let hasActiveChild = false;
+      item.dropdownItems.forEach(child => {
+        if (pathname === getRelativePath(child.href)) {
+          hasActiveChild = true;
+        }
+        if (child.subItems) {
+          child.subItems.forEach(sub => {
+            if (pathname === getRelativePath(sub.href)) {
+              hasActiveChild = true;
+            }
+          });
+        }
+      });
+      return hasActiveChild;
     }
     return pathname === getRelativePath(item.href);
   })();
 
   if (item.dropdownItems) {
+    const parent = hoveredParent ? item.dropdownItems.find(i => i.title === hoveredParent) : null;
+    const showSubMenu = !!parent?.subItems?.length;
+    const subItems = parent?.subItems;
+
     return (
       <div
-        ref={menuRef}
+        ref={subMenuRef}
         className="relative flex items-center h-9"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
+        onMouseEnter={() => {
+          setIsOpen(true);
+          setHoveredParent(null);
+        }}
+        onMouseLeave={() => {
+          setIsOpen(false);
+          setHoveredParent(null);
+        }}
       >
         <Link
           ref={triggerRef}
@@ -508,39 +607,98 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
               left: `${position.left + 10}px`,
               top: '55px'
             } : {}}
-            className="fixed -translate-x-1/2 lg:absolute lg:left-1/2 lg:top-full lg:z-[110] pt-2"
+            className="fixed -translate-x-1/2 lg:absolute lg:left-0 lg:translate-x-0 lg:top-full lg:z-[110] pt-2"
           >
-            <div className="w-64 rounded-2xl border border-[#edf0f4] bg-white p-2 shadow-xl backdrop-blur-xl">
-              {item.dropdownItems.map((subItem) => {
-                const subItemActive = pathname === getRelativePath(subItem.href);
-                return (
-                  <Link
-                    key={subItem.title}
-                    href={subItem.href}
-                    className={`group flex items-start gap-3 rounded-xl p-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
-                      ? 'bg-white text-[#20A9AD]'
-                      : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
-                      }`}>
-                      {subItem.icon}
+            <div className="relative w-64 rounded-2xl border border-[#edf0f4] bg-white shadow-xl backdrop-blur-xl">
+              <div className="space-y-2 p-3">
+                {item.dropdownItems.map((subItem) => {
+                  const subItemActive = pathname === getRelativePath(subItem.href) || (subItem.subItems && subItem.subItems.some(si => pathname === getRelativePath(si.href)));
+                  const hasNestedSubItems = subItem.subItems && subItem.subItems.length > 0;
+                  return (
+                    <div
+                      key={subItem.title}
+                      className="relative"
+                      onMouseEnter={() => setHoveredParent(subItem.title)}
+                    >
+                      {hasNestedSubItems ? (
+                        <Link
+                          href={subItem.href}
+                          className={`group flex items-start gap-3 rounded-xl p-3 transition-colors cursor-pointer ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
+                            ? 'bg-white text-[#20A9AD]'
+                            : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+                            }`}>
+                            {subItem.icon}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                              {subItem.description}
+                            </div>
+                          </div>
+                          <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-200 -rotate-90" />
+                        </Link>
+                      ) : (
+                        <Link
+                          href={subItem.href}
+                          className={`group flex items-start gap-3 rounded-xl p-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
+                            ? 'bg-white text-[#20A9AD]'
+                            : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+                            }`}>
+                            {subItem.icon}
+                          </div>
+                          <div className="min-w-0">
+                            <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                              {subItem.description}
+                            </div>
+                          </div>
+                        </Link>
+                      )}
                     </div>
-                    <div className="min-w-0">
-                      <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
-                      <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
-                        {subItem.description}
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {showSubMenu && subItems && (
+                <div className="absolute left-0 top-full lg:left-full lg:top-0 w-[220px] rounded-2xl border border-[#edf0f4] bg-white p-3 shadow-xl backdrop-blur-xl z-20">
+                  <div className="space-y-1">
+                    {subItems.map((nestedItem) => {
+                      const nestedItemActive = pathname === getRelativePath(nestedItem.href);
+                      return (
+                        <Link
+                          key={nestedItem.title}
+                          href={nestedItem.href}
+                          className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors ${nestedItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          onClick={() => { setIsOpen(false); setHoveredParent(null); }}
+                        >
+                          <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${nestedItemActive
+                            ? 'bg-white text-[#20A9AD]'
+                            : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
+                            }`}>
+                            {nestedItem.icon}
+                          </div>
+                          <div className="min-w-0">
+                            <div className={`text-[12px] font-bold leading-tight ${nestedItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{nestedItem.title}</div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
       </div>
     );
   }
+
 
   return (
     <Link
