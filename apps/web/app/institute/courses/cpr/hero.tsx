@@ -117,7 +117,7 @@ export default function CPRHero() {
               className="relative mt-16 aspect-square w-full max-w-[640px] overflow-hidden rounded-[40px] lg:mt-0 lg:w-[45%] isolate z-0"
             >
               <Image
-                src="/images/institute/cpr.png"
+                src="/images/institute/hero/cpr.png"
                 alt="CPR Training"
                 fill
                 className="object-cover rounded-[36px]"

@@ -119,7 +119,7 @@ export default function DualEnrollmentHero() {
               className="relative mt-16 aspect-square w-full max-w-[640px] overflow-hidden rounded-[40px] lg:mt-0 lg:w-[45%] isolate z-0"
             >
               <Image
-                src="/images/institute/dual-enrollment.png"
+                src="/images/institute/hero/dual-enrollment.png"
                 alt="Dual Enrollment program"
                 fill
                 className="object-cover rounded-[36px]"
