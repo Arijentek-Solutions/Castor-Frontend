@@ -73,15 +73,7 @@ export function Hero() {
                     className="min-h-[58px] min-w-[168px] rounded-[14px] border-white/18 bg-[#4a556b]/78 px-9 text-[1.05rem] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-sm hover:bg-[#566178]/84 flex items-center justify-center gap-2"
                     href="#"
                   >
-                    <Image
-                      src={studentIcon}
-                      alt=""
-                      width={16}
-                      height={16}
-                      className="opacity-90"
-                      aria-hidden="true"
-                    />
-                    <span>Student Portal</span>
+                    <span>Enroll Now</span>
                   </Button>
                 </HeroActions>
               </motion.div>
