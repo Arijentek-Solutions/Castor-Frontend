@@ -23,6 +23,7 @@ build/
 *.tsbuildinfo
 
 # IDE / Editor secrets
+.roo/
 .vscode/*
 !.vscode/extensions.json
 !.vscode/launch.json
