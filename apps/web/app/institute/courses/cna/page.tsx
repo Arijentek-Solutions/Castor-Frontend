@@ -1,7 +1,6 @@
 import CNACourseHero from "./hero";
 import ProgramHighlights from "./highlights";
-import CourseCurriculum from "./curriculum";
-import CNACTA from "./cta";
+import CourseCurriculum from "./courseDetails";
 
 export default function CNAPage() {
   return (
@@ -9,7 +8,6 @@ export default function CNAPage() {
       <CNACourseHero />
       <ProgramHighlights />
       <CourseCurriculum />
-      <CNACTA />
     </main>
   );
 }

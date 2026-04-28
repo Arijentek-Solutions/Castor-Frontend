@@ -119,7 +119,7 @@ export default function PhlebotomyHero() {
             >
               {/* Image Placeholder with provided asset logic */}
               <Image
-                src="/images/institute/phlebotomy.png"
+                src="/images/institute/hero/phlebotomy.png"
                 alt="Phlebotomy training"
                 fill
                 className="object-cover rounded-[36px]"
