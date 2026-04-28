@@ -5,19 +5,19 @@ import { motion } from "framer-motion";
 
 export default function CNACourseHero() {
   return (
-    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-48 xl:pt-52">
-      <div className="mx-auto w-full max-w-[1408px]">
+    <section className="px-4 pb-14 pt-48 sm:px-6 sm:pt-52 lg:px-8 lg:pb-20 lg:pt-48">
+      <div className="mx-auto w-full max-w-[1871px]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative min-h-[579px] overflow-hidden rounded-[40px]"
+          className="relative h-[600px] sm:h-[650px] lg:h-[700px] overflow-hidden rounded-[2rem]"
           style={{
             backgroundImage:
               "linear-gradient(157.646deg, rgb(14, 27, 51) 0%, rgb(16, 29, 55) 7.1429%, rgb(17, 31, 58) 14.286%, rgb(19, 34, 62) 21.429%, rgb(21, 36, 66) 28.571%, rgb(22, 38, 69) 35.714%, rgb(24, 41, 73) 42.857%, rgb(26, 43, 77) 50%, rgb(24, 41, 73) 57.143%, rgb(22, 38, 69) 64.286%, rgb(21, 36, 66) 71.429%, rgb(19, 34, 62) 78.571%, rgb(17, 31, 58) 85.714%, rgb(16, 29, 55) 92.857%, rgb(14, 27, 51) 100%)",
           }}
         >
-          <div className="relative z-10 mx-auto flex min-h-[579px] flex-col-reverse items-center px-8 py-16 sm:px-12 lg:flex-row lg:justify-between lg:px-16">
+          <div className="relative z-10 mx-auto flex h-full flex-col-reverse items-center px-8 py-16 sm:px-12 lg:flex-row lg:justify-between lg:px-16">
             <div className="max-w-[693px] lg:w-[55%]">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}

@@ -11,19 +11,19 @@ const cards = [
       "We help connect you with local employers, offering resume workshops and interview prep to kickstart your healthcare career with confidence.",
   },
   {
-    image: "/images/courses/img2.png",
+    image: "/images/institute/courses/img2.png",
     title: "Hands-On Clinical Training",
     description:
       "Gain practical experience in real healthcare settings, building the skills and confidence needed to deliver exceptional patient care from day one.",
   },
   {
-    image: "/images/courses/img3.png",
+    image: "/images/institute/courses/img3.png",
     title: "Flexible Class Schedules",
     description:
       "With courses running year-round, and with full-day or evening options, you\u2019re bound to find a class that works with your schedule.",
   },
   {
-    image: "/images/courses/img4.png",
+    image: "/images/institute/courses/img4.png",
     title: "Affordable Rates & Financial Support",
     description:
       "Take advantage of competitive rates and flexible payment options, including financial assistance, to make your education accessible and worry-free.",
