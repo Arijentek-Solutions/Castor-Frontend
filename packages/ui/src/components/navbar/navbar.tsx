@@ -207,11 +207,11 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
     { label: "Home", href: SITE_URLS.institute },
     { label: "About Us", href: `${SITE_URLS.institute}/about-us` },
     {
-      label: "Courses", href: `${SITE_URLS.institute}/courses`, dropdownItems: [
+      label: "Courses", href: `${SITE_URLS.institute}`, dropdownItems: [
         {
           title: "Courses Offered",
           description: "Browse our training programs",
-          href: `${SITE_URLS.institute}/courses`,
+          href: `${SITE_URLS.institute}`,
           icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
