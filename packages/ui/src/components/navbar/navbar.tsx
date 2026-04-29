@@ -546,16 +546,22 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
     catch { return href || '/'; }
   };
 
+  const mobileLeftOffset = item.label === "Courses" ? 100 : item.label === "Services" ? 20 : 20;
+  const mobileTopOffset = item.label === "Courses" ? 95 : item.label === "Services" ? 85 : 15;
+
   const isActive = (() => {
     if (item.dropdownItems) {
       let hasActiveChild = false;
       item.dropdownItems.forEach(child => {
-        if (pathname === getRelativePath(child.href)) {
+        const childPath = getRelativePath(child.href);
+        const rootPath = getRelativePath(baseUrl);
+        if (pathname === childPath && childPath !== rootPath) {
           hasActiveChild = true;
         }
         if (child.subItems) {
           child.subItems.forEach(sub => {
-            if (pathname === getRelativePath(sub.href)) {
+            const subPath = getRelativePath(sub.href);
+            if (pathname === subPath && subPath !== rootPath) {
               hasActiveChild = true;
             }
           });
@@ -604,13 +610,13 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
         {isOpen && (
           <div
             style={window.innerWidth < 1024 ? {
-              left: `${position.left + 10}px`,
-              top: '55px'
+              left: `${position.left - mobileLeftOffset}px`,
+              top: `${position.bottom - mobileTopOffset}px`
             } : {}}
             className="fixed -translate-x-1/2 lg:absolute lg:left-0 lg:translate-x-0 lg:top-full lg:z-[110] pt-2"
           >
-            <div className="relative w-64 rounded-2xl border border-[#edf0f4] bg-white shadow-xl backdrop-blur-xl">
-              <div className="space-y-2 p-3">
+            <div className="relative w-[210px] lg:w-64 rounded-2xl border border-[#edf0f4] bg-white shadow-xl backdrop-blur-xl">
+              <div className="space-y-1 lg:space-y-2 p-2 lg:p-3">
                 {item.dropdownItems.map((subItem) => {
                   const subItemActive = pathname === getRelativePath(subItem.href) || (subItem.subItems && subItem.subItems.some(si => pathname === getRelativePath(si.href)));
                   const hasNestedSubItems = subItem.subItems && subItem.subItems.length > 0;
@@ -618,43 +624,52 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
                     <div
                       key={subItem.title}
                       className="relative"
-                      onMouseEnter={() => setHoveredParent(subItem.title)}
+                      onMouseEnter={() => {
+                        if (window.innerWidth >= 1024) setHoveredParent(subItem.title);
+                      }}
                     >
                       {hasNestedSubItems ? (
                         <Link
                           href={subItem.href}
-                          className={`group flex items-start gap-3 rounded-xl p-3 transition-colors cursor-pointer ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
-                          onClick={() => setIsOpen(false)}
+                          className={`group flex items-start gap-2 lg:gap-3 rounded-xl p-2 lg:p-3 transition-colors cursor-pointer ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          onClick={(e) => {
+                            if (window.innerWidth < 1024) {
+                              e.preventDefault();
+                              setHoveredParent(hoveredParent === subItem.title ? null : subItem.title);
+                            } else {
+                              setIsOpen(false);
+                            }
+                          }}
                         >
-                          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
+                          <div className={`flex h-8 w-8 lg:h-10 lg:w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
                             }`}>
                             {subItem.icon}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
-                            <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                            <div className={`text-[12px] lg:text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[10px] lg:text-[11px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
                               {subItem.description}
                             </div>
                           </div>
-                          <ChevronDown className="h-3 w-3 opacity-60 transition-transform duration-200 -rotate-90" />
+                          <ChevronDown className={`h-3 w-3 opacity-60 transition-transform duration-200 ${hoveredParent === subItem.title && window.innerWidth < 1024 ? 'rotate-180' : '-rotate-90'}`} />
                         </Link>
                       ) : (
                         <Link
                           href={subItem.href}
-                          className={`group flex items-start gap-3 rounded-xl p-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          className={`group flex items-start gap-2 lg:gap-3 rounded-xl p-2 lg:p-3 transition-colors ${subItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
                           onClick={() => setIsOpen(false)}
                         >
-                          <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
+                          <div className={`flex h-8 w-8 lg:h-10 lg:w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
                             }`}>
                             {subItem.icon}
                           </div>
                           <div className="min-w-0">
-                            <div className={`text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
-                            <div className={`mt-1 whitespace-normal break-words text-[11px] leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                            <div className={`text-[12px] lg:text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[10px] lg:text-[11px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
                               {subItem.description}
                             </div>
                           </div>
@@ -666,7 +681,7 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
               </div>
 
               {showSubMenu && subItems && (
-                <div className="absolute left-0 top-full lg:left-full lg:top-0 w-[220px] rounded-2xl border border-[#edf0f4] bg-white p-3 shadow-xl backdrop-blur-xl z-20">
+                <div className="absolute left-[95%] top-0 lg:left-full lg:top-0 w-[180px] lg:w-[220px] rounded-2xl border border-[#edf0f4] bg-white p-2 lg:p-3 shadow-xl backdrop-blur-xl z-20 ml-1 lg:ml-0">
                   <div className="space-y-1">
                     {subItems.map((nestedItem) => {
                       const nestedItemActive = pathname === getRelativePath(nestedItem.href);
@@ -674,17 +689,17 @@ const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNavLink; 
                         <Link
                           key={nestedItem.title}
                           href={nestedItem.href}
-                          className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors ${nestedItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+                          className={`group flex items-center gap-2 lg:gap-3 rounded-lg px-2 py-2 lg:px-3 lg:py-2.5 transition-colors ${nestedItemActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
                           onClick={() => { setIsOpen(false); setHoveredParent(null); }}
                         >
-                          <div className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${nestedItemActive
+                          <div className={`flex h-6 w-6 lg:h-8 lg:w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${nestedItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
                             }`}>
                             {nestedItem.icon}
                           </div>
                           <div className="min-w-0">
-                            <div className={`text-[12px] font-bold leading-tight ${nestedItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{nestedItem.title}</div>
+                            <div className={`text-[11px] lg:text-[12px] font-bold leading-tight ${nestedItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{nestedItem.title}</div>
                           </div>
                         </Link>
                       );
