@@ -3,8 +3,9 @@ import Image from "next/image";
 import { Button, HeroActions } from "@castor/ui";
 import { motion } from "framer-motion";
 
+const smoothTransition = { duration: 1.2, ease: [0.22, 1, 0.36, 1] as const };
+
 export function Hero() {
-  const smoothTransition = { duration: 1.2, ease: [0.22, 1, 0.36, 1] };
 
   return (
     <section className="px-4 pb-14 pt-48 sm:px-6 sm:pt-52 lg:px-8 lg:pb-20 lg:pt-48">

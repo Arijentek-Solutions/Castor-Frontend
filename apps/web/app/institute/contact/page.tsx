@@ -4,11 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
+const smoothTransition = { duration: 1.2, ease: [0.22, 1, 0.36, 1] as const };
+
 export default function InstituteContactUsPage() {
   const [isLoading, setIsLoading] = useState(true);
-
-  // Elite Institute Animation Pattern
-  const smoothTransition = { duration: 1.2, ease: [0.22, 1, 0.36, 1] };
 
   const sectionVariants = {
     initial: { opacity: 0, y: 40 },
