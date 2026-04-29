@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Button } from "@castor/ui";
 
 export default function DualEnrollmentHero() {
   return (
@@ -46,7 +47,7 @@ export default function DualEnrollmentHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
                 className="mt-10 max-w-[638px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
-    
+
               >
                 For the first time, we&apos;re offering a way for you to get certified as both a CNA and a Phlebotomist in just one accelerated course. Broaden your horizons and open twice as many career opportunities in two ever-growing fields.
               </motion.p>
@@ -57,18 +58,16 @@ export default function DualEnrollmentHero() {
                 transition={{ delay: 0.8, duration: 0.8 }}
                 className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
               >
-                <a
-                  href="#course-details"
-                  className="inline-flex h-14 items-center justify-center rounded-[43px] bg-[#20a9ad] px-8 text-[21px] font-medium text-white shadow-[0_20px_40px_-15px_rgba(32,169,173,0.3)] transition-colors hover:bg-[#1a8b8f]"
-                >
+                <Button href="#course-details" variant="primary" size="lg">
                   Enroll Now
-                </a>
-                <a
+                </Button>
+                <Button
                   href="#course-details"
-                  className="inline-flex h-14 items-center justify-center rounded-[43px] border-[3px] border-[#6c7587] bg-[#2c3953] px-8 text-[21px] font-medium text-white transition-colors hover:bg-[#3a4a66]"
+                  variant="secondary"
+                  size="lg"
                 >
                   Course Details
-                </a>
+                </Button>
               </motion.div>
             </div>
 
