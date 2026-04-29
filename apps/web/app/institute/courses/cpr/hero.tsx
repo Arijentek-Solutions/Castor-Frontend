@@ -1,129 +1,52 @@
 "use client";
 
-import Image from "next/image";
-import { Button } from "@castor/ui";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Calendar, Heart, ChevronRight } from "lucide-react";
 
 export default function CPRHero() {
   return (
-    <section className="px-4 pb-14 pt-40 sm:px-6 sm:pt-44 lg:px-8 lg:pb-20 lg:pt-44 xl:pt-52">
+    <section className="px-4 pt-48 sm:px-6 sm:pt-52 lg:px-8 lg:pt-48">
       <div className="mx-auto w-full max-w-[1871px]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative h-[700px] overflow-hidden rounded-[2rem] bg-[#132540] shadow-[var(--hero-shadow)]"
+          className="relative overflow-hidden rounded-[2rem]"
+          style={{
+            backgroundImage:
+              "linear-gradient(166deg, rgb(14, 27, 51) 0%, rgb(16, 29, 55) 7.1429%, rgb(17, 31, 58) 14.286%, rgb(19, 34, 62) 21.429%, rgb(21, 36, 66) 28.571%, rgb(22, 38, 69) 35.714%, rgb(24, 41, 73) 42.857%, rgb(26, 43, 77) 50%, rgb(24, 41, 73) 57.143%, rgb(22, 38, 69) 64.286%, rgb(21, 36, 66) 71.429%, rgb(19, 34, 62) 78.571%, rgb(17, 31, 58) 85.714%, rgb(16, 29, 55) 92.857%, rgb(14, 27, 51) 100%)",
+          }}
         >
-          <div className="relative z-10 mx-auto px-6 py-12 flex flex-col-reverse lg:flex-row lg:h-[700px] lg:items-center lg:justify-between lg:px-20">
-            {/* Content Side */}
-            <div className="max-w-3xl lg:w-[55%]">
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="mb-8 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md"
-              >
-                <Heart className="h-4 w-4 text-[#20a9ad]" />
-                <span className="text-xs font-semibold tracking-wider text-white/90 uppercase">
-                  Life-Saving Skills
-                </span>
-              </motion.div>
-
-              {/* Title Area */}
-              <div>
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-7xl"
-                >
-                  CPR & First Aid{" "}
-                  <span className="text-[#20a9ad]">Certification</span>
-                </motion.h1>
-              </div>
-
-              {/* Description */}
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-8 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
-              >
-                Learn life-saving CPR and first aid skills with our American Heart Association certified training. Get certified in just one day.
-              </motion.p>
-
-              {/* Info Details Grid */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="mt-10 flex flex-wrap gap-x-12 gap-y-6"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-[#20a9ad]">
-                    <Clock className="h-5 w-5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Duration</span>
-                    <span className="text-sm font-medium text-white">4-6 Hours</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-[#20a9ad]">
-                    <MapPin className="h-5 w-5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Location</span>
-                    <span className="text-sm font-medium text-white">Tampa, FL</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-[#20a9ad]">
-                    <Calendar className="h-5 w-5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Next Class</span>
-                    <span className="text-sm font-medium text-white">April 25, 2026</span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Actions */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center"
-              >
-                <Button size="lg" className="h-14 px-10 text-base font-semibold shadow-[0_20px_40px_-15px_rgba(32,169,173,0.3)] bg-[#20a9ad] hover:bg-[#1a8b8f] text-white">
-                  Enroll Now
-                </Button>
-                <Button variant="secondary" size="lg" className="h-14 border-white/10 bg-white/5 px-8 text-base font-semibold backdrop-blur-md hover:bg-white/10 text-white">
-                  Request Info
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>
-              </motion.div>
-            </div>
-
-            {/* Visual Side */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, x: 20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="relative mt-16 aspect-square w-full max-w-[640px] overflow-hidden rounded-[40px] lg:mt-0 lg:w-[45%] isolate z-0"
+          <div className="flex min-h-[351px] flex-col items-center justify-center px-8 py-16 text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-[44px] font-bold leading-[52.8px] tracking-[-0.44px] text-white"
             >
-              <Image
-                src="/images/institute/hero/cpr.png"
-                alt="CPR Training"
-                fill
-                className="object-cover rounded-[36px]"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(14,27,51,0.5)] to-transparent pointer-events-none rounded-[36px]" />
+              There is no situation where knowing CPR isn&apos;t vital.
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="mt-8 max-w-[1243px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
+            >
+              If you are interested in CPR training for yourself or your team, please contact us. There is currently no open enrollment for CPR courses.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+              className="mt-10"
+            >
+              <a
+                href="/institute/courses/cpr#course-details"
+                className="inline-flex h-14 items-center justify-center rounded-[43px] border-[3px] border-white bg-white px-8 text-[21px] font-medium text-[#0e1b33] transition-colors hover:bg-[#f0f9fa]"
+              >
+                Contact Us
+              </a>
             </motion.div>
           </div>
         </motion.div>
