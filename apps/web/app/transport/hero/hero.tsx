@@ -13,7 +13,7 @@ export function Hero() {
   return (
     <section className="px-4 pb-14 pt-48 sm:px-6 sm:pt-52 lg:px-8 lg:pb-20 lg:pt-48">
       <div className="mx-auto w-full max-w-[1871px]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -36,14 +36,14 @@ export function Hero() {
           </div>
 
           <div className="relative z-20 flex h-full items-center justify-start px-7 sm:px-10 md:px-14 lg:px-20 xl:px-24">
-            <div className="flex max-w-[42rem] flex-col gap-6 pt-6 lg:pt-0">
+            <div className="flex max-w-[42rem] flex-col gap-4 sm:gap-6 pt-6 lg:pt-0">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-5xl font-bold leading-[1.1] text-white md:text-6xl lg:text-7xl"
+                className="text-3xl font-bold leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
               >
-                Reliable <br />
+                Reliable{" "}
                 <span className="relative inline-block text-[#2dabac]">
                   Transportation
                 </span>
@@ -53,7 +53,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="max-w-lg text-lg leading-relaxed text-slate-200 md:text-xl"
+                className="max-w-lg text-base leading-relaxed text-slate-200 sm:text-lg md:text-xl"
               >
                 Safe, timely non-emergency medical transportation for appointments, treatments, discharge transfers, and ongoing care coordination across the region.
               </motion.p>
@@ -62,7 +62,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="mt-4"
+                className="mt-0 sm:mt-4"
               >
                 <HeroActions>
                   <Button
@@ -82,8 +82,8 @@ export function Hero() {
               <motion.ul 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0, duration: 0.8 }}
-                className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-sm text-slate-300"
+                transition={{ delay: 1, duration: 0.8 }}
+                className="mt-0 sm:mt-4 flex flex-wrap gap-x-5 gap-y-3 text-sm text-slate-300"
               >
                 {transportHighlights.map((stat) => (
                   <li key={stat} className="inline-flex items-center gap-2">

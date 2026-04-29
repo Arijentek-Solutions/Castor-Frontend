@@ -23,7 +23,7 @@ export default function PhlebotomyHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="text-[44px] font-bold leading-[52.8px] tracking-[-0.44px] text-white"
+                className="text-[28px] sm:text-[34px] md:text-[40px] lg:text-[44px] font-bold leading-tight tracking-[-0.44px] text-white"
               >
                 Become Irreplaceable: The Castor{" "}
                 <span className="text-[#20a9ad]">Phlebotomy Training Program</span>
@@ -33,7 +33,7 @@ export default function PhlebotomyHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="mt-10 max-w-[603px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
+                className="mt-10 max-w-[603px] text-[16px] sm:text-[18px] lg:text-[22px] font-normal leading-relaxed tracking-[-0.47px] text-white"
               >
                 Specialized training to equip you with the skills and confidence needed for success in healthcare&apos;s most in-demand field.
               </motion.p>

@@ -20,32 +20,32 @@ const services: ServiceItem[] = [
   {
     title: "Skilled Home Health",
     description: "Personalized recovery support at home, covered under Medicare, promoting independence and healing.",
-    path: "/homehealth",
+    path: "/getcare/homehealth",
   },
   {
     title: "Private Duty Nursing - Pediatric",
     description: "Specialized in-home nursing for medically dependent children; DSCC-approved provider with multi-county coverage.",
-    path: "/pediatric-nursing",
+    path: "/getcare/pediatric-nursing",
   },
   {
     title: "Private Duty Nursing - Adult",
     description: "Full-focused nursing tailored for adult health needs, ensuring safe recovery in the comfort of home.",
-    path: "/privateduty-nursing",
+    path: "/getcare/privateduty-nursing",
   },
   {
     title: "Home Care & Companion Services",
     description: "Non-medical support, including elderly care, Alzheimer's assistance, and daily living companionship.",
-    path: "/home-care",
+    path: "/getcare/home-care",
   },
   {
     title: "Veterans Care",
     description: "Dignified, respectful care through VA partnerships designed to uplift independence and daily quality of life.",
-    path: "/veterans-care",
+    path: "/getcare/veterans-care",
   },
   {
     title: "Healthcare Staffing",
     description: "Healthcare Staffing's certified CNAs and skilled staff trained via Castor Health Institute are available to support local medical facilities.",
-    path: "/healthcare-staffing",
+    path: "/getcare/healthcare-staffing",
   },
 ];
 

@@ -36,9 +36,9 @@ export function GetCareHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-5xl font-bold leading-[1.1] text-white md:text-6xl lg:text-7xl"
+                className="text-3xl font-bold leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
               >
-                Professional Healthcare in the <br />
+                Professional Healthcare in the{" "}
                 <span className="relative inline-block text-[#2dabac]">
                   Comfort of Home
                 </span>
@@ -48,7 +48,7 @@ export function GetCareHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="max-w-lg text-lg leading-relaxed text-slate-200 md:text-xl"
+                className="max-w-lg text-base leading-relaxed text-slate-200 sm:text-lg md:text-xl"
               >
                 From skilled nursing to companion care, we bring compassionate, professional healthcare services directly to your home. Our team of licensed professionals provides personalized care tailored to your unique needs.
               </motion.p>

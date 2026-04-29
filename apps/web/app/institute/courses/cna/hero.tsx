@@ -34,7 +34,7 @@ export default function CNACourseHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-[44px] font-bold leading-[52.8px] tracking-[-0.44px] text-white"
+                className="text-[28px] sm:text-[34px] md:text-[40px] lg:text-[44px] font-bold leading-tight tracking-[-0.44px] text-white"
               >
                 Begin Your Healthcare Career with Confidence: The Castor{" "}
                 <span className="text-[#20a9ad]">CNA Training Program</span>
@@ -44,7 +44,7 @@ export default function CNACourseHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-10 max-w-[603px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
+                className="mt-10 max-w-[603px] text-[16px] sm:text-[18px] lg:text-[22px] font-normal leading-relaxed tracking-[-0.47px] text-white"
               >
                 Comprehensive, hands-on training designed to prepare you for success in caregiving and beyond. Start your journey today!
               </motion.p>

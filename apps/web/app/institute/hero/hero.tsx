@@ -3,13 +3,11 @@ import Image from "next/image";
 import { Button, HeroActions } from "@castor/ui";
 import { motion } from "framer-motion";
 
-const studentIcon = "/images/institute/studenticon.svg";
-
 export function Hero() {
   return (
     <section className="px-4 pb-14 pt-48 sm:px-6 sm:pt-52 lg:px-8 lg:pb-20 lg:pt-48">
       <div className="mx-auto w-full max-w-[1871px]">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -38,9 +36,9 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.8 }}
-                className="text-5xl font-bold leading-[1.1] text-white md:text-6xl lg:text-7xl"
+                className="text-3xl font-bold leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
               >
-                Castor Health <br />
+                Castor Health{" "}
                 <span className="relative inline-block text-[#2dabac]">
                   Institute
                 </span>
@@ -50,7 +48,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="max-w-lg text-lg leading-relaxed text-slate-200 md:text-xl"
+                className="max-w-lg text-base leading-relaxed text-slate-200 sm:text-lg md:text-xl"
               >
                 State-approved healthcare training, certifications, and workforce upskilling. Launch your career or train your staff with the region&apos;s leading institute.
               </motion.p>

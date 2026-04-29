@@ -6,7 +6,7 @@ import { Accreditation } from "./hero/accreditation";
 
 export default function InstitutePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen overflow-x-hidden bg-white">
       <Hero />
       <CastorDifference />
       <CourseOfferings />

@@ -40,11 +40,13 @@ export default function DualEnrollmentHero() {
                 <span className="text-[#20a9ad]">Dual Enrollment Program</span>
               </motion.h1>
 
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
                 className="mt-10 max-w-[638px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
+    
               >
                 For the first time, we&apos;re offering a way for you to get certified as both a CNA and a Phlebotomist in just one accelerated course. Broaden your horizons and open twice as many career opportunities in two ever-growing fields.
               </motion.p>
