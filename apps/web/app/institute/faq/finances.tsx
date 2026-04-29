@@ -11,9 +11,16 @@ interface FAQItemProps {
   onToggle: () => void;
 }
 
-function FAQItem({ question, answer, isOpen, onToggle }: FAQItemProps) {
+function FAQItem({ question, answer, isOpen, onToggle, index }: FAQItemProps & { index: number }) {
   return (
-    <div className="w-full overflow-hidden rounded-[2rem] bg-white shadow-sm transition-colors">
+    <motion.div 
+      layout
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full overflow-hidden rounded-[2rem] bg-white shadow-sm transition-colors"
+    >
       <button
         onClick={onToggle}
         className="flex w-full items-center justify-between px-8 py-6 text-left hover:bg-[#f9f9f9] transition-colors"
@@ -23,19 +30,20 @@ function FAQItem({ question, answer, isOpen, onToggle }: FAQItemProps) {
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="shrink-0 text-black"
         >
           <ChevronDown size={28} />
         </motion.div>
       </button>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            key="content"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="px-8 pb-8 pt-2 text-lg text-gray-700 whitespace-pre-line leading-relaxed">
               {answer}
@@ -43,11 +51,12 @@ function FAQItem({ question, answer, isOpen, onToggle }: FAQItemProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }
 
 const financeFAQs = [
+  // ... (content remains same)
   {
     question: "How much do courses cost?",
     answer: (
@@ -113,15 +122,22 @@ export function Finances() {
   return (
     <section className="w-full bg-[#FFEAD8] py-20">
       <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-12 text-center"
+        >
           <h2 className="text-4xl font-bold tracking-tight text-[#0e1b33] sm:text-5xl md:text-6xl">
             Finances
           </h2>
-        </div>
+        </motion.div>
         <div className="flex flex-col gap-4">
           {financeFAQs.map((faq, index) => (
             <FAQItem
               key={index}
+              index={index}
               question={faq.question}
               answer={faq.answer}
               isOpen={openIndex === index}
