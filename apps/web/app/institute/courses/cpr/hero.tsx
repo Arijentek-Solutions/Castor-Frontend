@@ -30,7 +30,7 @@ export default function CPRHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="mt-8 max-w-[1243px] text-[22px] font-normal leading-[27.1px] tracking-[-0.47px] text-white"
+              className="mt-8 max-w-[1243px] text-[16px] sm:text-[18px] lg:text-[22px] font-normal leading-relaxed tracking-[-0.47px] text-white"
             >
               If you are interested in CPR training for yourself or your team, please contact us. There is currently no open enrollment for CPR courses.
             </motion.p>
