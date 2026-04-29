@@ -40,11 +40,11 @@ export default function InstituteContactUsPage() {
               transition={{ ...smoothTransition, delay: 0.3 }}
               className="flex flex-col gap-2 relative z-20 px-6"
             >
-              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#2dabac]">
+              <span className="text-sm font-semibold tracking-[0.2em] text-[#2dabac]">
                 Contact Us
               </span>
               <h1 className="text-[48px] font-black tracking-[0.02em] text-white sm:text-[64px] md:text-[80px]">
-                LET&apos;S CHAT!
+                Let&apos;s Chat!
               </h1>
             </motion.div>
           </motion.div>
@@ -222,8 +222,8 @@ export default function InstituteContactUsPage() {
             >
               <h3 className="text-2xl font-bold text-[#0e1b33]">Illinois Board of Higher Education</h3>
               <div className="mt-6 space-y-2 text-[#6a6a67]">
-                <p className="font-medium">1 N. OLD STATE CAPITAL PLAZA, SUITE 333</p>
-                <p>SPRINGFIELD, IL. 62701</p>
+                <p className="font-medium">1 N. Old State Capital Plaza, Suite 333</p>
+                <p>Springfield, IL. 62701</p>
                 <a href="tel:+12177822551" className="block font-bold text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
                   217-782-2551
                 </a>
@@ -246,8 +246,8 @@ export default function InstituteContactUsPage() {
               <h3 className="text-2xl font-bold text-[#0e1b33]">Illinois Department of Public Health</h3>
               <div className="mt-6 space-y-2 text-[#6a6a67]">
                 <p className="font-bold text-[#0e1b33]">Randy Carey-Walden RN, MSN, PSA</p>
-                <p className="font-medium">525 WEST JEFFERSON ST. 4TH FLOOR</p>
-                <p>SPRINGFIELD, IL. 62761</p>
+                <p className="font-medium">525 West Jefferson St. 4th Floor</p>
+                <p>Springfield, IL. 62761</p>
                 <a href="tel:+12177855569" className="block font-bold text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
                   217-785-5569
                 </a>
