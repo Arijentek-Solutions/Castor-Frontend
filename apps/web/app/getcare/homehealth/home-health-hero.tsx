@@ -60,7 +60,7 @@ export function HomeHealthHero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.8 }}
-                    className="text-[40px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-bold leading-[1.1] mb-6 tracking-tight"
+                    className="text-[28px] sm:text-[36px] md:text-[48px] lg:text-[60px] xl:text-[72px] font-bold leading-[1.1] mb-6 tracking-tight"
                   >
                     <span className="text-white">Home </span>
                     <span className="text-[#2dbac1]">Health</span>
@@ -70,7 +70,7 @@ export function HomeHealthHero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.8 }}
-                    className="text-[18px] sm:text-[20px] text-white/90 leading-relaxed mb-10 max-w-[560px]"
+                    className="text-[16px] sm:text-[18px] md:text-[20px] text-white/90 leading-relaxed mb-10 max-w-[560px]"
                   >
                     Skilled nursing and therapy services designed for short-term recovery, rehabilitation, and managing chronic conditions. Covered 100% by Medicare for eligible patients.
                   </motion.p>

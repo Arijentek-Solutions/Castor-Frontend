@@ -9,7 +9,7 @@ import { CTASection } from "./hero/cta-section";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white transition-colors duration-500">
+    <main className="min-h-screen overflow-x-hidden bg-white transition-colors duration-500">
       <Hero />
       <TransportFor />
       <WelcomeSection />

@@ -39,7 +39,7 @@ export default function CPRHero() {
                   transition={{ delay: 0.4, duration: 0.8 }}
                   className="text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-7xl"
                 >
-                  CPR & First Aid <br />
+                  CPR & First Aid{" "}
                   <span className="text-[#20a9ad]">Certification</span>
                 </motion.h1>
               </div>
@@ -49,7 +49,7 @@ export default function CPRHero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="mt-8 max-w-xl text-lg leading-relaxed text-white/70"
+                className="mt-8 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg"
               >
                 Learn life-saving CPR and first aid skills with our American Heart Association certified training. Get certified in just one day.
               </motion.p>

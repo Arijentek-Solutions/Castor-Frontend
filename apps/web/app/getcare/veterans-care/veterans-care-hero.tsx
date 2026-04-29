@@ -61,7 +61,7 @@ const VeteransCareHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
-                  className="text-[40px] sm:text-[48px] md:text-[60px] lg:text-[72px] font-bold leading-[1.1] mb-[20px] tracking-[-0.02em]"
+                  className="text-[28px] sm:text-[36px] md:text-[48px] lg:text-[60px] xl:text-[72px] font-bold leading-[1.1] mb-[20px] tracking-[-0.02em]"
                 >
                   <span className="text-white">Veterans </span>
                   <span className="text-[#f7c89a]">Care</span>
@@ -72,7 +72,7 @@ const VeteransCareHero = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="text-[18px] sm:text-[20px] text-[#f0f9fa] opacity-90 leading-[1.625] mb-[52px] max-w-[504px]"
+                  className="text-[16px] sm:text-[18px] md:text-[20px] text-[#f0f9fa] opacity-90 leading-[1.625] mb-[52px] max-w-[504px]"
                 >
                   Serving those who served. We provide specialized care coordinated directly with the VA to ensure veterans receive the benefits and support they are entitled to.
                 </motion.p>

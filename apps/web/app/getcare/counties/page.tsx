@@ -72,9 +72,9 @@ export default function CountiesPage() {
                     </div>
                     <span className="text-[14px] font-bold text-[#6a6a67] tracking-widest uppercase">Illinois Territory</span>
                   </div>
-                  <button 
+                  <button
                     onClick={closeDrawer}
-                    className="p-4 rounded-full bg-[#f6f3f2] hover:bg-[#20a9ad] hover:text-white transition-all active:scale-90"
+                    className="p-4 rounded-full bg-[#f6f3f2] text-[#0e1b33] hover:bg-[#20a9ad] hover:text-white transition-all active:scale-90 shrink-0"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -141,9 +141,9 @@ export default function CountiesPage() {
                         <Award className="w-4 h-4" />
                         Our Commitment
                       </h3>
-                      <div className="prose prose-p:text-[#6a6a67] prose-p:leading-relaxed prose-p:text-[16px]">
+                      <div>
                         {detail.commitment.split('\n').map((line, i) => (
-                          <p key={i} className="mb-4">{line}</p>
+                          <p key={i} className="mb-4 text-[#0e1b33] text-[16px] leading-relaxed">{line}</p>
                         ))}
                       </div>
                     </div>
