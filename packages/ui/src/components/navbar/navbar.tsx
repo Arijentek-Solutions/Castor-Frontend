@@ -268,7 +268,7 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
         {
           title: "Course Schedules",
           description: "View class timetables",
-          href: `${SITE_URLS.institute}/schedules`,
+          href: `${SITE_URLS.institute}/course-schedules`,
           icon: (
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
