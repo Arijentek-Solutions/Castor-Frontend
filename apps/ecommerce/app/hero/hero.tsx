@@ -129,7 +129,7 @@ export function Hero() {
               </div>
 
               {/* Right Cards Grid */}
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:gap-6">
+              <div className="hidden gap-4 sm:grid sm:grid-cols-2 sm:gap-5 xl:gap-6">
                 {serviceCards.map((card, index) => (
                   <motion.div
                     key={index}
@@ -144,6 +144,29 @@ export function Hero() {
                     <div className="space-y-2">
                       <h3 className="text-xl font-bold text-white transition-colors group-hover:text-[#2dabac]">{card.title}</h3>
                       <p className="text-sm leading-relaxed text-slate-300/80">
+                        {card.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Mobile 2-Column Grid Cards */}
+              <div className="grid grid-cols-2 gap-3 sm:hidden">
+                {serviceCards.map((card, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.4 + (index * 0.1), duration: 0.8 }}
+                    className="group relative flex flex-col space-y-3 rounded-[1.25rem] border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:-translate-y-2 hover:border-[#2dabac]/30 hover:bg-white/10 hover:shadow-2xl"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2dabac] text-white shadow-lg shadow-[#2dabac]/20 transition-transform duration-300 group-hover:scale-110">
+                      {card.icon}
+                    </div>
+                    <div className="space-y-1">
+                      <h3 className="text-base font-bold text-white transition-colors group-hover:text-[#2dabac]">{card.title}</h3>
+                      <p className="text-xs leading-relaxed text-slate-300/80">
                         {card.description}
                       </p>
                     </div>
