@@ -153,7 +153,7 @@ export default function InstituteContactUsPage() {
             {/* Office Locations Card */}
             <motion.div
               {...cardVariants(0)}
-              className="rounded-[2rem] bg-[#ffead8] p-8 transition-all duration-300 hover:shadow-lg hover:shadow-orange-100/50"
+              className="rounded-[2rem] bg-[#ffead8] p-8"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white shadow-sm mb-6">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ed7d31" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -177,7 +177,7 @@ export default function InstituteContactUsPage() {
             {/* Phone Card */}
             <motion.div
               {...cardVariants(1)}
-              className="rounded-[2rem] bg-[#d5fbff] p-8 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-100/50"
+              className="rounded-[2rem] bg-[#d5fbff] p-8"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white shadow-sm mb-6">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#20a9ad" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -194,7 +194,7 @@ export default function InstituteContactUsPage() {
             {/* Email Card */}
             <motion.div
               {...cardVariants(2)}
-              className="rounded-[2rem] bg-[#ffead8] p-8 transition-all duration-300 hover:shadow-lg hover:shadow-orange-100/50"
+              className="rounded-[2rem] bg-[#ffead8] p-8"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white shadow-sm mb-6">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ed7d31" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

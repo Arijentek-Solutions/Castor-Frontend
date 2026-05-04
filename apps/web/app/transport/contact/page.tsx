@@ -130,7 +130,7 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, scale: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-[48px] overflow-hidden group shadow-2xl border-4 border-white h-[400px] lg:h-[500px]"
+              className="relative rounded-[48px] overflow-hidden shadow-lg border-4 border-white h-[400px] lg:h-[500px]"
             >
               <iframe
                 title="Castor Medical Transport Location Map"
@@ -141,7 +141,7 @@ export default function ContactPage() {
                 allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0"
               />
             </motion.div>
           </div>
