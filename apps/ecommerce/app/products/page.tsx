@@ -2,10 +2,9 @@
 
 import { Navbar } from "@/components/navbar";
 import { ProductListing } from "@/components/products/product-listing";
-import { Hero } from "./hero/hero";
 import { Footer } from "@castor/ui";
 
-export default function Home() {
+export default function ProductsPage() {
   const {
     categories,
     selectedCategory,
@@ -25,9 +24,10 @@ export default function Home() {
           selectedCategory={selectedCategory}
           onCategoryChange={handleCategoryChange}
         />
-        <Hero />
         {/* Product Catalog Layout */}
-        {listing}
+        <div className="pt-8">
+            {listing}
+        </div>
       </main>
       <Footer />
     </div>

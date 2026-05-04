@@ -293,11 +293,11 @@ const SERVICE_NAV_LINKS: Record<Exclude<ServiceContext, "web">, ServiceNavLink[]
     { label: "Contact Us", href: `${SITE_URLS.transport}/contact` },
   ],
   ecommerce: [
-    { label: "Shop All", href: SITE_URLS.ecommerce },
-    { label: "DME Equipment", href: `${SITE_URLS.ecommerce}/category/dme` },
-    { label: "Medical Scrubs", href: `${SITE_URLS.ecommerce}/category/scrubs` },
-    { label: "Wellness", href: `${SITE_URLS.ecommerce}/category/wellness` },
-    { label: "Track Order", href: `${SITE_URLS.ecommerce}/track` },
+    { label: "Home", href: SITE_URLS.ecommerce },
+    { label: "Products", href: `${SITE_URLS.ecommerce}/products` },
+    { label: "Rentals", href: `${SITE_URLS.ecommerce}/rentals` },
+    { label: "About us", href: `${SITE_URLS.ecommerce}/about-us` },
+    { label: "Contact Us", href: `${SITE_URLS.ecommerce}/contact` },
   ],
 };
 
@@ -477,7 +477,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
         isOpen={isHelpModalOpen}
         onClose={closeHelpModal}
       />
-      {serviceContext && serviceContext !== "web" && serviceContext !== "ecommerce" && (
+      {serviceContext && serviceContext !== "web" && (
         <ServiceSubNav serviceContext={serviceContext as Exclude<ServiceContext, "web">} />
       )}
     </div>
