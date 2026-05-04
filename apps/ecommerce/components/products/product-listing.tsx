@@ -39,10 +39,10 @@ export function ProductListing() {
         scrollToTop();
     };
 
-     // Derive unique categories from products
-     const categories = useMemo(() => {
-         return Array.from(new Set(PRODUCTS.map((p) => p.category).filter((c): c is string => c !== undefined))).sort();
-     }, []);
+    // Derive unique categories from products
+    const categories = useMemo(() => {
+        return Array.from(new Set(PRODUCTS.map((p) => p.category).filter((c): c is string => c !== undefined))).sort();
+    }, []);
 
     // Filter Logic (Search + Category)
     const processedProducts = useMemo(() => {
@@ -68,19 +68,19 @@ export function ProductListing() {
         return filtered;
     }, [selectedCategory, searchQuery]);
 
-     const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
-     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-     const endIndex = startIndex + ITEMS_PER_PAGE;
-     const currentProducts = processedProducts.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentProducts = processedProducts.slice(startIndex, endIndex);
 
-     return {
+    return {
         categories,
         selectedCategory,
         searchQuery,
         handleCategoryChange,
         handleSearchChange,
         listing: (
-            <div className="mx-auto max-w-[1720px] px-6 pt-3 pb-20 sm:px-8 lg:px-12 lg:pt-4">
+            <div className="mx-auto max-w-[1720px] px-6 pt-8 pb-20 sm:px-8 lg:px-12 lg:pt-4">
                 <div className="flex flex-col gap-8 lg:flex-row">
 
                     {/* Sticky Sidebar - Desktop Only */}
