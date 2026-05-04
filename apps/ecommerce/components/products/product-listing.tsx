@@ -105,8 +105,8 @@ export function ProductListing() {
                             </div>
                         </div>
 
-                        {/* Grid: Compact list on mobile, 4 columns on desktop */}
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-2 xl:grid-cols-4">
+                        {/* Grid: Compact list on mobile, 3 columns on desktop */}
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
                             {currentProducts.map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
