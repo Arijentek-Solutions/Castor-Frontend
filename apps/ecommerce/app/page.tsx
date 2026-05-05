@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-white font-sans">
-      <main className="w-full pt-[128px] lg:pt-[160px]">
+      <main className="w-full pt-[140px] sm:pt-[148px] lg:pt-[172px]">
         <Navbar
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
