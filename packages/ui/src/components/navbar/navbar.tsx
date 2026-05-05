@@ -191,7 +191,7 @@ const navItems: NavEntry[] = [
   { label: "Medical Supplies", href: SITE_URLS.ecommerce, desktopWidth: "lg:w-[150px] xl:w-[170px]" },
   { label: "Health Institute", href: SITE_URLS.institute, desktopWidth: "lg:w-[150px] xl:w-[170px]" },
   { label: "Transportation", href: SITE_URLS.transport, desktopWidth: "lg:w-[124px] xl:w-[140px]" },
-  { label: "About", href: `${SITE_URLS.web}/about`, desktopWidth: "lg:w-[62px] xl:w-[72px]" },
+  { label: "About Us", href: `${SITE_URLS.web}/about-us`, desktopWidth: "lg:w-[62px] xl:w-[72px]" },
   { label: "Careers", href: `${SITE_URLS.web}/careers`, desktopWidth: "lg:w-[70px] xl:w-[81px]" },
   { label: "Contact", href: `${SITE_URLS.web}/contact`, desktopWidth: "lg:w-[72px] xl:w-[83px]" },
 ];
@@ -794,7 +794,7 @@ const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEntry; pa
     isActive = contextToLabel[serviceContext] === item.label;
   }
 
-  if (!isActive) {
+  if (!isActive && (!serviceContext || serviceContext === "web")) {
     const pathFromHref = getPathname(item.href);
     if (pathFromHref === '/') {
       isActive = pathname === '/' && item.label !== "Medical Supplies";
@@ -863,7 +863,7 @@ const MobileNavItem = ({
     isActive = contextToLabel[serviceContext] === item.label;
   }
 
-  if (!isActive) {
+  if (!isActive && (!serviceContext || serviceContext === "web")) {
     const pathFromHref = getPathname(item.href);
     if (pathFromHref === '/') {
       isActive = pathname === '/' && item.label !== "Medical Supplies";

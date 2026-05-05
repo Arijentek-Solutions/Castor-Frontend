@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { Button, HeroActions } from "@castor/ui";
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import {
     Heart,
     ShieldCheck,
@@ -12,6 +13,7 @@ import {
     Star,
     GraduationCap,
     Truck,
+    ShoppingCart,
     Stethoscope,
     Target,
     Sparkles,
@@ -19,11 +21,75 @@ import {
     Award,
 } from "lucide-react";
 
+function useAnimatedCounter(target: number, duration: number, start: boolean) {
+    const [count, setCount] = useState(0);
+    const frameRef = useRef<number>(0);
+    const prevStart = useRef(start);
+
+    useEffect(() => {
+        if (!start) return;
+
+        let startTime: number | null = null;
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+
+            if (progress < 1) {
+                frameRef.current = requestAnimationFrame(animate);
+            }
+        };
+
+        frameRef.current = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frameRef.current);
+    }, [start, target, duration]);
+
+    if (!start && prevStart.current) {
+        setCount(0);
+    }
+    prevStart.current = start;
+
+    return count;
+}
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.6, ease: "easeOut" },
+    },
+};
+
+function StatItem({ stat }: { stat: { value: string; label: string; icon: React.ComponentType<{ className?: string }>; num: number; suffix: string } }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref, { once: true, amount: 0.5 });
+    const animated = useAnimatedCounter(stat.num, 2000, isInView);
+
+    return (
+        <motion.div
+            variants={itemVariants}
+            className="rounded-[2rem] border border-[#edf0f4] bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-lg"
+        >
+            <div ref={ref} className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d5fbff]">
+                <stat.icon className="h-7 w-7 text-[#20a9ad]" />
+            </div>
+            <p className="text-[36px] font-black leading-none text-[#0e1b33] sm:text-[42px]">
+                {animated}{stat.suffix}
+            </p>
+            <p className="mt-2 text-[15px] font-medium leading-6 text-[#6a6a67]">
+                {stat.label}
+            </p>
+        </motion.div>
+    );
+}
+
 const stats = [
-    { value: "15+", label: "Years of Excellence", icon: Award },
-    { value: "10K+", label: "Patients Served", icon: Heart },
-    { value: "500+", label: "Healthcare Professionals", icon: Users },
-    { value: "24/7", label: "Support Available", icon: Clock },
+    { value: "15+", label: "Years of Excellence", icon: Award, num: 15, suffix: "+" },
+    { value: "10K+", label: "Patients Served", icon: Heart, num: 10, suffix: "K+" },
+    { value: "500+", label: "Healthcare Professionals", icon: Users, num: 500, suffix: "+" },
+    { value: "24/7", label: "Support Available", icon: Clock, num: 24, suffix: "/7" },
 ];
 
 const values = [
@@ -110,34 +176,24 @@ const team = [
 
 const services = [
     {
+        icon: ShoppingCart,
+        title: "E-Commerce",
+        items: "Durable Medical Equipment, Disposable Medical Supplies, Mobility Aids, Respiratory Equipment, Wound Care Products",
+    },
+    {
         icon: Stethoscope,
-        title: "Home Health",
-        desc: "Skilled nursing & therapy for recovery at home.",
-    },
-    {
-        icon: ShieldCheck,
-        title: "Veterans Care",
-        desc: "Specialized support for our nation's heroes.",
-    },
-    {
-        icon: Users,
-        title: "Personal Care",
-        desc: "Daily living assistance with compassion.",
-    },
-    {
-        icon: Heart,
-        title: "Private Duty",
-        desc: "Long-term complex nursing care solutions.",
-    },
-    {
-        icon: GraduationCap,
-        title: "Health Institute",
-        desc: "CNA, Phlebotomy & CPR certification programs.",
+        title: "Services",
+        items: "Home Health, Personal Care, Private Duty Nursing, Veterans Care, Pediatric Nursing, Healthcare Staffing",
     },
     {
         icon: Truck,
-        title: "Medical Transport",
-        desc: "Safe, reliable non-emergency transportation.",
+        title: "Transport",
+        items: "Non-Emergency Medical Transportation, Wheelchair Accessible Transport, Ambulatory Transport, Hospital Discharge Transfers",
+    },
+    {
+        icon: GraduationCap,
+        title: "Institute",
+        items: "CNA Certification, Phlebotomy Training, CPR & First Aid, Healthcare Workforce Development",
     },
 ];
 
@@ -150,14 +206,6 @@ export default function AboutPage() {
         },
     };
 
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-        },
-    };
     return (
         <main className="min-h-screen bg-white font-sans">
             {/* Hero Section */}
@@ -248,21 +296,7 @@ export default function AboutPage() {
                     className="mx-auto grid max-w-[1280px] grid-cols-2 gap-6 sm:gap-8 lg:grid-cols-4"
                 >
                     {stats.map((stat) => (
-                        <motion.div
-                            key={stat.label}
-                            variants={itemVariants}
-                            className="rounded-[2rem] border border-[#edf0f4] bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-lg"
-                        >
-                            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#d5fbff]">
-                                <stat.icon className="h-7 w-7 text-[#20a9ad]" />
-                            </div>
-                            <p className="text-[36px] font-black leading-none text-[#0e1b33] sm:text-[42px]">
-                                {stat.value}
-                            </p>
-                            <p className="mt-2 text-[15px] font-medium leading-6 text-[#6a6a67]">
-                                {stat.label}
-                            </p>
-                        </motion.div>
+                        <StatItem key={stat.label} stat={stat} />
                     ))}
                 </motion.div>
             </section>
@@ -319,7 +353,7 @@ export default function AboutPage() {
                                 <motion.div
                                     key={service.title}
                                     variants={itemVariants}
-                                    className="rounded-[2rem] border border-[#edf0f4] bg-white p-7 transition-all duration-500 hover:shadow-xl"
+                                    className="rounded-[2rem] border border-[#edf0f4] bg-white p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
                                 >
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#20a9ad]/10">
                                         <service.icon className="h-6 w-6 text-[#20a9ad]" />
@@ -328,7 +362,7 @@ export default function AboutPage() {
                                         {service.title}
                                     </h4>
                                     <p className="text-[14px] leading-[1.6] text-[#6a6a67]">
-                                        {service.desc}
+                                        {service.items}
                                     </p>
                                 </motion.div>
                             ))}
@@ -493,8 +527,7 @@ export default function AboutPage() {
                             <motion.div
                                 key={member.name}
                                 variants={itemVariants}
-                                whileHover={{ y: -4 }}
-                                className="rounded-[2rem] border border-[#edf0f4] bg-white p-8 transition-shadow duration-500 hover:shadow-xl"
+                                className="rounded-[2rem] border border-[#edf0f4] bg-white p-8"
                             >
                                 <div className="mb-6 flex items-center gap-5">
                                     <div
