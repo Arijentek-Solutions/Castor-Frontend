@@ -19,12 +19,9 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor-main.vercel.app"),
-  title: {
-    template: "%s | Castor Health",
-    default: "Castor Health — Complete Healthcare Ecosystem",
-  },
+  title: "Castor Health",
   description:
-    "Castor provides integrated home care, medical supplies, transportation, and healthcare training under one unified platform.",
+    "Castor Health provides integrated home care, medical supplies, transportation, and healthcare training under one unified platform.",
 };
 
 export default function RootLayout({
