@@ -6,3 +6,4 @@ export * from './components/footer/footer';
 export * from './components/cta/get-started-cta';
 export * from './components/hero/simple-hero';
 export * from './config/site-urls';
+export * from './components/not-found';
