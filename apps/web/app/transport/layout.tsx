@@ -3,10 +3,7 @@ import { Navbar, Footer } from "@castor/ui";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor-main.vercel.app"),
-  title: {
-    template: "%s | Castor Transportation",
-    default: "Castor Medical Transportation | Safe & Reliable NEMT",
-  },
+  title:"Castor Medical Transportation",
   description:
     "Safe and reliable non-emergency medical transportation services. Book a ride for medical appointments.",
 };
