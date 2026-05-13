@@ -151,7 +151,7 @@ export default function CountiesPage() {
                     {/* Footer Contact */}
                     <div className="pt-12 border-t border-[#f6f3f2]">
                       <Link 
-                        href="tel:1-800-CASTOR-1"
+                        href="tel:815-564-0977"
                         className="flex items-center justify-center gap-4 w-full py-6 bg-[#20a9ad] text-white rounded-full font-bold shadow-xl hover:shadow-2xl transition-all active:scale-[0.98]"
                       >
                         <Phone className="w-5 h-5" />

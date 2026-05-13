@@ -309,10 +309,10 @@ const TopBar = () => {
         <div className="flex items-center gap-1.5 sm:gap-2 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
           <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
           <Link
-            href="tel:1-800-CASTOR-1"
+            href="tel:815-564-0977"
             className="text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80 whitespace-nowrap"
           >
-            1-800-CASTOR-1
+            815-564-0977
           </Link>
         </div>
 
@@ -757,18 +757,12 @@ const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<ServiceCont
 
 const Brand = () => {
   return (
-    <a href={SITE_URLS.web} className="flex flex-shrink-0 items-center gap-1.5 transition-opacity hover:opacity-90 sm:gap-2.5 lg:gap-2 xl:gap-3">
-      <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#20A9AD_0%,#1A8B8F_100%)] text-[16px] font-black leading-7 tracking-[-0.05em] text-white shadow-[0_10px_15px_rgba(0,0,0,0.10),0_4px_6px_rgba(0,0,0,0.10)] sm:h-11 sm:w-11 sm:text-[20px] lg:h-10 lg:w-10 xl:h-12 xl:w-12">
-        C
-      </div>
-      <div className="min-w-0">
-        <div className="text-[15px] font-black leading-6 tracking-[-0.025em] text-[#0E1B33] sm:text-[20px] sm:leading-7 lg:text-[17px] lg:leading-6 xl:text-[20px] xl:leading-7">
-          CASTOR
-        </div>
-        <div className="hidden truncate text-[7.5px] font-bold uppercase leading-[10px] tracking-[0.14em] text-[rgba(32,169,173,0.7)] sm:block sm:text-[9px] sm:tracking-[0.2em] lg:text-[8px] lg:tracking-[0.14em] xl:text-[10px] xl:tracking-[0.2em]">
-          Health Ecosystem
-        </div>
-      </div>
+    <a href={SITE_URLS.web} className="flex flex-shrink-0 items-center transition-opacity hover:opacity-90">
+      <img
+        src="/logo.png"
+        alt="CASTOR Logo"
+        className="h-10 w-auto sm:h-12 lg:h-11 xl:h-14"
+      />
     </a>
   );
 };

@@ -10,7 +10,7 @@ export function CTASection() {
             buttonText="Book Online"
             buttonHref="/booking"
             secondaryButtonText="Call Now"
-            secondaryButtonHref="tel:1-800-CASTOR-1"
+            secondaryButtonHref="tel:815-200-9096"
         />
     );
 };

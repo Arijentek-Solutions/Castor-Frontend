@@ -106,7 +106,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="text-xl font-bold text-[#0e1b33]">Phone</h3>
                       <p className="mt-1 text-sm font-medium text-[#6a6a67]">Centralized Support Line</p>
-                      <p className="mt-4 text-2xl font-bold text-[#20a9ad]">1-800-CASTOR-1</p>
+                      <p className="mt-4 text-2xl font-bold text-[#20a9ad]">815-564-0977</p>
                     </div>
                   </div>
                 </motion.div>

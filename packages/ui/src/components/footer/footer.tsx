@@ -34,13 +34,12 @@ export function Footer() {
 
             {/* Column 1: Brand & Socials */}
             <div className="flex flex-col gap-6 items-start">
-              <div className="flex gap-2 items-center h-10">
-                <div className="bg-[#20a9ad] rounded-[14px] w-10 h-10 flex items-center justify-center">
-                  <span className="font-bold text-[20px] leading-[28px] text-white font-['Inter']">C</span>
-                </div>
-                <span className="font-bold text-[24px] tracking-tight text-white font-['Inter']">
-                  Castor
-                </span>
+              <div className="flex gap-2 items-center h-12">
+                <img
+                  src="/footerlogo.png"
+                  alt="Castor Logo"
+                  className="h-12 w-auto"
+                />
               </div>
               <p className="font-normal text-[14px] leading-relaxed text-[#99a1af] max-w-xs">
                 The unified digital front door for comprehensive healthcare services in Northern Illinois. Compassion, Quality, and Trust in every service we provide.
@@ -125,7 +124,7 @@ export function Footer() {
                   </div>
                   <div className="flex flex-col">
                     <p className="font-medium text-[16px] text-[#99a1af] mb-1">Call Anytime</p>
-                    <p className="font-semibold text-[18px] text-white">1-800-CASTOR-1</p>
+                    <p className="font-semibold text-[18px] text-white">815-564-0977</p>
                   </div>
                 </div>
                 <div className="flex gap-4 items-start">
@@ -149,11 +148,6 @@ export function Footer() {
             <p className="font-normal text-[14px] md:text-[16px] text-[#6a7282]">
               © 2026 Castor Healthcare. All rights reserved.
             </p>
-            {/* <div className="flex gap-6 items-center w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 hide-scrollbar justify-center lg:justify-end">
-            <span className="font-semibold text-[14px] md:text-[16px] text-[#6a7282] whitespace-nowrap">Design System</span>
-            <span className="font-normal text-[14px] md:text-[16px] text-[#6a7282] whitespace-nowrap">Licensed Provider</span>
-            <span className="font-normal text-[14px] md:text-[16px] text-[#6a7282] whitespace-nowrap">Accredited</span>
-          </div> */}
           </div>
         </div>
       </footer>

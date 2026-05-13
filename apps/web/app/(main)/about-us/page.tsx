@@ -584,10 +584,10 @@ export default function AboutPage() {
                                 <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                                     <Button href="/contact">Contact Us Today</Button>
                                     <a
-                                        href="tel:1-800-CASTOR-1"
+                                        href="tel:815-564-0977"
                                         className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 text-[16px] font-bold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
                                     >
-                                        <span>1-800-CASTOR-1</span>
+                                        <span>815-564-0977</span>
                                     </a>
                                 </div>
                             </motion.div>
