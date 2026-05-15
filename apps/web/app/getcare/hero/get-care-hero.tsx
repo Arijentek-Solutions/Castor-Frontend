@@ -18,6 +18,7 @@ export function GetCareHero() {
               src="/images/getcare/general/getcare-hero.png"
               alt="Nurse supporting an elderly woman at home"
               fill
+              sizes="100vw"
               priority
               className="object-cover object-center md:object-[center_20%] opacity-90"
             />

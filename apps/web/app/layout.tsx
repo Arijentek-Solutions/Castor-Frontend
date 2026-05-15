@@ -18,7 +18,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || "https://castor-main.vercel.app"),
+  metadataBase: process.env.NEXT_PUBLIC_WEB_URL 
+    ? new URL(process.env.NEXT_PUBLIC_WEB_URL) 
+    : undefined,
   title: "Castor Health",
   description:
     "Castor Health provides integrated home care, medical supplies, transportation, and healthcare training under one unified platform.",
@@ -30,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning

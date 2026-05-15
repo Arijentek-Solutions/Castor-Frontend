@@ -69,6 +69,7 @@ export function ProviderReferral() {
 
   return (
     <section 
+      id="provider-referral"
       className="font-inter relative py-20 px-4 md:px-0 flex justify-center w-full overflow-hidden bg-white"
     >
       <motion.div 
@@ -150,7 +151,7 @@ export function ProviderReferral() {
             transition={{ delay: 0.7, duration: 0.6 }}
           >
             <Button 
-              href="/provider-portal"
+              href="/contact"
               size="lg"
               variant="primary"
               className="shadow-lg shadow-[#20A9AD40]"
