@@ -2,11 +2,11 @@ const isLocal = process.env.NODE_ENV === 'development';
 
 const WEB_BASE = isLocal 
   ? 'http://localhost:3004' 
-  : (process.env.NEXT_PUBLIC_WEB_URL || 'https://temp.castorhealth.com');
+  : (process.env.NEXT_PUBLIC_WEB_URL || '');
 
 const ECOMMERCE_BASE = isLocal 
   ? 'http://localhost:3005' 
-  : (process.env.NEXT_PUBLIC_ECOMMERCE_URL || 'https://supplies.castorhealth.com');
+  : (process.env.NEXT_PUBLIC_ECOMMERCE_URL || '');
 
 export const SITE_URLS = {
   web: WEB_BASE,

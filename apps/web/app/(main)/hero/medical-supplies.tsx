@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@castor/ui";
+import { Button, SITE_URLS } from "@castor/ui";
 import { motion, type Variants } from "framer-motion";
 
 export function MedicalSupplies() {
@@ -85,7 +85,7 @@ export function MedicalSupplies() {
         <section className="font-inter px-4 py-16 sm:px-6 lg:px-8 bg-white overflow-hidden">
             <div className="mx-auto max-w-7xl">
                 {/* Header */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -111,7 +111,7 @@ export function MedicalSupplies() {
                 </motion.div>
 
                 {/* Products Grid */}
-                <motion.div 
+                <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -119,8 +119,8 @@ export function MedicalSupplies() {
                     className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-12"
                 >
                     {products.map((product, index) => (
-                        <motion.div 
-                            key={index} 
+                        <motion.div
+                            key={index}
                             variants={itemVariants}
                             whileHover={{ y: -8 }}
                             className="group relative flex flex-col bg-white rounded-3xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] transition-all duration-500 hover:shadow-[0_20px_48px_-12px_rgba(0,0,0,0.12)] border border-[#f3f4f6]"
@@ -154,8 +154,8 @@ export function MedicalSupplies() {
                                 <div className="flex items-center justify-between mt-auto pt-6">
                                     <span className="text-2xl font-black text-[#20A9AD] tracking-tight">{product.price}</span>
                                     <div className="transform transition-transform duration-300 group-hover:scale-105 active:scale-95">
-                                        <Button 
-                                            variant="primary" 
+                                        <Button
+                                            variant="primary"
                                             size="sm"
                                             className="rounded-full px-6 py-2.5 bg-[#20A9AD] hover:bg-[#1A8B8F] text-[14px] font-bold shadow-lg shadow-cyan-100 group-hover:shadow-[#20A9AD]/20 transition-all border-none"
                                         >
@@ -169,7 +169,7 @@ export function MedicalSupplies() {
                 </motion.div>
 
                 {/* Categories */}
-                <motion.div 
+                <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
@@ -177,8 +177,8 @@ export function MedicalSupplies() {
                     className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
                 >
                     {categories.map((category, index) => (
-                        <motion.div 
-                            key={index} 
+                        <motion.div
+                            key={index}
                             variants={itemVariants}
                             whileHover={{ scale: 1.05, y: -5 }}
                             className="group relative rounded-[24px] p-6 text-center shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] transition-all duration-300"
@@ -200,16 +200,16 @@ export function MedicalSupplies() {
                 </motion.div>
 
                 {/* CTA Buttons */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="flex flex-col sm:flex-row justify-center gap-4"
                 >
-                    <Button 
-                        href="/catalog" 
-                        size="lg" 
+                    <Button
+                        href={`${SITE_URLS.ecommerce}/products`}
+                        size="lg"
                         variant="primary"
                         className="px-8 shadow-lg shadow-cyan-500/20"
                     >
@@ -225,4 +225,4 @@ export function MedicalSupplies() {
             </div>
         </section>
     );
-}
+}
