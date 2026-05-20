@@ -30,13 +30,13 @@ export const TopBar = () => {
             Provider
           </Link>
           <div className="h-3.5 w-px bg-[rgba(32,169,173,0.4)]" />
-          <Link
+          <a
             href={SITE_URLS.auth}
             className="flex items-center gap-0.5 text-[9px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
           >
             <span>Sign In</span>
             <ChevronDownIcon className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 opacity-60" />
-          </Link>
+          </a>
         </div>
       </div>
     </div>
