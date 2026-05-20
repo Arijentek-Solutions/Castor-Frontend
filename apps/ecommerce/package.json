@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@castor/ui": "workspace:*",
+    "axios": "^1.16.1",
     "framer-motion": "^11.18.1",
     "lucide-react": "^0.470.0",
     "next": "16.1.7",

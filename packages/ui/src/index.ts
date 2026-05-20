@@ -7,3 +7,5 @@ export * from './components/cta/get-started-cta';
 export * from './components/hero/simple-hero';
 export * from './config/site-urls';
 export * from './components/not-found';
+export * from './components/auth/AuthForms';
+export * from './components/auth/OtpForm';
