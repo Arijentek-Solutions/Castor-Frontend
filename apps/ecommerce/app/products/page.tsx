@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
-import { ProductListing } from "@/components/products/product-listing";
+import { ProductListing } from "@/app/products/components/product-listing";
 import { Footer } from "@castor/ui";
 
 export default function ProductsPage() {

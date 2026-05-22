@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@castor/ui";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const serviceCards = [
   {
@@ -114,11 +115,13 @@ export function Hero() {
                   transition={{ delay: 0.8, duration: 0.8 }}
                   className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:pt-4"
                 >
-                  <Button
-                    className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[198px] sm:w-auto"
-                  >
-                    Browse Products
-                  </Button>
+                  <Link href="/products" className="w-full sm:w-auto">
+                    <Button
+                      className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[198px] sm:w-auto"
+                    >
+                      Browse Products
+                    </Button>
+                  </Link>
                   <Button
                     variant="secondary"
                     className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[170px] sm:w-auto text-white"

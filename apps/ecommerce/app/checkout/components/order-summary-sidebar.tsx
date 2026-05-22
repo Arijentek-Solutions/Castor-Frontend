@@ -5,7 +5,7 @@ import type { CartItem } from "@/types/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ShieldCheck, Lock } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { PricingModal } from "../products/pricing-modal";
+import { PricingModal } from "@/app/products/components/pricing-modal";
 
 type OrderSummarySidebarProps = {
   items: CartItem[];

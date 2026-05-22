@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Phone, Mail } from "lucide-react";
+import { SITE_URLS } from "../../config/site-urls";
 
 const FacebookIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -65,25 +66,25 @@ export function Footer() {
               <h3 className="font-bold text-[18px] text-white font-['Inter']">Services</h3>
               <ul className="flex flex-col gap-4">
                 <li>
-                  <Link href="#" className="flex items-center gap-2 group">
+                  <Link href={SITE_URLS.services} className="flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Get Care</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="flex items-center gap-2 group">
+                  <Link href={SITE_URLS.ecommerce} className="flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Medical Supplies</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="flex items-center gap-2 group">
+                  <Link href={SITE_URLS.transport} className="flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Transportation</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="flex items-center gap-2 group">
+                  <Link href={SITE_URLS.institute} className="flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Health Institute</span>
                   </Link>
@@ -96,17 +97,17 @@ export function Footer() {
               <h3 className="font-bold text-[18px] text-white font-['Inter']">Company</h3>
               <ul className="flex flex-col gap-4">
                 <li>
-                  <Link href="#" className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/careers`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/privacy-policy`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/terms-conditions`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
                     Terms & Conditions
                   </Link>
                 </li>

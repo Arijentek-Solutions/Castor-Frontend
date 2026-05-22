@@ -153,10 +153,10 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
   if (!hasDropdown) {
     return (
       <NavLink
-        className={`flex h-9 items-center justify-center rounded-full px-2 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap xl:px-4 xl:text-[14px] ${isActive
+        className={`flex h-9 items-center justify-center rounded-full px-3.5 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-4 xl:px-5 xl:text-[14px] ${isActive
           ? "bg-[#20A9AD] text-white"
           : "text-[#6A6A67] hover:text-[#0E1B33]"
-          } ${item.desktopWidth}`}
+          }`}
         href={item.href}
       >
         {item.label}
@@ -165,9 +165,9 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
   }
 
   return (
-    <div className={`group relative flex h-9 ${item.desktopWidth} items-center justify-center`}>
+    <div className="group relative flex h-9 items-center justify-center">
       <NavLink
-        className={`flex h-9 w-full items-center justify-center gap-0.5 rounded-full px-2 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap xl:gap-1 xl:px-[14px] xl:text-[14px] ${isActive
+        className={`flex h-9 items-center justify-center gap-1 rounded-full px-3.5 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-4 xl:px-5 xl:text-[14px] ${isActive
           ? "bg-[#20A9AD] text-white"
           : "text-[#6A6A67] group-hover:text-[#0E1B33]"
           }`}
@@ -176,7 +176,7 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
         <span>{item.label}</span>
         <ChevronDown className={`mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 group-hover:rotate-180 ${isActive ? 'opacity-100' : ''}`} />
       </NavLink>
-      <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+      <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
         <DropdownMenu items={item.dropdownItems ?? []} pathname={pathname} />
       </div>
     </div>

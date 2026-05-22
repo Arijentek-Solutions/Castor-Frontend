@@ -8,9 +8,9 @@ import { ArrowLeft, ShoppingCart, Star, Check, ShieldCheck, Minus, Plus, HelpCir
 import { PRODUCTS } from "@/lib/products/products";
 import { formatCartCurrency } from "@/lib/cart/cart-service";
 import { useCart } from "@/context/cart-context";
-import { RelatedCards } from "@/components/products/related-cards";
-import { PricingModal } from "@/components/products/pricing-modal";
-import { EnquiryModal } from "@/components/products/enquiry-modal";
+import { RelatedCards } from "@/app/products/components/related-cards";
+import { PricingModal } from "@/app/products/components/pricing-modal";
+import { EnquiryModal } from "@/app/products/components/enquiry-modal";
 import { Footer } from "@castor/ui";
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {

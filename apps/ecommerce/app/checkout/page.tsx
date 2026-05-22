@@ -7,10 +7,10 @@ import { ShoppingBag, ArrowLeft, ShieldCheck, AlertCircle, CreditCard, Smartphon
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useCart } from "@/context/cart-context";
-import { PaymentSelector } from "@/components/checkout/payment-selector";
-import { ContactAddressForm } from "@/components/checkout/contact-address-form";
-import { OrderSummarySidebar } from "@/components/checkout/order-summary-sidebar";
-import { InsuranceJotform } from "@/components/checkout/insurance-jotform";
+import { PaymentSelector } from "@/app/checkout/components/payment-selector";
+import { ContactAddressForm } from "@/app/checkout/components/contact-address-form";
+import { OrderSummarySidebar } from "@/app/checkout/components/order-summary-sidebar";
+import { InsuranceJotform } from "@/app/checkout/components/insurance-jotform";
 import type { CheckoutFormData, PaymentMethod, Order } from "@/types/checkout";
 import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
 import { PRODUCTS } from "@/lib/products/products";

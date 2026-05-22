@@ -90,7 +90,7 @@ function OrderSuccessContent() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f8fafb] px-4 pt-[110px] pb-16 sm:px-6 lg:px-8 lg:pt-[140px]">
+    <main className="min-h-screen bg-[#f8fafb] px-4 pt-[168px] pb-16 sm:px-6 lg:px-8 lg:pt-[220px]">
       <motion.div 
         className="mx-auto max-w-5xl"
         initial="hidden"
@@ -238,7 +238,7 @@ function OrderSuccessContent() {
             {/* Action Buttons */}
             <motion.div variants={fadeUpVariants}>
               <Link
-                href="/"
+                href="/products"
                 className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-[#00696c] px-8 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-[#004f51] hover:scale-[1.02] active:scale-[0.98]"
               >
                 <ShoppingBag size={20} />

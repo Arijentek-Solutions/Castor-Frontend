@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useCart } from "@/context/cart-context";
 import { formatCartCurrency, calculateShipping, calculateTax } from "@/lib/cart/cart-service";
 import { useEffect, useRef, useMemo, useCallback, useState } from "react";
-import { PricingModal } from "../products/pricing-modal";
+import { PricingModal } from "@/app/products/components/pricing-modal";
 
 interface CartDrawerProps {
   isOpen: boolean;
