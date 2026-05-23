@@ -9,23 +9,19 @@ export function RentalsBanner() {
   const categories = [
     {
       icon: <Accessibility className="h-6 w-6 text-[#20a9ad]" />,
-      title: "Wheelchairs",
-      description: "Manual, power, and transport wheelchairs."
+      title: "Wheelchairs"
     },
     {
       icon: <Bed className="h-6 w-6 text-[#20a9ad]" />,
-      title: "Hospital Beds",
-      description: "Fully electric and semi-electric adjustable beds."
+      title: "Hospital Beds"
     },
     {
       icon: <Activity className="h-6 w-6 text-[#20a9ad]" />,
-      title: "Walking Aids",
-      description: "Walkers, rollators, crutches, and knee scooters."
+      title: "Walking Aids"
     },
     {
       icon: <Plus className="h-6 w-6 text-[#20a9ad]" />,
-      title: "Other Supplies",
-      description: "Patient lifts, oxygen concentrators, and more."
+      title: "Other Supplies"
     }
   ];
 
@@ -79,7 +75,7 @@ export function RentalsBanner() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 * idx + 0.3 }}
-                  className="group flex gap-4 p-5 rounded-2xl bg-slate-50/60 border border-slate-100 hover:bg-[#20a9ad]/5 hover:border-[#20a9ad]/15 transition-all duration-300 hover:-translate-y-1"
+                  className="group flex items-center gap-4 p-5 rounded-2xl bg-slate-50/60 border border-slate-100 hover:bg-[#20a9ad]/5 hover:border-[#20a9ad]/15 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-white border border-[#20a9ad]/10 shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:shadow-[#20a9ad]/10">
                     {cat.icon}
@@ -88,9 +84,6 @@ export function RentalsBanner() {
                     <h3 className="text-base font-bold text-[#0e1b33] transition-colors group-hover:text-[#20a9ad]">
                       {cat.title}
                     </h3>
-                    <p className="mt-1 text-slate-500 text-xs sm:text-sm leading-relaxed">
-                      {cat.description}
-                    </p>
                   </div>
                 </motion.div>
               ))}
