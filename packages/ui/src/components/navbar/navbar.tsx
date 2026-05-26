@@ -104,18 +104,18 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
       <TopBar />
       <nav className="w-full border-b border-[#edf0f4] bg-white/96 shadow-[0_2px_15px_rgba(0,0,0,0.05)] backdrop-blur-[20px]">
         <div className="mx-auto max-w-[1276px] px-4 sm:px-6">
-          <div className="flex min-h-[56px] items-center justify-between gap-1.5 sm:gap-3 lg:h-20">
+          <div className="flex min-h-[56px] items-center justify-between gap-1.5 sm:gap-3 lg:h-20 lg:gap-8">
             <Brand />
 
-            <div className="hidden flex-1 items-center justify-center lg:flex">
-              <div className="flex h-9 w-full max-w-[680px] items-center justify-between xl:max-w-[800px]">
+            <div className="hidden flex-1 items-center justify-end lg:flex">
+              <div className="flex h-9 items-center gap-1 xl:gap-2">
                 {navItems.map((item) => (
                   <DesktopNavItem key={item.label} item={item} pathname={pathname} serviceContext={serviceContext} />
                 ))}
               </div>
             </div>
 
-            <div className="hidden items-center lg:flex">
+            <div className="hidden items-center pl-4 lg:flex lg:flex-shrink-0">
               <HelpMeChooseButton className="flex" onClick={openHelpModal} />
             </div>
 

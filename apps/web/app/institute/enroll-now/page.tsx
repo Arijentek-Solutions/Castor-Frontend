@@ -11,9 +11,9 @@ export default function EnrollNowPage() {
 
   const containerVariants = {
     initial: { opacity: 0 },
-    animate: { 
+    animate: {
       opacity: 1,
-      transition: { 
+      transition: {
         staggerChildren: 0.1,
         ...smoothTransition
       }
@@ -29,23 +29,23 @@ export default function EnrollNowPage() {
     {
       name: "Sterling",
       courses: [
-        { 
-          id: "cna-s", 
-          title: "CNA Program", 
+        {
+          id: "cna-s",
+          title: "CNA Program",
           openClasses: ["[Hybrid] Apr 6 – Jun 13 (M/W/Sa)", "[Hybrid] May 30 – Jul 25 (T/W/Sa)"],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: true
         },
-        { 
-          id: "phleb-s", 
-          title: "Phlebotomy", 
+        {
+          id: "phleb-s",
+          title: "Phlebotomy",
           openClasses: ["Jul 6 – Aug 26 (M/Tu/W)"],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: true
         },
-        { 
-          id: "dual-s", 
-          title: "Dual Enrollment", 
+        {
+          id: "dual-s",
+          title: "Dual Enrollment",
           openClasses: ["[Hybrid] May 30 – Aug 26"],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: true
@@ -55,23 +55,23 @@ export default function EnrollNowPage() {
     {
       name: "Freeport",
       courses: [
-        { 
-          id: "cna-f", 
-          title: "CNA Program", 
+        {
+          id: "cna-f",
+          title: "CNA Program",
           openClasses: ["[Hybrid] Apr 6 – Jun 13 (M/Th/Sa)", "[Hybrid] May 30 – Jul 25 (T/Th/Sa)"],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: true
         },
-        { 
-          id: "phleb-f", 
-          title: "Phlebotomy", 
+        {
+          id: "phleb-f",
+          title: "Phlebotomy",
           openClasses: ["May 25 – Jul 1 (M/Tu/W)"],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: true
         },
-        { 
-          id: "dual-f", 
-          title: "Dual Enrollment", 
+        {
+          id: "dual-f",
+          title: "Dual Enrollment",
           openClasses: ["No open classes at this time."],
           waitlists: "No waitlisted classes at this time.",
           isAvailable: false
@@ -156,7 +156,7 @@ export default function EnrollNowPage() {
         <div className="space-y-6">
           {locations.map((loc, idx) => (
             <div key={loc.name} className="space-y-4">
-              <motion.button 
+              <motion.button
                 onClick={() => setActiveLocation(activeLocation === loc.name ? null : loc.name)}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ export default function EnrollNowPage() {
                 <h2 className="text-3xl font-black tracking-tight text-[#0e1b33] sm:text-4xl">
                   {loc.name}
                 </h2>
-                <motion.div 
+                <motion.div
                   animate={{ rotate: activeLocation === loc.name ? 90 : 0 }}
                   transition={smoothTransition}
                   className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#0e1b33]"
@@ -186,23 +186,23 @@ export default function EnrollNowPage() {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8 px-4">
                       {loc.courses.map((course) => (
-                        <div 
+                        <div
                           key={course.id}
                           className="rounded-[2rem] bg-[#f5f5f5] p-8 flex flex-col justify-between border border-black/5 hover:border-[#ed7d31]/30 transition-all group"
                         >
                           <div className="space-y-6 mb-8">
-                            <h3 className="text-2xl font-black text-[#0e1b33] leading-tight border-b border-black/10 pb-4">
+                            <h3 className="text-3xl font-black text-[#0e1b33] leading-tight border-b border-black/10 pb-4">
                               {course.title}
                             </h3>
-                            
+
                             <div className="space-y-4">
                               <div>
-                                <h4 className="text-sm font-black tracking-wider text-[#0e1b33] mb-2">
+                                <h4 className="text-base font-black tracking-wider text-[#0e1b33] mb-2">
                                   Open Classes:
                                 </h4>
                                 <ul className="space-y-1">
                                   {course.openClasses.map((session, sIdx) => (
-                                    <li key={sIdx} className="text-sm font-bold text-[#0e1b33]/80">
+                                    <li key={sIdx} className="text-base font-bold text-[#0e1b33]/80">
                                       {session}
                                     </li>
                                   ))}
@@ -210,10 +210,10 @@ export default function EnrollNowPage() {
                               </div>
 
                               <div>
-                                <h4 className="text-sm font-black tracking-wider text-[#0e1b33] mb-2">
+                                <h4 className="text-base font-black tracking-wider text-[#0e1b33] mb-2">
                                   Waitlists:
                                 </h4>
-                                <p className="text-sm font-medium italic text-[#0e1b33]/60">
+                                <p className="text-base font-medium italic text-[#0e1b33]/60">
                                   {course.waitlists}
                                 </p>
                               </div>
@@ -221,11 +221,11 @@ export default function EnrollNowPage() {
                           </div>
 
                           {course.isAvailable ? (
-                            <button className="h-12 w-full rounded-xl bg-[#0e1b33] text-white text-sm font-black tracking-widest hover:bg-[#2dabac] transition-all active:scale-[0.98]">
+                            <button className="h-12 w-full rounded-xl bg-[#0e1b33] text-white text-base font-black tracking-widest hover:bg-[#2dabac] transition-all active:scale-[0.98]">
                               Enroll Now
                             </button>
                           ) : (
-                            <button disabled className="h-12 w-full rounded-xl bg-[#5a5a5a] text-white text-sm font-black tracking-widest cursor-not-allowed">
+                            <button disabled className="h-12 w-full rounded-xl bg-[#5a5a5a] text-white text-base font-black tracking-widest cursor-not-allowed">
                               No Open Classes
                             </button>
                           )}

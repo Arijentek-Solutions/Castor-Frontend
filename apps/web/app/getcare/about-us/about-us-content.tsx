@@ -73,9 +73,9 @@ export function AboutUsContent() {
                     <div className={`w-12 h-12 ${node.color} rounded-xl flex items-center justify-center mb-4 shadow-lg transform group-hover:scale-110 transition-transform duration-500`}>
                       <node.icon className="w-6 h-6 text-white" />
                     </div>
-                    <h4 className="text-[16px] font-bold text-[#0e1b33] mb-1.5">{node.title}</h4>
-                    <p className="text-[13px] text-[#6a6a67] font-medium leading-[1.5] mb-3">{node.desc}</p>
-                    <Link href={node.path} className="inline-flex items-center gap-2 text-[#20a9ad] text-[13px] font-bold transition-all duration-300 hover:gap-3">
+                    <h4 className="text-[18px] font-bold text-[#0e1b33] mb-1.5">{node.title}</h4>
+                    <p className="text-[15px] text-[#6a6a67] font-medium leading-[1.5] mb-3">{node.desc}</p>
+                    <Link href={node.path} className="inline-flex items-center gap-2 text-[#20a9ad] text-[15px] font-bold transition-all duration-300 hover:gap-3">
                       Learn More <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </motion.div>

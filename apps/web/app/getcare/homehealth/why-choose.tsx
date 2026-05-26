@@ -1,19 +1,19 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { 
-  Award, 
-  Home, 
-  Stethoscope, 
-  CheckCircle2, 
-  ShieldCheck, 
-  TrendingDown, 
-  Heart, 
-  Users, 
-  Activity, 
-  Smile, 
-  Shield, 
-  HeartHandshake 
+import {
+  Award,
+  Home,
+  Stethoscope,
+  CheckCircle2,
+  ShieldCheck,
+  TrendingDown,
+  Heart,
+  Users,
+  Activity,
+  Smile,
+  Shield,
+  HeartHandshake
 } from "lucide-react";
 
 const features = [
@@ -92,8 +92,8 @@ export function WhyChoose() {
 
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.8,
@@ -129,19 +129,19 @@ export function WhyChoose() {
               whileHover={{ y: -5, boxShadow: "0 20px 40px rgba(0,0,0,0.04)" }}
               className="bg-white border-2 border-[#f3f4f6] rounded-[32px] p-8 hover:border-[#20a9ad]/20 transition-all flex flex-col items-start gap-5 shadow-sm"
             >
-              <div 
+              <div
                 className="w-14 h-14 rounded-full flex items-center justify-center text-white"
-                style={{ 
-                  backgroundImage: "linear-gradient(135deg, #20a9ad 0%, #128184 100%)" 
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #20a9ad 0%, #128184 100%)"
                 }}
               >
                 <feature.icon className="w-7 h-7" />
               </div>
               <div>
-                <h3 className="font-['Inter'] font-black text-[18px] text-[#0e1b33] mb-3 leading-tight">
+                <h3 className="font-['Inter'] font-black text-[20px] text-[#0e1b33] mb-3 leading-tight">
                   {feature.title}
                 </h3>
-                <p className="font-['Inter'] font-normal text-[14px] text-[#6a6a67] leading-relaxed">
+                <p className="font-['Inter'] font-normal text-[16px] text-[#6a6a67] leading-relaxed">
                   {feature.description}
                 </p>
               </div>

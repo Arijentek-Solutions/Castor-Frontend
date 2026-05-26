@@ -67,10 +67,10 @@ const HowItWork = () => {
               >
                 {step.number}
               </div>
-              <h3 className="text-[20px] font-semibold text-[#0e1b33] mb-4" data-node-id={index === 0 ? "281:117" : index === 1 ? "281:121" : "281:125"}>
+              <h3 className="text-[24px] font-bold text-[#0e1b33] mb-4" data-node-id={index === 0 ? "281:117" : index === 1 ? "281:121" : "281:125"}>
                 {step.title}
               </h3>
-              <p className="text-[#6a6a67] text-[16px] leading-[24px] max-w-[380px]" data-node-id={index === 0 ? "281:118" : index === 1 ? "281:122" : "281:126"}>
+              <p className="text-[#6a6a67] text-[18px] leading-[28px] max-w-[380px]" data-node-id={index === 0 ? "281:118" : index === 1 ? "281:122" : "281:126"}>
                 {step.description}
               </p>
             </motion.div>

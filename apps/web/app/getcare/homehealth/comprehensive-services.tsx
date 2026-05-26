@@ -115,10 +115,10 @@ export function ComprehensiveServices() {
               }}
               className="bg-white border-2 border-[#f3f4f6] rounded-[24px] p-8 flex flex-col gap-4 transition-all duration-300"
             >
-              <h3 className="font-['Inter'] font-black text-[22px] sm:text-[24px] leading-[1.2] text-[#0e1b33]">
+              <h3 className="font-['Inter'] font-black text-[24px] sm:text-[26px] leading-[1.2] text-[#0e1b33]">
                 {service.title}
               </h3>
-              <p className="font-['Inter'] text-[14px] leading-relaxed text-[#6a6a67]">
+              <p className="font-['Inter'] text-[16px] leading-relaxed text-[#6a6a67]">
                 {service.description}
               </p>
             </motion.div>

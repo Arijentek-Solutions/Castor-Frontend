@@ -68,8 +68,8 @@ export function ProductCard({ product }: ProductCardProps) {
             />
             {product.insuranceCovered && (
               <div className="absolute top-1 left-1 flex items-center gap-0.5 rounded-md bg-[#f0fdf4] border border-[rgba(0,130,54,0.2)] px-1.5 py-0.5">
-                <ShieldCheck size={10} className="text-[#008236]" />
-                <span className="text-[7px] font-medium text-[#008236]">Insurance</span>
+                <ShieldCheck size={12} className="text-[#008236]" />
+                <span className="text-[11px] font-bold text-[#008236]">Insurance</span>
               </div>
             )}
           </div>
@@ -84,7 +84,7 @@ export function ProductCard({ product }: ProductCardProps) {
                 </div>
                 {product.hcpcs && (
                   <div className="rounded-[8px] bg-[rgba(32,169,173,0.1)] border border-[rgba(32,169,173,0.2)] px-1.5 py-0.5">
-                    <span className="text-[8px] font-medium text-[#20a9ad]">
+                    <span className="text-[11px] font-bold text-[#20a9ad]">
                       HCPCS
                     </span>
                   </div>
@@ -168,9 +168,9 @@ export function ProductCard({ product }: ProductCardProps) {
               className="object-contain p-4 transition-transform duration-500 group-hover:scale-110"
             />
             {product.insuranceCovered && (
-              <div className="absolute top-2 left-2 flex items-center gap-0.5 rounded-md bg-[#f0fdf4] border border-[rgba(0,130,54,0.2)] px-2 py-1">
-                <ShieldCheck size={14} className="text-[#008236]" />
-                <span className="text-[10px] font-medium text-[#008236]">Insurance</span>
+              <div className="absolute top-2 left-2 flex items-center gap-1 rounded-md bg-[#f0fdf4] border border-[rgba(0,130,54,0.2)] px-2.5 py-1.5">
+                <ShieldCheck size={18} className="text-[#008236]" />
+                <span className="text-[14px] font-black text-[#008236]">Insurance</span>
               </div>
             )}
           </div>
@@ -184,8 +184,8 @@ export function ProductCard({ product }: ProductCardProps) {
                   {product.sku}
                 </div>
                 {product.hcpcs && (
-                  <div className="rounded-[8px] bg-[rgba(32,169,173,0.1)] border border-[rgba(32,169,173,0.2)] px-2 py-0.5">
-                    <span className="text-[11px] font-medium text-[#20a9ad]">
+                  <div className="rounded-[8px] bg-[rgba(32,169,173,0.1)] border border-[rgba(32,169,173,0.2)] px-2.5 py-1">
+                    <span className="text-[15px] font-black text-[#20a9ad]">
                       HCPCS
                     </span>
                   </div>

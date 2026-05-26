@@ -68,12 +68,12 @@ const HowItWork = () => {
                             </div>
 
                             {/* Step Title */}
-                            <h3 className="mt-5 text-[20px] font-semibold leading-[28px] text-[#0e1b33]">
+                            <h3 className="mt-5 text-[24px] font-bold leading-[32px] text-[#0e1b33]">
                                 {step.title}
                             </h3>
 
                             {/* Step Description */}
-                            <p className="mt-3 max-w-[380px] text-[16px] font-normal leading-[24px] text-[#6a6a67]">
+                            <p className="mt-3 max-w-[380px] text-[18px] font-normal leading-[28px] text-[#6a6a67]">
                                 {step.description}
                             </p>
                         </motion.div>

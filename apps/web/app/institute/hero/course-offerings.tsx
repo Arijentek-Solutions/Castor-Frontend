@@ -68,10 +68,10 @@ export function CourseOfferings() {
               </div>
 
               <div className="px-4 pb-4 pt-2.5 text-center">
-                <h3 className="mb-1 text-[20px] font-bold leading-[26px] text-[#122645]">
+                <h3 className="mb-1 text-[22px] font-bold leading-[28px] text-[#122645]">
                   {course.title}
                 </h3>
-                <p className="mx-auto max-w-[360px] text-[15px] leading-[22px] text-[#0e1b33]">
+                <p className="mx-auto max-w-[360px] text-[17px] leading-[24px] text-[#0e1b33]">
                   {course.description}
                 </p>
               </div>

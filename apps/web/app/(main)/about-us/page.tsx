@@ -358,10 +358,10 @@ export default function AboutPage() {
                                     <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#20a9ad]/10">
                                         <service.icon className="h-6 w-6 text-[#20a9ad]" />
                                     </div>
-                                    <h4 className="mb-1.5 text-[17px] font-bold text-[#0e1b33]">
+                                    <h4 className="mb-1.5 text-[20px] font-bold text-[#0e1b33]">
                                         {service.title}
                                     </h4>
-                                    <p className="text-[14px] leading-[1.6] text-[#6a6a67]">
+                                    <p className="text-[16px] leading-[1.6] text-[#6a6a67]">
                                         {service.items}
                                     </p>
                                 </motion.div>
@@ -480,10 +480,10 @@ export default function AboutPage() {
                                 >
                                     <value.icon className="h-7 w-7 text-white" />
                                 </div>
-                                <h4 className="mb-3 text-[20px] font-bold text-white">
+                                <h4 className="mb-3 text-[24px] font-bold text-white">
                                     {value.title}
                                 </h4>
-                                <p className="text-[15px] leading-[1.7] text-white/70">
+                                <p className="text-[18px] leading-[1.7] text-white/70">
                                     {value.description}
                                 </p>
                             </motion.div>
@@ -536,15 +536,15 @@ export default function AboutPage() {
                                         {member.initials}
                                     </div>
                                     <div>
-                                        <h4 className="text-[18px] font-bold text-[#0e1b33]">
+                                        <h4 className="text-[22px] font-bold text-[#0e1b33]">
                                             {member.name}
                                         </h4>
-                                        <p className="text-[14px] font-medium text-[#20a9ad]">
+                                        <p className="text-[16px] font-bold text-[#20a9ad]">
                                             {member.role}
                                         </p>
                                     </div>
                                 </div>
-                                <p className="text-[15px] leading-[1.7] text-[#6a6a67]">
+                                <p className="text-[17px] leading-[1.7] text-[#6a6a67]">
                                     {member.description}
                                 </p>
                             </motion.div>

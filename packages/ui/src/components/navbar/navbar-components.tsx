@@ -11,12 +11,12 @@ import styles from "./HelpMeChooseButton.module.css";
 export const TopBar = () => {
   return (
     <div className="bg-[#0E1B33] border-b border-white/10 relative z-[60]">
-      <div className="mx-auto flex h-9 sm:h-10 max-w-[1276px] items-center px-2.5 sm:px-6 relative">
+      <div className="mx-auto flex h-11 sm:h-12 max-w-[1276px] items-center px-2.5 sm:px-6 relative">
         <div className="flex items-center gap-1.5 sm:gap-2 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
-          <Phone className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white" />
+          <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
           <Link
             href="tel:815-564-0977"
-            className="text-[11px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80 whitespace-nowrap"
+            className="text-[13px] sm:text-[14px] xl:text-[15px] font-bold text-white transition-opacity hover:opacity-80 whitespace-nowrap"
           >
             815-564-0977
           </Link>
@@ -25,17 +25,17 @@ export const TopBar = () => {
         <div className="ml-auto flex items-center gap-1.5 sm:gap-6">
           <Link
             href={`${SITE_URLS.web}/#provider-referral`}
-            className="text-[9px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+            className="text-[13px] sm:text-[14px] xl:text-[15px] font-bold text-white transition-opacity hover:opacity-80"
           >
             Provider
           </Link>
-          <div className="h-3.5 w-px bg-[rgba(32,169,173,0.4)]" />
+          <div className="h-4 w-px bg-[rgba(32,169,173,0.4)]" />
           <a
             href={SITE_URLS.auth}
-            className="flex items-center gap-0.5 text-[9px] sm:text-[13px] xl:text-[14px] font-bold text-white transition-opacity hover:opacity-80"
+            className="flex items-center gap-0.5 text-[13px] sm:text-[14px] xl:text-[15px] font-bold text-white transition-opacity hover:opacity-80"
           >
             <span>Sign In</span>
-            <ChevronDownIcon className="h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 opacity-60" />
+            <ChevronDownIcon className="h-3 w-3 sm:h-4 sm:w-4 opacity-60" />
           </a>
         </div>
       </div>
@@ -153,7 +153,7 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
   if (!hasDropdown) {
     return (
       <NavLink
-        className={`flex h-9 items-center justify-center rounded-full px-3.5 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-4 xl:px-5 xl:text-[14px] ${isActive
+        className={`flex h-11 items-center justify-center rounded-full px-2 text-center text-[14px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-3 xl:px-4 xl:text-[15px] ${isActive
           ? "bg-[#20A9AD] text-white"
           : "text-[#6A6A67] hover:text-[#0E1B33]"
           }`}
@@ -165,9 +165,9 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
   }
 
   return (
-    <div className="group relative flex h-9 items-center justify-center">
+    <div className="group relative flex h-11 items-center justify-center">
       <NavLink
-        className={`flex h-9 items-center justify-center gap-1 rounded-full px-3.5 text-center text-[13px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-4 xl:px-5 xl:text-[14px] ${isActive
+        className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-center text-[14px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-3 xl:px-4 xl:text-[15px] ${isActive
           ? "bg-[#20A9AD] text-white"
           : "text-[#6A6A67] group-hover:text-[#0E1B33]"
           }`}
@@ -222,7 +222,7 @@ export const MobileNavItem = ({
   if (!hasDropdown) {
     return (
       <NavLink
-        className={`flex h-11 items-center rounded-[20px] px-4 text-[14px] font-bold leading-5 transition-colors hover:bg-[#f7f9fb] ${isActive
+        className={`flex h-12 items-center rounded-[20px] px-4 text-[16px] font-bold leading-5 transition-colors hover:bg-[#f7f9fb] ${isActive
           ? "bg-[#20A9AD] text-white"
           : "text-[#0E1B33]"
           }`}
@@ -237,7 +237,7 @@ export const MobileNavItem = ({
     <div className={`rounded-[22px] border border-[#edf0f4] p-1 ${isActive ? 'bg-[#f0f9fa] border-[#20A9AD]' : ''}`}>
       <div className="flex items-center gap-2">
         <NavLink
-          className={`flex min-w-0 flex-1 items-center rounded-[18px] px-3 py-3 text-[14px] font-bold leading-5 transition-colors ${isActive
+          className={`flex min-w-0 flex-1 items-center rounded-[18px] px-3 py-3 text-[16px] font-bold leading-5 transition-colors ${isActive
             ? "bg-[#20A9AD] text-white"
             : "text-[#0E1B33]"
             }`}

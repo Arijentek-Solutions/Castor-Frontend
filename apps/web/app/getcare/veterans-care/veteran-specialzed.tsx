@@ -69,7 +69,7 @@ export default function VeteranSpecialized() {
               className="bg-gradient-to-br from-[#dbf2f2] to-white border-2 border-[#20a9ad33] rounded-[32px] p-8 flex flex-col items-start transition-all duration-300 hover:shadow-xl group"
             >
               {/* Card Title */}
-              <h3 className="text-[20px] font-black leading-[1.4] text-[#0e1b33] mb-8 tracking-[-0.45px] h-[56px] flex items-center">
+              <h3 className="text-[24px] font-black leading-[1.2] text-[#0e1b33] mb-8 tracking-[-0.45px] min-h-[64px] flex items-center">
                 {service.title}
               </h3>
 
@@ -84,10 +84,10 @@ export default function VeteranSpecialized() {
                     transition={{ duration: 0.4, delay: (index * 0.1) + (i * 0.05) }}
                     className="flex items-start gap-2 w-full"
                   >
-                    <div className="flex-shrink-0 mt-1 size-[16px] flex items-center justify-center">
+                    <div className="flex-shrink-0 mt-1.5 size-[18px] flex items-center justify-center">
                       <Check className="size-4 text-[#20a9ad] stroke-[3px]" />
                     </div>
-                    <span className="text-[14px] font-semibold leading-[1.4] text-[#0e1b33] tracking-[-0.15px]">
+                    <span className="text-[17px] font-semibold leading-[1.4] text-[#0e1b33] tracking-[-0.15px]">
                       {item}
                     </span>
                   </motion.li>
