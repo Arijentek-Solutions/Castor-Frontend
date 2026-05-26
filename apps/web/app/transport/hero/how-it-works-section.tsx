@@ -83,10 +83,10 @@ export function HowItWorksSection() {
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#20a9ad] text-3xl font-bold text-white">
                 {step.id}
               </div>
-              <h3 className="mt-6 text-xl font-semibold text-[#0e1b33]">
+              <h3 className="mt-6 text-2xl font-bold text-[#0e1b33]">
                 {step.title}
               </h3>
-              <p className="mt-4 text-base leading-relaxed text-[#6a6a67]">
+              <p className="mt-4 text-lg leading-relaxed text-[#6a6a67]">
                 {step.description}
               </p>
             </motion.div>

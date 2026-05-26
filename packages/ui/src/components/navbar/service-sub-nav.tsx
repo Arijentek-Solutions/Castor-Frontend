@@ -15,9 +15,9 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
   const [position, setPosition] = useState({ left: 0, bottom: 0 });
   const subMenuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLAnchorElement>(null);
-  const baseClasses = "inline-flex h-9 items-center gap-1.5 whitespace-nowrap text-[12px] font-bold leading-none tracking-normal font-sans transition-colors outline-none appearance-none bg-transparent p-0 sm:text-[13px]";
-  const activeClasses = "text-[#20A9AD]";
-  const inactiveClasses = "text-[#0E1B33]/70 hover:text-[#20A9AD]";
+  const baseClasses = "inline-flex h-8 items-center gap-1.5 whitespace-nowrap text-[14px] font-bold leading-none tracking-normal font-sans transition-all outline-none appearance-none px-4 rounded-full sm:text-[15px] border-2 border-transparent focus-visible:ring-2 focus-visible:ring-[#20A9AD]/50";
+  const activeClasses = "bg-[#20A9AD] text-white border-[#20A9AD] shadow-sm";
+  const inactiveClasses = "text-[#0E1B33]/70 hover:text-[#20A9AD] hover:bg-white hover:border-[#20A9AD]/20";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -103,7 +103,7 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
           href={item.href}
           aria-expanded={isOpen}
           aria-haspopup="menu"
-          className={`${baseClasses} cursor-pointer rounded-none ${isActive ? activeClasses : inactiveClasses}`}
+          className={`${baseClasses} cursor-pointer ${isActive ? activeClasses : inactiveClasses}`}
           onClick={(e) => {
             if (window.innerWidth < 1024) {
               e.preventDefault();
@@ -156,8 +156,8 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                             {subItem.icon}
                           </div>
                           <div className="min-w-0 flex-1">
-                            <div className={`text-[12px] lg:text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
-                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[10px] lg:text-[11px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                            <div className={`text-[14px] lg:text-[15px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[12px] lg:text-[13px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
                               {subItem.description}
                             </div>
                           </div>
@@ -176,8 +176,8 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                             {subItem.icon}
                           </div>
                           <div className="min-w-0">
-                            <div className={`text-[12px] lg:text-[13px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
-                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[10px] lg:text-[11px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
+                            <div className={`text-[14px] lg:text-[15px] font-bold ${subItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{subItem.title}</div>
+                            <div className={`mt-0.5 lg:mt-1 whitespace-normal break-words text-[12px] lg:text-[13px] leading-tight lg:leading-4 ${subItemActive ? 'text-white/80' : 'text-[#475569]'}`}>
                               {subItem.description}
                             </div>
                           </div>
@@ -207,7 +207,7 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                             {nestedItem.icon}
                           </div>
                           <div className="min-w-0">
-                            <div className={`text-[11px] lg:text-[12px] font-bold leading-tight ${nestedItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{nestedItem.title}</div>
+                            <div className={`text-[13px] lg:text-[14px] font-bold leading-tight ${nestedItemActive ? 'text-white' : 'text-[#0E1B33]'}`}>{nestedItem.title}</div>
                           </div>
                         </Link>
                       );

@@ -52,10 +52,10 @@ export default function DualEnrollmentHighlights() {
                   className="object-cover"
                 />
               </div>
-              <h3 className="mt-7 min-h-[48px] text-[22px] font-semibold leading-[24px] text-black">
+              <h3 className="mt-7 min-h-[60px] text-[26px] font-bold leading-[30px] text-black">
                 {card.title}
               </h3>
-              <p className="mt-5 text-[16px] leading-[1.4] text-black">
+              <p className="mt-5 text-[18px] leading-[26px] text-black">
                 {card.description}
               </p>
             </motion.div>

@@ -45,13 +45,13 @@ const Provide = () => {
                 y: -8,
                 transition: { type: "spring", stiffness: 300, damping: 20 }
               }}
-              className="relative bg-white rounded-[12px] p-[24px] h-[184px] overflow-hidden shadow-sm border-t-[4px] border-[#20a9ad] cursor-default"
+              className="relative bg-white rounded-[12px] p-[24px] min-h-[184px] overflow-hidden shadow-sm border-t-[4px] border-[#20a9ad] cursor-default"
               data-node-id={service.id}
             >
-              <h3 className="font-semibold text-[#0e1b33] text-[16px] mb-[16px]">
+              <h3 className="font-bold text-[#0e1b33] text-[20px] mb-[16px]">
                 {service.title}
               </h3>
-              <p className="text-[#6a6a67] text-[14px] leading-[22px]">
+              <p className="text-[#6a6a67] text-[16px] leading-[24px]">
                 {service.description}
               </p>
             </motion.div>

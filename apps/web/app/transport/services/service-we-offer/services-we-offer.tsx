@@ -80,12 +80,12 @@ const ServicesWeOffer = () => {
                                 />
                             </div>
                             <div className="flex flex-1 flex-col items-center gap-4 px-4 py-4">
-                                <p className="text-center text-[14px] font-semibold leading-[20px] text-[#0e1b33]">
+                                <p className="text-center text-[18px] font-bold leading-[24px] text-[#0e1b33]">
                                     {service.title}
                                 </p>
                                 <Link
                                     href={service.href}
-                                    className="mt-auto inline-flex items-center rounded-full bg-[#20a9ad] px-5 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a8f92]"
+                                    className="mt-auto inline-flex items-center rounded-full bg-[#20a9ad] px-5 py-2 text-[15px] font-semibold text-white transition-colors hover:bg-[#1a8f92]"
                                 >
                                     Learn More
                                 </Link>

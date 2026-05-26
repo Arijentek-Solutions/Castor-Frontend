@@ -29,7 +29,7 @@ export default function HomeServices() {
           transition={{ duration: 0.8 }}
           className="mb-16"
         >
-          <h2 className="text-[48px] font-black leading-[1.1] text-[#0e1b33] mb-12 tracking-[-0.48px] max-w-[900px]">
+          <h2 className="text-[56px] font-black leading-[1.1] text-[#0e1b33] mb-12 tracking-[-0.48px] max-w-[900px]">
             Castor Home Services Include
           </h2>
         </motion.div>
@@ -47,7 +47,7 @@ export default function HomeServices() {
               <div className="flex-shrink-0 size-6 bg-[#20a9ad]/10 rounded-full flex items-center justify-center">
                 <Check className="size-4 text-[#20a9ad] stroke-[3px]" />
               </div>
-              <span className="text-[15px] font-semibold text-[#0e1b33] leading-snug">
+              <span className="text-[18px] font-semibold text-[#0e1b33] leading-snug">
                 {service}
               </span>
             </motion.div>

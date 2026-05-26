@@ -38,7 +38,7 @@ export function BrandMarquee() {
       `}</style>
 
       <div className="mx-auto w-full max-w-[1720px] px-4 mb-10 text-center">
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#0e1b33]/60">
+        <span className="text-[24px] font-black uppercase tracking-[0.1em] text-[#0e1b33]">
           Trusted by Leading Healthcare Brands
         </span>
       </div>

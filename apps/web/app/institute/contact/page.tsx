@@ -220,18 +220,18 @@ export default function InstituteContactUsPage() {
               {...sectionVariants}
               className="text-center md:text-left"
             >
-              <h3 className="text-2xl font-bold text-[#0e1b33]">Illinois Board of Higher Education</h3>
-              <div className="mt-6 space-y-2 text-[#6a6a67]">
-                <p className="font-medium">1 N. Old State Capital Plaza, Suite 333</p>
-                <p>Springfield, IL. 62701</p>
-                <a href="tel:+12177822551" className="block font-bold text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
+              <h3 className="text-[32px] font-black text-[#0e1b33]">Illinois Board of Higher Education</h3>
+              <div className="mt-6 space-y-3 text-[#6a6a67]">
+                <p className="text-[20px] font-bold text-[#0e1b33]">1 N. Old State Capital Plaza, Suite 333</p>
+                <p className="text-[20px] font-medium">Springfield, IL. 62701</p>
+                <a href="tel:+12177822551" className="block text-[22px] font-black text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
                   217-782-2551
                 </a>
                 <a
                   href="https://complaints.ibhe.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-2 text-[#20a9ad] hover:underline"
+                  className="inline-block mt-2 text-[20px] font-bold text-[#20a9ad] hover:underline"
                 >
                   https://complaints.ibhe.org
                 </a>
@@ -243,19 +243,19 @@ export default function InstituteContactUsPage() {
               {...sectionVariants}
               className="text-center md:text-left"
             >
-              <h3 className="text-2xl font-bold text-[#0e1b33]">Illinois Department of Public Health</h3>
-              <div className="mt-6 space-y-2 text-[#6a6a67]">
-                <p className="font-bold text-[#0e1b33]">Randy Carey-Walden RN, MSN, PSA</p>
-                <p className="font-medium">525 West Jefferson St. 4th Floor</p>
-                <p>Springfield, IL. 62761</p>
-                <a href="tel:+12177855569" className="block font-bold text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
+              <h3 className="text-[32px] font-black text-[#0e1b33]">Illinois Department of Public Health</h3>
+              <div className="mt-6 space-y-3 text-[#6a6a67]">
+                <p className="text-[22px] font-black text-[#0e1b33]">Randy Carey-Walden RN, MSN, PSA</p>
+                <p className="text-[20px] font-bold text-[#0e1b33]">525 West Jefferson St. 4th Floor</p>
+                <p className="text-[20px] font-medium">Springfield, IL. 62761</p>
+                <a href="tel:+12177855569" className="block text-[22px] font-black text-[#0e1b33] hover:text-[#20a9ad] transition-colors">
                   217-785-5569
                 </a>
                 <a
                   href="https://dph.illinois.gov"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block mt-2 text-[#20a9ad] hover:underline"
+                  className="inline-block mt-2 text-[20px] font-bold text-[#20a9ad] hover:underline"
                 >
                   https://dph.illinois.gov
                 </a>
