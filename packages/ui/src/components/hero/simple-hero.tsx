@@ -10,7 +10,8 @@ interface SimpleHeroProps {
 
 export const SimpleHero = ({ subtitle, title, description }: SimpleHeroProps) => {
   return (
-    <motion.div
+    <motion.section
+      aria-label={title}
       initial={{ opacity: 0, y: 60 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
@@ -47,6 +48,6 @@ export const SimpleHero = ({ subtitle, title, description }: SimpleHeroProps) =>
         )}
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(32,169,173,0.08)_0%,transparent_70%)]" />
-    </motion.div>
+    </motion.section>
   );
 };

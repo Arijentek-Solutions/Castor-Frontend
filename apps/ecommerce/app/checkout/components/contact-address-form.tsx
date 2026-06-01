@@ -58,7 +58,7 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
   return (
     <div className="space-y-6">
       {/* Contact Information */}
-      <section className="space-y-4">
+      <section className="space-y-4" aria-label="Contact information">
         <h3 className="text-lg font-bold text-[#0e1b33]">Contact Information</h3>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -73,12 +73,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
               required
               value={formData.fullName}
               onChange={(e) => handleChange("fullName", e.target.value)}
+              aria-invalid={!!errors.fullName}
+              aria-describedby={errors.fullName ? "fullName-error" : undefined}
               className={`w-full rounded-xl border ${
                 errors.fullName ? "border-red-500 ring-red-500/20" : "border-slate-200"
               } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="John Doe"
             />
-            {errors.fullName && <p className="mt-1 text-xs text-red-500">{errors.fullName}</p>}
+            {errors.fullName && <p id="fullName-error" className="mt-1 text-xs text-red-500" role="alert">{errors.fullName}</p>}
           </div>
 
           <div>
@@ -92,12 +94,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
               required
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
               className={`w-full rounded-xl border ${
                 errors.email ? "border-red-500 ring-red-500/20" : "border-slate-200"
               } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="john@example.com"
             />
-            {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+            {errors.email && <p id="email-error" className="mt-1 text-xs text-red-500" role="alert">{errors.email}</p>}
           </div>
         </div>
 
@@ -112,20 +116,22 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
             required
             value={formData.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? "phone-error" : "phone-hint"}
             className={`w-full rounded-xl border ${
               errors.phone ? "border-red-500 ring-red-500/20" : "border-slate-200"
             } bg-white px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
             placeholder="+1 (555) 123-4567"
           />
-          {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
-          <p className="mt-1 text-xs text-[#6a6a67]">For delivery updates and order notifications</p>
+          {errors.phone && <p id="phone-error" className="mt-1 text-xs text-red-500" role="alert">{errors.phone}</p>}
+          <p id="phone-hint" className="mt-1 text-xs text-[#6a6a67]">For delivery updates and order notifications</p>
         </div>
       </section>
 
       {/* Shipping Address */}
-      <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6">
+      <section className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6" aria-label="Shipping address">
         <div className="flex items-center gap-2 border-b border-slate-100 pb-4">
-          <Truck size={20} className="text-[#20a9ad]" />
+          <Truck size={20} className="text-[#20a9ad]" aria-hidden="true" />
           <h3 className="text-lg font-bold text-[#0e1b33]">Shipping Address</h3>
         </div>
 
@@ -141,12 +147,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
               required
               value={formData.addressLine1}
               onChange={(e) => handleChange("addressLine1", e.target.value)}
+              aria-invalid={!!errors.addressLine1}
+              aria-describedby={errors.addressLine1 ? "addressLine1-error" : undefined}
               className={`w-full rounded-xl border ${
                 errors.addressLine1 ? "border-red-500 ring-red-500/20" : "border-slate-200"
               } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
               placeholder="123 Main Street, Apt 4"
             />
-            {errors.addressLine1 && <p className="mt-1 text-xs text-red-500">{errors.addressLine1}</p>}
+            {errors.addressLine1 && <p id="addressLine1-error" className="mt-1 text-xs text-red-500" role="alert">{errors.addressLine1}</p>}
           </div>
 
           <div>
@@ -176,12 +184,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
                 required
                 value={formData.city}
                 onChange={(e) => handleChange("city", e.target.value)}
+                aria-invalid={!!errors.city}
+                aria-describedby={errors.city ? "city-error" : undefined}
                 className={`w-full rounded-xl border ${
                   errors.city ? "border-red-500 ring-red-500/20" : "border-slate-200"
                 } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="New York"
               />
-              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
+              {errors.city && <p id="city-error" className="mt-1 text-xs text-red-500" role="alert">{errors.city}</p>}
             </div>
 
             <div>
@@ -195,12 +205,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
                 required
                 value={formData.state}
                 onChange={(e) => handleChange("state", e.target.value)}
+                aria-invalid={!!errors.state}
+                aria-describedby={errors.state ? "state-error" : undefined}
                 className={`w-full rounded-xl border ${
                   errors.state ? "border-red-500 ring-red-500/20" : "border-slate-200"
                 } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="NY"
               />
-              {errors.state && <p className="mt-1 text-xs text-red-500">{errors.state}</p>}
+              {errors.state && <p id="state-error" className="mt-1 text-xs text-red-500" role="alert">{errors.state}</p>}
             </div>
 
             <div>
@@ -214,12 +226,14 @@ export function ContactAddressForm({ defaultValues = {}, onChange, onFieldChange
                 required
                 value={formData.zipCode}
                 onChange={(e) => handleChange("zipCode", e.target.value)}
+                aria-invalid={!!errors.zipCode}
+                aria-describedby={errors.zipCode ? "zipCode-error" : undefined}
                 className={`w-full rounded-xl border ${
                   errors.zipCode ? "border-red-500 ring-red-500/20" : "border-slate-200"
                 } bg-slate-50/50 px-4 py-3 text-[#0e1b33] focus:border-[#20a9ad] focus:outline-none focus:ring-2 focus:ring-[#20a9ad]/20`}
                 placeholder="10001"
               />
-              {errors.zipCode && <p className="mt-1 text-xs text-red-500">{errors.zipCode}</p>}
+              {errors.zipCode && <p id="zipCode-error" className="mt-1 text-xs text-red-500" role="alert">{errors.zipCode}</p>}
             </div>
           </div>
 

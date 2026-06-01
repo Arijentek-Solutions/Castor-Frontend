@@ -1,9 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface AuthFormData {
+  name?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+interface FieldErrors {
   name?: string;
   email?: string;
   password?: string;
@@ -18,6 +25,10 @@ interface AuthFormsProps {
   successMessage?: string | null;
 }
 
+function validateEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 export function AuthForms({
   defaultMode = "signup",
   onSubmit,
@@ -26,6 +37,52 @@ export function AuthForms({
   successMessage = null,
 }: AuthFormsProps) {
   const [isLogin, setIsLogin] = useState(defaultMode === "login");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  const clearFieldError = useCallback((field: keyof FieldErrors) => {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }, []);
+
+  const validateSignupForm = useCallback((data: AuthFormData): FieldErrors => {
+    const errors: FieldErrors = {};
+    if (!data.name?.trim()) {
+      errors.name = "Name is required.";
+    }
+    if (!data.email?.trim()) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(data.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+    if (!data.password) {
+      errors.password = "Password is required.";
+    } else if (data.password.length < 8) {
+      errors.password = "Password must be at least 8 characters.";
+    }
+    if (!data.confirmPassword) {
+      errors.confirmPassword = "Please confirm your password.";
+    } else if (data.password !== data.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match.";
+    }
+    return errors;
+  }, []);
+
+  const validateLoginForm = useCallback((data: AuthFormData): FieldErrors => {
+    const errors: FieldErrors = {};
+    if (!data.email?.trim()) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(data.email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+    if (!data.password) {
+      errors.password = "Password is required.";
+    }
+    return errors;
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,15 +94,24 @@ export function AuthForms({
     if (isLogin) {
       data.email = formData.get("email") as string;
       data.password = formData.get("password") as string;
+      const errors = validateLoginForm(data);
+      setFieldErrors(errors);
+      if (Object.keys(errors).length > 0) return;
     } else {
       data.name = formData.get("name") as string;
       data.email = formData.get("email") as string;
       data.password = formData.get("password") as string;
       data.confirmPassword = formData.get("confirm-password") as string;
+      const errors = validateSignupForm(data);
+      setFieldErrors(errors);
+      if (Object.keys(errors).length > 0) return;
     }
 
     onSubmit(data, isLogin ? "login" : "signup");
   };
+
+  const inputErrorClass = "border-red-400 focus:border-red-500 focus:ring-red-500";
+  const fieldErrorClass = "mt-1 text-xs text-red-600";
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-start bg-white p-4 pt-36 sm:pt-44 pb-12 font-sans">
@@ -61,6 +127,7 @@ export function AuthForms({
             className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#20a9ad]/10"
           >
             <svg
+              aria-hidden="true"
               className="h-6 w-6 text-[#20a9ad]"
               fill="none"
               stroke="currentColor"
@@ -98,7 +165,7 @@ export function AuthForms({
           <motion.h1 layout className="text-2xl font-bold tracking-tight text-[#171717]" id="auth-title">
             {isLogin ? "Welcome back" : "Create an account"}
           </motion.h1>
-          <motion.p layout className="mt-2 text-sm text-gray-500">
+          <motion.p layout className="mt-2 text-sm text-gray-600">
             {isLogin
               ? "Please sign in to your account to continue"
               : "Sign up to get started"}
@@ -114,6 +181,8 @@ export function AuthForms({
               exit={{ opacity: 0, y: -10 }}
               className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-600 border border-red-100"
               id="auth-error-msg"
+              role="alert"
+              aria-live="assertive"
             >
               {errorMessage}
             </motion.div>
@@ -125,6 +194,8 @@ export function AuthForms({
               exit={{ opacity: 0, y: -10 }}
               className="mb-4 rounded-xl bg-green-50 p-3 text-sm text-green-600 border border-green-100"
               id="auth-success-msg"
+              role="status"
+              aria-live="polite"
             >
               {successMessage}
             </motion.div>
@@ -142,7 +213,7 @@ export function AuthForms({
                 exit={{ opacity: 0, rotateY: 90 }}
                 transition={{ duration: 0.3 }}
               >
-                <form className="space-y-6" onSubmit={handleSubmit} id="login-form">
+                <form className="space-y-6" onSubmit={handleSubmit} id="login-form" noValidate>
                   <div className="space-y-4">
                     <div>
                       <label
@@ -158,9 +229,15 @@ export function AuthForms({
                         autoComplete="email"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.email}
+                        aria-describedby={fieldErrors.email ? "login-email-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.email ? inputErrorClass : "border-gray-200"}`}
                         placeholder="you@example.com"
+                        onChange={() => clearFieldError("email")}
                       />
+                      {fieldErrors.email && (
+                        <p id="login-email-error" className={fieldErrorClass} role="alert">{fieldErrors.email}</p>
+                      )}
                     </div>
 
                     <div>
@@ -177,20 +254,26 @@ export function AuthForms({
                         autoComplete="current-password"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.password}
+                        aria-describedby={fieldErrors.password ? "login-password-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.password ? inputErrorClass : "border-gray-200"}`}
                         placeholder="••••••••"
+                        onChange={() => clearFieldError("password")}
                       />
+                      {fieldErrors.password && (
+                        <p id="login-password-error" className={fieldErrorClass} role="alert">{fieldErrors.password}</p>
+                      )}
                     </div>
                   </div>
 
                   <div className="flex items-center justify-end">
                     <div className="text-sm">
-                      <a
-                        href="#"
-                        className="font-medium text-[#20a9ad] transition-colors hover:text-[#1c989c]"
+                      <button
+                        type="button"
+                        className="font-medium text-[#0e7f82] transition-colors hover:text-[#0a6b6e] focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
                       >
                         Forgot password?
-                      </a>
+                      </button>
                     </div>
                   </div>
 
@@ -207,14 +290,14 @@ export function AuthForms({
                 </form>
 
                 {/* Footer */}
-                <div className="mt-8 text-center text-sm text-gray-500">
-                  Don't have an account?{" "}
+                <div className="mt-8 text-center text-sm text-gray-600">
+                  Don&apos;t have an account?{" "}
                   <button
                     type="button"
-                    onClick={() => setIsLogin(false)}
+                    onClick={() => { setIsLogin(false); setFieldErrors({}); }}
                     disabled={isLoading}
                     id="switch-to-signup-btn"
-                    className="font-medium text-[#20a9ad] transition-colors hover:text-[#1c989c] focus:outline-none disabled:opacity-50"
+                    className="font-medium text-[#0e7f82] transition-colors hover:text-[#0a6b6e] focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 disabled:opacity-50"
                   >
                     Sign up now
                   </button>
@@ -228,7 +311,7 @@ export function AuthForms({
                 exit={{ opacity: 0, rotateY: -90 }}
                 transition={{ duration: 0.3 }}
               >
-                <form className="space-y-6" onSubmit={handleSubmit} id="signup-form">
+                <form className="space-y-6" onSubmit={handleSubmit} id="signup-form" noValidate>
                   <div className="space-y-4">
                     <div>
                       <label
@@ -244,9 +327,15 @@ export function AuthForms({
                         autoComplete="name"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.name}
+                        aria-describedby={fieldErrors.name ? "signup-name-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.name ? inputErrorClass : "border-gray-200"}`}
                         placeholder="John Doe"
+                        onChange={() => clearFieldError("name")}
                       />
+                      {fieldErrors.name && (
+                        <p id="signup-name-error" className={fieldErrorClass} role="alert">{fieldErrors.name}</p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -262,9 +351,15 @@ export function AuthForms({
                         autoComplete="email"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.email}
+                        aria-describedby={fieldErrors.email ? "signup-email-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.email ? inputErrorClass : "border-gray-200"}`}
                         placeholder="you@example.com"
+                        onChange={() => clearFieldError("email")}
                       />
+                      {fieldErrors.email && (
+                        <p id="signup-email-error" className={fieldErrorClass} role="alert">{fieldErrors.email}</p>
+                      )}
                     </div>
 
                     <div>
@@ -281,9 +376,15 @@ export function AuthForms({
                         autoComplete="new-password"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.password}
+                        aria-describedby={fieldErrors.password ? "signup-password-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.password ? inputErrorClass : "border-gray-200"}`}
                         placeholder="••••••••"
+                        onChange={() => clearFieldError("password")}
                       />
+                      {fieldErrors.password && (
+                        <p id="signup-password-error" className={fieldErrorClass} role="alert">{fieldErrors.password}</p>
+                      )}
                     </div>
 
                     <div>
@@ -300,9 +401,15 @@ export function AuthForms({
                         autoComplete="new-password"
                         required
                         disabled={isLoading}
-                        className="mt-1.5 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
+                        aria-invalid={!!fieldErrors.confirmPassword}
+                        aria-describedby={fieldErrors.confirmPassword ? "signup-confirm-error" : undefined}
+                        className={`mt-1.5 block w-full rounded-xl border bg-white px-4 py-3 text-sm text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50 ${fieldErrors.confirmPassword ? inputErrorClass : "border-gray-200"}`}
                         placeholder="••••••••"
+                        onChange={() => clearFieldError("confirmPassword")}
                       />
+                      {fieldErrors.confirmPassword && (
+                        <p id="signup-confirm-error" className={fieldErrorClass} role="alert">{fieldErrors.confirmPassword}</p>
+                      )}
                     </div>
                   </div>
 
@@ -319,14 +426,14 @@ export function AuthForms({
                 </form>
 
                 {/* Footer */}
-                <div className="mt-8 text-center text-sm text-gray-500">
+                <div className="mt-8 text-center text-sm text-gray-600">
                   Already have an account?{" "}
                   <button
                     type="button"
-                    onClick={() => setIsLogin(true)}
+                    onClick={() => { setIsLogin(true); setFieldErrors({}); }}
                     disabled={isLoading}
                     id="switch-to-login-btn"
-                    className="font-medium text-[#20a9ad] transition-colors hover:text-[#1c989c] focus:outline-none disabled:opacity-50"
+                    className="font-medium text-[#0e7f82] transition-colors hover:text-[#0a6b6e] focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 disabled:opacity-50"
                   >
                     Sign in
                   </button>

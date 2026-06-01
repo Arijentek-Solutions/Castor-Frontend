@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface EnquiryModalProps {
   isOpen: boolean;
@@ -15,7 +15,63 @@ interface EnquiryModalProps {
 
 export function EnquiryModal({ isOpen, onClose, productName, productId, quantity = 1, enquiryUrl }: EnquiryModalProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
+  const defaultUrl = "https://form.jotform.com/261121883086053";
+  const baseUrl = enquiryUrl || defaultUrl;
+
+  const jotformUrl = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}q5_textbox3=${encodeURIComponent(
+    productName
+  )}&q6_textbox4=${encodeURIComponent(productId)}&q7_number5=${quantity}&source=Product%20Enquiry`;
+
+  // Focus trap + Escape handler
+  useEffect(() => {
+    if (!isOpen) return;
+
+    previouslyFocusedRef.current = document.activeElement as HTMLElement;
+
+    const timer = setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 100);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocusedRef.current?.focus();
+    };
+  }, [isOpen, onClose]);
+
+  // Lock scroll
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -28,17 +84,15 @@ export function EnquiryModal({ isOpen, onClose, productName, productId, quantity
     };
   }, [isOpen]);
 
-  const defaultUrl = "https://form.jotform.com/261121883086053";
-  const baseUrl = enquiryUrl || defaultUrl;
-  
-  const jotformUrl = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}q5_textbox3=${encodeURIComponent(
-    productName
-  )}&q6_textbox4=${encodeURIComponent(productId)}&q7_number5=${quantity}&source=Product%20Enquiry`;
-
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="enquiry-modal-title"
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4"
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -50,6 +104,7 @@ export function EnquiryModal({ isOpen, onClose, productName, productId, quantity
 
           {/* Modal Content */}
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -58,7 +113,7 @@ export function EnquiryModal({ isOpen, onClose, productName, productId, quantity
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 p-4 sm:px-8">
               <div>
-                <h2 className="text-xl font-black text-[#0E1B33] sm:text-2xl">
+                <h2 id="enquiry-modal-title" className="text-xl font-black text-[#0E1B33] sm:text-2xl">
                   Product Enquiry
                 </h2>
                 <p className="text-sm text-[#6A6A67]">
@@ -66,11 +121,12 @@ export function EnquiryModal({ isOpen, onClose, productName, productId, quantity
                 </p>
               </div>
               <button
+                ref={closeButtonRef}
                 onClick={onClose}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-[#6A6A67] hover:bg-[#F3F4F6] transition-colors"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-[#6A6A67] hover:bg-[#F3F4F6] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
                 aria-label="Close modal"
               >
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6" aria-hidden="true" />
               </button>
             </div>
 
@@ -78,7 +134,7 @@ export function EnquiryModal({ isOpen, onClose, productName, productId, quantity
             <div className="relative h-[calc(90vh-80px)] w-full overflow-hidden bg-slate-50">
               {isLoading && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white">
-                  <Loader2 className="h-10 w-10 animate-spin text-[#20a9ad]" />
+                  <Loader2 className="h-10 w-10 animate-spin text-[#20a9ad]" aria-hidden="true" />
                   <p className="mt-4 text-sm font-medium text-[#6A6A67]">Loading enquiry form...</p>
                 </div>
               )}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type ReactNode } from "react";
+import React, { type ReactNode, useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Phone, ChevronDown as ChevronDownIcon } from "lucide-react";
 import { SITE_URLS } from "../../config/site-urls";
@@ -62,7 +62,7 @@ export const HelpMeChooseButton = ({
 
 export const Brand = () => {
   return (
-    <a href={SITE_URLS.web} className="flex flex-shrink-0 items-center transition-opacity hover:opacity-90">
+    <a href={SITE_URLS.web} aria-label="Home" className="flex flex-shrink-0 items-center transition-opacity hover:opacity-90">
       <img
         src="/logo.png"
         alt="CASTOR Logo"
@@ -72,34 +72,35 @@ export const Brand = () => {
   );
 };
 
-export const NavLink = ({
-  href,
-  className,
-  children,
-}: {
+export const NavLink = React.forwardRef<HTMLAnchorElement, {
   href: string;
   className: string;
   children: ReactNode;
-}) => {
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLAnchorElement>) => void;
+  "aria-haspopup"?: React.HTMLAttributes<HTMLAnchorElement>["aria-haspopup"];
+  "aria-expanded"?: boolean;
+}>(({ href, className, children, onClick, onKeyDown, ...rest }, ref) => {
   const isExternal = href.startsWith("http");
 
   if (isExternal) {
     return (
-      <a href={href} className={className}>
+      <a ref={ref} href={href} className={className} onClick={onClick} onKeyDown={onKeyDown} {...rest}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={className}>
+    <Link ref={ref} href={href} className={className} onClick={onClick} onKeyDown={onKeyDown} {...rest}>
       {children}
     </Link>
   );
-};
+});
+NavLink.displayName = "NavLink";
 
 export const DropdownMenu = ({ items, pathname }: { items: DropdownEntry[]; pathname: string }) => (
-  <div className="w-[286px] rounded-[28px] border border-[#edf0f4] bg-white/98 p-4 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
+  <div role="list" aria-label="Dropdown navigation" className="w-[286px] rounded-[28px] border border-[#edf0f4] bg-white/98 p-4 shadow-[0_24px_60px_rgba(17,24,39,0.14)] backdrop-blur-[16px]">
     <div className="space-y-2">
       {items.map((item) => {
         const isActive = pathname === getPathname(item.href);
@@ -107,12 +108,14 @@ export const DropdownMenu = ({ items, pathname }: { items: DropdownEntry[]; path
           <a
             key={item.title}
             href={item.href}
-            className={`group flex items-start gap-4 rounded-[20px] px-3 py-3 text-left transition-colors ${isActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
+            className={`group flex items-start gap-4 rounded-[20px] px-3 py-3 text-left transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 ${isActive ? 'bg-[#20A9AD] text-white' : 'hover:bg-[#f7f9fb]'}`}
           >
             <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-colors ${isActive
               ? 'bg-white text-[#20A9AD]'
               : 'bg-[#eef8f8] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
-              }`}>
+              }`}
+              aria-hidden="true"
+            >
               {item.icon}
             </div>
             <div>
@@ -128,6 +131,10 @@ export const DropdownMenu = ({ items, pathname }: { items: DropdownEntry[]; path
 
 export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEntry; pathname: string; serviceContext?: ServiceContext }) => {
   const hasDropdown = Boolean(item.dropdownItems?.length);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLAnchorElement>(null);
+
   let isActive = false;
   const contextToLabel: Record<string, string> = {
     services: "Get Care",
@@ -150,6 +157,26 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
     }
   }
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isDropdownOpen]);
+
+  // Close dropdown on Escape
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setIsDropdownOpen(false);
+      triggerRef.current?.focus();
+    }
+  }, []);
+
   if (!hasDropdown) {
     return (
       <NavLink
@@ -158,6 +185,7 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
           : "text-[#6A6A67] hover:text-[#0E1B33]"
           }`}
         href={item.href}
+        aria-current={isActive ? "page" : undefined}
       >
         {item.label}
       </NavLink>
@@ -165,18 +193,43 @@ export const DesktopNavItem = ({ item, pathname, serviceContext }: { item: NavEn
   }
 
   return (
-    <div className="group relative flex h-11 items-center justify-center">
+    <div
+      ref={dropdownRef}
+      className="group relative flex h-11 items-center justify-center"
+      onMouseEnter={() => setIsDropdownOpen(true)}
+      onMouseLeave={() => setIsDropdownOpen(false)}
+      onKeyDown={handleKeyDown}
+    >
       <NavLink
+        ref={triggerRef}
+        aria-haspopup={true}
+        aria-expanded={isDropdownOpen}
         className={`flex h-11 items-center justify-center gap-1 rounded-full px-2 text-center text-[14px] font-bold leading-5 transition-colors whitespace-nowrap lg:px-3 xl:px-4 xl:text-[15px] ${isActive
           ? "bg-[#20A9AD] text-white"
-          : "text-[#6A6A67] group-hover:text-[#0E1B33]"
+          : "text-[#6A6A67] hover:text-[#0E1B33]"
           }`}
         href={item.href}
+        onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+          e.preventDefault();
+          setIsDropdownOpen((prev) => !prev);
+        }}
+        onKeyDown={(e: React.KeyboardEvent<HTMLAnchorElement>) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsDropdownOpen((prev) => !prev);
+          }
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setIsDropdownOpen(true);
+            const firstLink = dropdownRef.current?.querySelector("a");
+            firstLink?.focus();
+          }
+        }}
       >
         <span>{item.label}</span>
-        <ChevronDown className={`mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 group-hover:rotate-180 ${isActive ? 'opacity-100' : ''}`} />
+        <ChevronDown aria-hidden="true" className={`mt-px h-3 w-3 text-current opacity-60 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
       </NavLink>
-      <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+      <div className={`absolute left-1/2 -translate-x-1/2 top-full pt-3 transition-all duration-200 ${isDropdownOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <DropdownMenu items={item.dropdownItems ?? []} pathname={pathname} />
       </div>
     </div>
@@ -227,6 +280,7 @@ export const MobileNavItem = ({
           : "text-[#0E1B33]"
           }`}
         href={item.href}
+        aria-current={isActive ? "page" : undefined}
       >
         {item.label}
       </NavLink>
@@ -247,16 +301,17 @@ export const MobileNavItem = ({
         </NavLink>
         <button
           aria-expanded={isOpen}
+          aria-controls={`mobile-dropdown-${item.label.replace(/\s+/g, '-')}`}
           aria-label={`Toggle ${item.label} links`}
           className={`flex h-10 w-10 items-center justify-center rounded-[18px] transition-colors hover:bg-[#f7f9fb] ${isActive ? 'bg-[#20A9AD] text-white' : 'text-[#6A6A67]'}`}
           onClick={onToggle}
           type="button"
         >
-          <ChevronDownIcon className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+          <ChevronDownIcon aria-hidden="true" className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
         </button>
       </div>
       {isOpen ? (
-        <div className="space-y-1 px-2 pb-2 pt-1">
+        <div id={`mobile-dropdown-${item.label.replace(/\s+/g, '-')}`} className="space-y-1 px-2 pb-2 pt-1" role="list" aria-label={`${item.label} submenu`}>
           {item.dropdownItems?.map((dropdownItem) => {
             const subItemActive = pathname === dropdownItem.href || pathname.startsWith(dropdownItem.href);
             return (

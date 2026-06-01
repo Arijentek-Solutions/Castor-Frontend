@@ -24,6 +24,15 @@
   transform: scale(.97)
 }
 
+.helpButton:focus-visible {
+  outline: 3px solid #20a9ad;
+  outline-offset: 3px;
+}
+
+.helpButton:focus:not(:focus-visible) {
+  outline: none;
+}
+
 @media(min-width:640px) {
   .helpButton {
     height: 2.75rem;

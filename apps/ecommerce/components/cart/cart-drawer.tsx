@@ -15,18 +15,18 @@ interface CartDrawerProps {
 }
 
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
-  const { 
-    items, 
-    itemCount, 
-    subtotal, 
-    removeItem, 
-    increaseQuantity, 
+  const {
+    items,
+    itemCount,
+    subtotal,
+    removeItem,
+    increaseQuantity,
     decreaseQuantity,
-    isEmpty 
+    isEmpty
   } = useCart();
-  
+
   const [selectedPricingProduct, setSelectedPricingProduct] = useState<{name: string, id: string, quantity: number} | null>(null);
-  
+
   const drawerRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
@@ -41,6 +41,41 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     // Restore focus to the element that opened the drawer
     previousFocusRef.current?.focus();
   }, [onClose]);
+
+  // Focus trap: lock Tab within drawer while open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+        return;
+      }
+
+      if (e.key !== "Tab" || !drawerRef.current) return;
+
+      const focusable = drawerRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, handleClose]);
 
   // Save the currently focused element and lock scroll when drawer opens
   useEffect(() => {
@@ -78,6 +113,9 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           <motion.div
             key="cart-drawer"
             ref={drawerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-drawer-title"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -88,19 +126,20 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               {/* Header */}
               <div className="flex items-center justify-between border-b border-slate-100 p-6">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#20a9ad]/10 text-[#20a9ad]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#20a9ad]/10 text-[#20a9ad]" aria-hidden="true">
                     <ShoppingBag size={20} />
                   </div>
                   <div>
-                    <h2 className="text-xl font-black text-[#0e1b33]">Your Cart</h2>
+                    <h2 id="cart-drawer-title" className="text-xl font-black text-[#0e1b33]">Your Cart</h2>
                     <p className="text-sm font-bold text-[#6a6a67]">{itemCount} {itemCount === 1 ? 'item' : 'items'}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleClose}
+                  aria-label="Close cart"
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-50 text-[#6a6a67] transition-all hover:bg-slate-100 active:scale-95"
                 >
-                  <X size={20} />
+                  <X size={20} aria-hidden="true" />
                 </button>
               </div>
 
@@ -108,7 +147,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-slate-200">
                 {isEmpty ? (
                   <div className="flex h-full flex-col items-center justify-center text-center">
-                    <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-slate-50 text-slate-200">
+                    <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-slate-50 text-slate-200" aria-hidden="true">
                       <ShoppingBag size={48} />
                     </div>
                     <h3 className="mb-2 text-xl font-black text-[#0e1b33]">Your cart is empty</h3>
@@ -151,12 +190,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                               </h4>
                               <button
                                 onClick={() => removeItem(item.productId)}
+                                aria-label={`Remove ${item.name} from cart`}
                                 className="text-slate-300 transition-colors hover:text-red-500"
                               >
-                                <Trash2 size={16} />
+                                <Trash2 size={16} aria-hidden="true" />
                               </button>
                             </div>
-                            <p className="text-[10px] font-bold uppercase tracking-wider text-[#20a9ad]">
+                            <p className="text-[11px] font-bold uppercase tracking-wider text-[#20a9ad]">
                               SKU: {item.sku}
                             </p>
                           </div>
@@ -165,18 +205,20 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             <div className="flex items-center gap-3 rounded-full border border-slate-100 bg-slate-50/50 p-1">
                               <button
                                 onClick={() => decreaseQuantity(item.productId)}
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-90"
+                                aria-label={`Decrease quantity of ${item.name}`}
+                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-90"
                               >
-                                <Minus size={14} />
+                                <Minus size={14} aria-hidden="true" />
                               </button>
-                              <span className="w-4 text-center text-xs font-black text-[#0e1b33]">
+                              <span className="w-4 text-center text-xs font-black text-[#0e1b33]" aria-label={`Quantity: ${item.quantity}`}>
                                 {item.quantity}
                               </span>
                               <button
                                 onClick={() => increaseQuantity(item.productId)}
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-90"
+                                aria-label={`Increase quantity of ${item.name}`}
+                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#0e1b33] shadow-sm transition-all hover:bg-slate-50 active:scale-90"
                               >
-                                <Plus size={14} />
+                                <Plus size={14} aria-hidden="true" />
                               </button>
                             </div>
                             <span className="text-sm font-black text-[#0e1b33]">
@@ -229,7 +271,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     className="flex h-14 w-full items-center justify-center gap-3 rounded-full bg-[#0e1b33] px-8 font-black text-white shadow-xl shadow-[#0e1b33]/10 transition-all hover:bg-[#15294d] active:scale-[0.98]"
                   >
                     Proceed to Checkout
-                    <ArrowRight size={20} strokeWidth={2.5} />
+                    <ArrowRight size={20} strokeWidth={2.5} aria-hidden="true" />
                   </Link>
 
                   <p className="mt-4 text-center text-[11px] font-bold text-[#6a6a67]">

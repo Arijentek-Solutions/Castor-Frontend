@@ -14,11 +14,6 @@ const TwitterIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const LinkedinIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
-  </svg>
-);
 
 const InstagramIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -27,6 +22,8 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 );
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="w-full bg-white mt-auto">
       <footer className="bg-[#0e1b33] w-full rounded-t-[32px] md:rounded-t-[48px] px-6 md:px-12 lg:px-[80px] pt-16 md:pt-[80px] pb-8 text-white font-sans">
@@ -45,47 +42,62 @@ export function Footer() {
               <p className="font-normal text-[14px] leading-relaxed text-[#99a1af] max-w-xs">
                 The unified digital front door for comprehensive healthcare services in Northern Illinois. Compassion, Quality, and Trust in every service we provide.
               </p>
-              <div className="flex gap-4 mt-2">
-                <a href="#" className="bg-[#6a6a67] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#20a9ad] transition-colors">
-                  <FacebookIcon className="w-4 h-4 text-white" />
+              <nav aria-label="Social media links" className="flex gap-4 mt-2">
+                <a
+                  href="https://www.facebook.com/CastorCares"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow us on Facebook"
+                  className="bg-[#6a6a67] rounded-full w-11 h-11 flex items-center justify-center hover:bg-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+                >
+                  <FacebookIcon className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="bg-[#6a6a67] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#20a9ad] transition-colors">
-                  <TwitterIcon className="w-4 h-4 text-white hover:fill-white" />
+                <a
+                  href="https://x.com/castorhomecare"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow us on Twitter"
+                  className="bg-[#6a6a67] rounded-full w-11 h-11 flex items-center justify-center hover:bg-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+                >
+                  <TwitterIcon className="w-5 h-5 text-white hover:fill-white" />
                 </a>
-                <a href="#" className="bg-[#6a6a67] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#20a9ad] transition-colors">
-                  <LinkedinIcon className="w-4 h-4 text-white hover:fill-white" />
+                <a
+                  href="https://www.instagram.com/castorhomenursing/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow us on Instagram"
+                  className="bg-[#6a6a67] rounded-full w-11 h-11 flex items-center justify-center hover:bg-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+                >
+                  <InstagramIcon className="w-5 h-5 text-white" />
                 </a>
-                <a href="#" className="bg-[#6a6a67] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#20a9ad] transition-colors">
-                  <InstagramIcon className="w-4 h-4 text-white" />
-                </a>
-              </div>
+              </nav>
             </div>
 
             {/* Column 2: Services */}
             <div className="flex flex-col gap-6 items-start">
-              <h3 className="font-bold text-[18px] text-white font-['Inter']">Services</h3>
+              <h2 className="font-bold text-[18px] text-white font-['Inter']">Services</h2>
               <ul className="flex flex-col gap-4">
                 <li>
                   <Link href={SITE_URLS.services} className="flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" aria-hidden="true" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Get Care</span>
                   </Link>
                 </li>
                 <li>
                   <Link href={SITE_URLS.ecommerce} className="flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" aria-hidden="true" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Medical Supplies</span>
                   </Link>
                 </li>
                 <li>
                   <Link href={SITE_URLS.transport} className="flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" aria-hidden="true" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Transportation</span>
                   </Link>
                 </li>
                 <li>
                   <Link href={SITE_URLS.institute} className="flex items-center gap-2 group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#20a9ad] group-hover:scale-125 transition-transform" aria-hidden="true" />
                     <span className="font-semibold text-[16px] text-[#d1d5dc] group-hover:text-white transition-colors">Health Institute</span>
                   </Link>
                 </li>
@@ -94,20 +106,20 @@ export function Footer() {
 
             {/* Column 3: Company */}
             <div className="flex flex-col gap-6 items-start">
-              <h3 className="font-bold text-[18px] text-white font-['Inter']">Company</h3>
+              <h2 className="font-bold text-[18px] text-white font-['Inter']">Company</h2>
               <ul className="flex flex-col gap-4">
                 <li>
-                  <Link href={`${SITE_URLS.web}/careers`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/careers`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${SITE_URLS.web}/privacy-policy`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/privacy-policy`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${SITE_URLS.web}/terms-conditions`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors">
+                  <Link href={`${SITE_URLS.web}/terms-conditions`} className="font-semibold text-[16px] text-[#d1d5dc] hover:text-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2">
                     Terms & Conditions
                   </Link>
                 </li>
@@ -116,25 +128,27 @@ export function Footer() {
 
             {/* Column 4: Contact Us */}
             <div className="flex flex-col gap-6 items-start">
-              <h3 className="font-bold text-[18px] text-white font-['Inter']">Contact Us</h3>
+              <h2 className="font-bold text-[18px] text-white font-['Inter']">Contact Us</h2>
               <div className="flex flex-col gap-6">
 
                 <div className="flex gap-4 items-start">
-                  <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5">
+                  <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5" aria-hidden="true">
                     <Phone className="w-5 h-5 text-white" />
                   </div>
                   <div className="flex flex-col">
                     <p className="font-medium text-[16px] text-[#99a1af] mb-1">Call Anytime</p>
-                    <p className="font-semibold text-[18px] text-white">815-564-0977</p>
+                    <a href="tel:815-564-0977" className="font-semibold text-[18px] text-white hover:text-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2">
+                      815-564-0977
+                    </a>
                   </div>
                 </div>
                 <div className="flex gap-4 items-start">
-                  <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5">
+                  <div className="bg-[#6a6a67] rounded-lg w-9 h-9 shrink-0 flex items-center justify-center mt-0.5" aria-hidden="true">
                     <Mail className="w-5 h-5 text-white" />
                   </div>
                   <div className="flex flex-col">
                     <p className="font-medium text-[16px] text-[#99a1af] mb-1">Email Us</p>
-                    <a href="mailto:info@castorhealth.com" className="font-normal text-[14px] text-white hover:text-[#20a9ad] transition-colors">
+                    <a href="mailto:info@castorhealth.com" className="font-normal text-[14px] text-white hover:text-[#20a9ad] transition-colors focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2">
                       info@castorhealth.com
                     </a>
                   </div>
@@ -146,8 +160,8 @@ export function Footer() {
 
           {/* Bottom Bar */}
           <div className="border-t border-[#6a6a67] pt-6 flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
-            <p className="font-normal text-[14px] md:text-[16px] text-[#6a7282]">
-              © 2026 Castor Healthcare. All rights reserved.
+            <p className="font-normal text-[14px] md:text-[16px] text-[#99a1af]">
+              © {currentYear} Castor Healthcare. All rights reserved.
             </p>
           </div>
         </div>

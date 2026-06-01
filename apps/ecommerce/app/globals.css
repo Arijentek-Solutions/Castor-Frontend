@@ -33,6 +33,7 @@ html {
     transform: translateX(-100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -51,4 +52,30 @@ body {
 
 button {
   font: inherit;
+}
+
+/* Global focus-visible styles for WCAG 2.4.7 compliance */
+*:focus-visible {
+  outline: 3px solid #20a9ad;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #20a9ad;
+  outline-offset: 0;
+}
+
+/* Reduced motion support for WCAG 2.3.3 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
