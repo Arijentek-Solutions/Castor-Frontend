@@ -9,7 +9,7 @@ import { Footer } from "@castor/ui";
 export default function Home() {
   return (
     <div className="min-h-screen w-full bg-white font-sans">
-      <main className="w-full pt-[140px] sm:pt-[148px] lg:pt-[172px]">
+      <main id="main-content" className="w-full pt-[140px] sm:pt-[148px] lg:pt-[172px]">
         <Hero />
         <RentalsBanner />
         <WelcomeSection />

@@ -1,14 +1,14 @@
 "use client";
 import { Button } from "@castor/ui";
 import { motion } from "framer-motion";
-import Link from "next/link";
+
 
 const serviceCards = [
   {
     title: "Self-Pay Options",
     description: "Direct purchase with secure checkout",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect width="20" height="14" x="2" y="5" rx="2" />
         <line x1="2" x2="22" y1="10" y2="10" />
       </svg>
@@ -18,7 +18,7 @@ const serviceCards = [
     title: "Insurance Billing",
     description: "We handle Medicare & insurance",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
         <polyline points="14 2 14 8 20 8" />
         <path d="M12 12v6" />
@@ -30,7 +30,7 @@ const serviceCards = [
     title: "B2B Accounts",
     description: "Bulk pricing for facilities",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 21h18" />
         <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4" />
         <path d="M5 21V10.85" />
@@ -43,7 +43,7 @@ const serviceCards = [
     title: "Fast Delivery",
     description: "Free shipping on orders $100+",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M10 17h4V5H2v12h3" />
         <path d="M20 17h2v-3.34a4 4 0 0 0-1.17-2.83L19 9h-5" />
         <circle cx="7.5" cy="17.5" r="2.5" />
@@ -55,7 +55,7 @@ const serviceCards = [
 
 export function Hero() {
   return (
-    <section className="px-4 pb-14 pt-6 sm:px-6 sm:pt-8 lg:px-8 lg:pb-20 lg:pt-10 xl:pt-12">
+    <section aria-label="Medical supplies hero banner" className="px-4 pb-14 pt-6 sm:px-6 sm:pt-8 lg:px-8 lg:pb-20 lg:pt-10 xl:pt-12">
       <div className="mx-auto w-full max-w-[1871px]">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -115,15 +115,15 @@ export function Hero() {
                   transition={{ delay: 0.8, duration: 0.8 }}
                   className="flex flex-col gap-4 pt-2 sm:flex-row sm:flex-wrap sm:pt-4"
                 >
-                  <Link href="/products" className="w-full sm:w-auto">
-                    <Button
-                      className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[198px] sm:w-auto"
-                    >
-                      Browse Products
-                    </Button>
-                  </Link>
+                  <Button
+                    href="/products"
+                    className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[198px] sm:w-auto"
+                  >
+                    Browse Products
+                  </Button>
                   <Button
                     variant="secondary"
+                    href="mailto:info@castorhealth.com?subject=B2B%20Inquiry"
                     className="min-h-[58px] w-full rounded-[14px] px-9 text-[1.05rem] font-semibold sm:min-w-[170px] sm:w-auto text-white"
                   >
                     B2B Inquiries

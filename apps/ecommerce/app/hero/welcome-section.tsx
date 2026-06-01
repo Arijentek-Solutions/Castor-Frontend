@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export function WelcomeSection() {
   return (
-    <section className="px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-36 bg-white overflow-hidden">
+    <section aria-label="Welcome to Castor Medical Supplies" className="px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-36 bg-white overflow-hidden">
       <div className="mx-auto w-full max-w-[1720px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
@@ -65,10 +65,11 @@ export function WelcomeSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mt-8"
             >
-              <Link href="/about-us">
-                <button className="min-h-[50px] px-10 bg-[#20a9ad] hover:bg-[#1c989c] text-white font-bold rounded-lg transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm shadow-md shadow-[#20a9ad]/20 hover:shadow-[#20a9ad]/30 active:scale-98 cursor-pointer">
-                  Read More
-                </button>
+              <Link
+                href="/about-us"
+                className="inline-flex min-h-[50px] items-center justify-center px-10 bg-[#20a9ad] hover:bg-[#1c989c] text-white font-bold rounded-lg transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm shadow-md shadow-[#20a9ad]/20 hover:shadow-[#20a9ad]/30 active:scale-98 focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+              >
+                Read More
               </Link>
             </motion.div>
           </div>

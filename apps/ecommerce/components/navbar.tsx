@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
 import { Search, ShoppingCart, Filter, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -41,28 +40,31 @@ export function Navbar({
           <div className="flex w-full items-center justify-between md:hidden">
             {/* Left: Category Icon Dropdown */}
             <button
+              aria-label={isMenuOpen ? "Close category menu" : "Browse categories"}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f0f9fa] text-[#20a9ad] active:scale-95"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f0f9fa] text-[#20a9ad] active:scale-95 focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
             >
               {isMenuOpen ? <X size={18} /> : <Filter size={18} />}
             </button>
 
             {/* Center: Search Bar */}
             <div className="mx-3 flex h-9 flex-1 items-center overflow-hidden rounded-full bg-[#f8fafc] px-3 ring-1 ring-slate-200">
-              <Search size={14} className="text-slate-400" />
+              <Search size={14} className="text-slate-400" aria-hidden="true" />
               <input
                 type="text"
                 placeholder="Search name or HCPCS..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="h-full w-full bg-transparent px-2 text-[12px] text-slate-700 outline-none"
+                aria-label="Search products by name or HCPCS code"
+                className="h-full w-full bg-transparent px-2 text-[13px] text-slate-700 outline-none focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
               />
             </div>
 
             {/* Right: Cart Icon */}
             <button
+              aria-label={`Shopping cart with ${itemCount} items`}
               onClick={() => setIsCartOpen(true)}
-              className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-[#20a9ad] text-white active:scale-95"
+              className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-[#20a9ad] text-white active:scale-95 focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
             >
               <ShoppingCart size={18} />
               {mounted && itemCount > 0 && (
@@ -77,24 +79,25 @@ export function Navbar({
           <div className="hidden w-full items-center justify-between md:flex">
             {/* Integrated Heading - DESKTOP ONLY */}
             <div className="hidden h-12 items-center lg:flex">
-              <h1 className="whitespace-nowrap text-[40px] font-black tracking-[-1.2px] text-[#0e1b33]">
+              <h2 className="whitespace-nowrap text-[40px] font-black tracking-[-1.2px] text-[#0e1b33]">
                 Shop <span className="text-[#20a9ad]">Medical Supplies</span>
-              </h1>
+              </h2>
             </div>
 
             {/* Integrated Controls (Search + Cart + Optional Tablet Filter) */}
             <div className="flex flex-1 items-center justify-end gap-3 md:gap-4 lg:flex-initial lg:gap-6">
               {/* Tablet Filter Icon - Visible only on md, hidden on mobile and desktop */}
               <button
+                aria-label={isMenuOpen ? "Close category menu" : "Browse categories"}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="hidden h-12 w-12 items-center justify-center rounded-full bg-[#f0f9fa] text-[#20a9ad] transition-all active:scale-95 md:flex lg:hidden"
+                className="hidden h-12 w-12 items-center justify-center rounded-full bg-[#f0f9fa] text-[#20a9ad] transition-all active:scale-95 md:flex lg:hidden focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
               >
                 {isMenuOpen ? <X size={20} /> : <Filter size={20} />}
               </button>
 
               {/* Search Bar */}
               <div className="flex h-12 flex-1 items-center overflow-hidden rounded-full border-2 border-[#20a9ad]/20 bg-white shadow-sm transition-all md:flex-1 lg:w-[384px] lg:flex-initial">
-                <div className="flex h-full w-10 items-center justify-center text-slate-400 lg:w-12">
+                <div className="flex h-full w-10 items-center justify-center text-slate-400 lg:w-12" aria-hidden="true">
                   <Search size={20} strokeWidth={2.5} />
                 </div>
                 <input
@@ -102,15 +105,17 @@ export function Navbar({
                   placeholder="Search by product name..."
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
-                  className="h-full flex-1 bg-transparent pr-4 text-[13px] text-slate-700 outline-none placeholder:text-[#717182] lg:text-[14px]"
+                  aria-label="Search products"
+                  className="h-full flex-1 bg-transparent pr-4 text-[13px] text-slate-700 outline-none focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 placeholder:text-[#717182] lg:text-[14px]"
                 />
               </div>
 
               {/* Cart Button */}
               <div className="relative">
                 <button
+                  aria-label={`Shopping cart with ${itemCount} items`}
                   onClick={() => setIsCartOpen(true)}
-                  className="flex h-12 items-center gap-2 rounded-full bg-[#20a9ad] px-4 text-[13px] font-bold text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1a8b8f] active:scale-95 lg:gap-3 lg:px-8 lg:text-[14px]"
+                  className="flex h-12 items-center gap-2 rounded-full bg-[#20a9ad] px-4 text-[13px] font-bold text-white shadow-lg shadow-[#20a9ad]/20 transition-all hover:bg-[#1a8b8f] active:scale-95 lg:gap-3 lg:px-8 lg:text-[14px] focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
                 >
                   <ShoppingCart size={20} strokeWidth={2.5} />
                   <span>Cart</span>
@@ -132,10 +137,13 @@ export function Navbar({
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              id="category-dropdown"
+              role="list"
+              aria-label="Browse categories"
               className="absolute left-4 top-[calc(100%-8px)] max-h-[60vh] w-64 overflow-y-auto rounded-2xl border border-[#20a9ad]/10 bg-white p-2 shadow-[0_20px_50px_rgba(0,0,0,0.15)] backdrop-blur-xl lg:hidden"
             >
               <div className="flex flex-col space-y-1">
-                <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400/80">
+                <div className="px-3 py-2 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400/80">
                   Browse Categories
                 </div>
                 <div className="grid grid-cols-1 gap-1">
@@ -153,9 +161,9 @@ export function Navbar({
                     >
                       <span className="flex-1 text-left">{category}</span>
                       {selectedCategory === category && (
-                        <motion.div 
+                        <motion.div
                           layoutId="activeIndicator"
-                          className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" 
+                          className="h-1.5 w-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"
                         />
                       )}
                     </button>

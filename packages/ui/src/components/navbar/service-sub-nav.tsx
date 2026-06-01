@@ -49,6 +49,20 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
     };
   }, [isOpen]);
 
+  // Close on Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        setHoveredParent(null);
+        triggerRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   const getRelativePath = (href: string): string => {
     try { return new URL(href).pathname || '/'; }
     catch { return href || '/'; }
@@ -102,26 +116,38 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
           ref={triggerRef}
           href={item.href}
           aria-expanded={isOpen}
-          aria-haspopup="menu"
+          aria-haspopup="true"
           className={`${baseClasses} cursor-pointer ${isActive ? activeClasses : inactiveClasses}`}
           onClick={(e) => {
-            if (window.innerWidth < 1024) {
+            // Allow navigation on all screen sizes — toggle dropdown only via dedicated keyboard control
+            setIsOpen(!isOpen);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
               e.preventDefault();
-              setIsOpen(!isOpen);
+              setIsOpen(true);
+              const firstLink = subMenuRef.current?.querySelector("a");
+              firstLink?.focus();
+            }
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setIsOpen((prev) => !prev);
             }
           }}
         >
           <span className="block">{item.label}</span>
-          <ChevronDownIcon className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-300 ease-out ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
+          <ChevronDownIcon aria-hidden="true" className={`h-3 w-3 mt-0.5 opacity-60 transition-transform duration-300 ease-out ${isOpen ? 'rotate-180' : ''} ${isActive ? 'opacity-100' : ''}`} />
         </Link>
 
         {isOpen && (
           <div
-            style={window.innerWidth < 1024 ? {
+            style={typeof window !== 'undefined' && window.innerWidth < 1024 ? {
               left: `${position.left - mobileLeftOffset}px`,
               top: `${position.bottom - mobileTopOffset}px`
             } : {}}
             className="fixed -translate-x-1/2 lg:absolute lg:left-0 lg:translate-x-0 lg:top-full lg:z-[110] pt-2"
+            role="list"
+            aria-label={`${item.label} submenu`}
           >
             <div className="relative w-[210px] lg:w-64 rounded-2xl border border-[#edf0f4] bg-white shadow-xl backdrop-blur-xl">
               <div className="space-y-1 lg:space-y-2 p-2 lg:p-3">
@@ -148,11 +174,21 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                               setIsOpen(false);
                             }
                           }}
+                          onKeyDown={(e) => {
+                            if (e.key === "ArrowRight" && hasNestedSubItems) {
+                              e.preventDefault();
+                              setHoveredParent(subItem.title);
+                              const parent = subMenuRef.current?.querySelector('[data-nested-submenu] a') as HTMLElement | null;
+                              parent?.focus();
+                            }
+                          }}
                         >
                           <div className={`flex h-8 w-8 lg:h-10 lg:w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
-                            }`}>
+                            }`}
+                            aria-hidden="true"
+                          >
                             {subItem.icon}
                           </div>
                           <div className="min-w-0 flex-1">
@@ -161,7 +197,7 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                               {subItem.description}
                             </div>
                           </div>
-                          <ChevronDown className={`h-3 w-3 opacity-60 transition-transform duration-200 ${hoveredParent === subItem.title && window.innerWidth < 1024 ? 'rotate-180' : '-rotate-90'}`} />
+                          <ChevronDown aria-hidden="true" className={`h-3 w-3 opacity-60 transition-transform duration-200 ${hoveredParent === subItem.title && window.innerWidth < 1024 ? 'rotate-180' : '-rotate-90'}`} />
                         </Link>
                       ) : (
                         <Link
@@ -172,7 +208,9 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                           <div className={`flex h-8 w-8 lg:h-10 lg:w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${subItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
-                            }`}>
+                            }`}
+                            aria-hidden="true"
+                          >
                             {subItem.icon}
                           </div>
                           <div className="min-w-0">
@@ -189,7 +227,7 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
               </div>
 
               {showSubMenu && subItems && (
-                <div className="absolute left-[95%] top-0 lg:left-full lg:top-0 w-[180px] lg:w-[220px] rounded-2xl border border-[#edf0f4] bg-white p-2 lg:p-3 shadow-xl backdrop-blur-xl z-20 ml-1 lg:ml-0">
+                <div data-nested-submenu className="absolute left-[95%] top-0 lg:left-full lg:top-0 w-[180px] lg:w-[220px] rounded-2xl border border-[#edf0f4] bg-white p-2 lg:p-3 shadow-xl backdrop-blur-xl z-20 ml-1 lg:ml-0">
                   <div className="space-y-1">
                     {subItems.map((nestedItem) => {
                       const nestedItemActive = pathname === getRelativePath(nestedItem.href);
@@ -203,7 +241,9 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
                           <div className={`flex h-6 w-6 lg:h-8 lg:w-8 flex-shrink-0 items-center justify-center rounded-lg transition-colors ${nestedItemActive
                             ? 'bg-white text-[#20A9AD]'
                             : 'bg-[#f0f9fa] text-[#20A9AD] group-hover:bg-[#20A9AD] group-hover:text-white'
-                            }`}>
+                            }`}
+                            aria-hidden="true"
+                          >
                             {nestedItem.icon}
                           </div>
                           <div className="min-w-0">
@@ -226,6 +266,7 @@ export const ServiceSubNavItem = ({ item, pathname, baseUrl }: { item: ServiceNa
     <Link
       href={item.href}
       className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
+      aria-current={isActive ? "page" : undefined}
     >
       <span className="block leading-none">{item.label}</span>
     </Link>
@@ -248,9 +289,9 @@ export const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<Serv
     : links;
 
   return (
-    <div className="border-b border-[#20A9AD]/10 bg-[#EEF8F8]/80 backdrop-blur-xl py-1.5 sm:py-2 flex items-center justify-center cursor-default select-none relative z-40">
+    <nav aria-label={`${serviceContext} navigation`} className="border-b border-[#20A9AD]/10 bg-[#EEF8F8]/80 backdrop-blur-xl py-1.5 sm:py-2 flex items-center justify-center cursor-default select-none relative z-40">
       <div className="mx-auto max-w-[1276px] w-full">
-        <div className="flex items-center justify-start gap-10 overflow-x-auto overflow-y-visible px-6 scrollbar-hide sm:justify-center sm:px-8 lg:hidden">
+        <div className="flex items-center justify-start gap-10 overflow-x-auto overflow-y-visible px-6 sm:justify-center sm:px-8 lg:hidden">
           {links.map((link) => (
             <ServiceSubNavItem key={link.label} item={link} pathname={pathname} baseUrl={baseUrl} />
           ))}
@@ -258,19 +299,15 @@ export const ServiceSubNav = ({ serviceContext }: { serviceContext: Exclude<Serv
 
         <div className="hidden items-center justify-center gap-4 overflow-visible px-8 lg:flex xl:gap-8">
           {desktopLinks.map((link, idx) => (
-            <ServiceSubNavItem 
-              key={`${link.label}-${idx}`} 
-              item={link} 
-              pathname={pathname} 
-              baseUrl={baseUrl} 
+            <ServiceSubNavItem
+              key={`${link.label}-${idx}`}
+              item={link}
+              pathname={pathname}
+              baseUrl={baseUrl}
             />
           ))}
         </div>
       </div>
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
-    </div>
+    </nav>
   );
 };

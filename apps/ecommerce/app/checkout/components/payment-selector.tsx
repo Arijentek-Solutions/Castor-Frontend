@@ -16,12 +16,19 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
     <div className="space-y-4">
       <h3 className="text-lg font-bold text-[#0e1b33]">Payment Method</h3>
 
-      <div className={`grid gap-4 ${hasInsuranceItems ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
+      <div
+        role="radiogroup"
+        aria-label="Payment method"
+        className={`grid gap-4 ${hasInsuranceItems ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}
+      >
         {/* Cash on Delivery */}
         <motion.button
           type="button"
+          role="radio"
+          aria-checked={selected === "cod"}
+          aria-label="Cash on Delivery"
           onClick={() => onChange("cod")}
-          className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all ${
+          className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 ${
             selected === "cod"
               ? "border-[#20a9ad] bg-[#20a9ad]/5"
               : "border-slate-200 hover:border-slate-300"
@@ -33,6 +40,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
             className={`flex h-12 w-12 items-center justify-center rounded-full ${
               selected === "cod" ? "bg-[#20a9ad] text-white" : "bg-slate-100 text-slate-600"
             }`}
+            aria-hidden="true"
           >
             <Truck size={24} />
           </div>
@@ -44,6 +52,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
             className={`h-5 w-5 rounded-full border-2 ${
               selected === "cod" ? "border-[#20a9ad] bg-[#20a9ad]" : "border-slate-300"
             } flex items-center justify-center`}
+            aria-hidden="true"
           >
             {selected === "cod" && (
               <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,8 +65,11 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
         {/* Card / UPI */}
         <motion.button
           type="button"
+          role="radio"
+          aria-checked={selected === "card"}
+          aria-label="Card or UPI"
           onClick={() => onChange("card")}
-          className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all ${
+          className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 ${
             selected === "card"
               ? "border-[#20a9ad] bg-[#20a9ad]/5"
               : "border-slate-200 hover:border-slate-300"
@@ -69,6 +81,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
             className={`flex h-12 w-12 items-center justify-center rounded-full ${
               selected === "card" ? "bg-[#20a9ad] text-white" : "bg-slate-100 text-slate-600"
             }`}
+            aria-hidden="true"
           >
             <CreditCard size={24} />
           </div>
@@ -80,6 +93,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
             className={`h-5 w-5 rounded-full border-2 ${
               selected === "card" ? "border-[#20a9ad] bg-[#20a9ad]" : "border-slate-300"
             } flex items-center justify-center`}
+            aria-hidden="true"
           >
             {selected === "card" && (
               <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,8 +107,11 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
         {hasInsuranceItems && (
           <motion.button
             type="button"
+            role="radio"
+            aria-checked={selected === "insurance"}
+            aria-label="Pay with Insurance"
             onClick={() => onChange("insurance")}
-            className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all ${
+            className={`flex items-center gap-4 rounded-2xl border-2 p-5 transition-all focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 ${
               selected === "insurance"
                 ? "border-[#008236] bg-[#f0fdf4]"
                 : "border-slate-200 hover:border-slate-300"
@@ -106,6 +123,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
               className={`flex h-12 w-12 items-center justify-center rounded-full ${
                 selected === "insurance" ? "bg-[#008236] text-white" : "bg-slate-100 text-slate-600"
               }`}
+              aria-hidden="true"
             >
               <ShieldCheck size={24} />
             </div>
@@ -117,6 +135,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
               className={`h-5 w-5 rounded-full border-2 ${
                 selected === "insurance" ? "border-[#008236] bg-[#008236]" : "border-slate-300"
               } flex items-center justify-center`}
+              aria-hidden="true"
             >
               {selected === "insurance" && (
                 <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,7 +149,7 @@ export function PaymentSelector({ selected, onChange, hasInsuranceItems = false 
 
       {/* Trust indicator */}
       <div className="flex items-center gap-2 text-sm text-[#6a6a67]">
-        <Lock size={16} className="text-[#20a9ad]" />
+        <Lock size={16} className="text-[#20a9ad]" aria-hidden="true" />
         <span>Secure encrypted payment</span>
       </div>
     </div>

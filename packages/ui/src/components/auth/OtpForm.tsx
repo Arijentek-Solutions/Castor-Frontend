@@ -37,7 +37,7 @@ export function OtpForm({
       >
         {/* Header */}
         <div className="mb-8 text-center relative z-10">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#20a9ad]/10">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#20a9ad]/10" aria-hidden="true">
             <svg
               className="h-6 w-6 text-[#20a9ad]"
               fill="none"
@@ -55,7 +55,7 @@ export function OtpForm({
           <h1 className="text-2xl font-bold tracking-tight text-[#171717]" id="otp-title">
             Verify your email
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-gray-600">
             We've sent a verification code to <span className="font-semibold text-[#171717]">{email}</span>
           </p>
         </div>
@@ -69,6 +69,8 @@ export function OtpForm({
               exit={{ opacity: 0, y: -10 }}
               className="mb-4 rounded-xl bg-red-50 p-3 text-sm text-red-600 border border-red-100"
               id="otp-error-msg"
+              role="alert"
+              aria-live="assertive"
             >
               {errorMessage}
             </motion.div>
@@ -80,6 +82,8 @@ export function OtpForm({
               exit={{ opacity: 0, y: -10 }}
               className="mb-4 rounded-xl bg-green-50 p-3 text-sm text-green-600 border border-green-100"
               id="otp-success-msg"
+              role="status"
+              aria-live="polite"
             >
               {successMessage}
             </motion.div>
@@ -106,6 +110,12 @@ export function OtpForm({
               disabled={isLoading}
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+              aria-describedby={
+                [
+                  errorMessage ? "otp-error-msg" : "",
+                  successMessage ? "otp-success-msg" : "",
+                ].filter(Boolean).join(" ") || undefined
+              }
               className="block w-full tracking-[1.5em] text-center rounded-xl border border-gray-200 bg-white px-4 py-3 text-xl font-bold text-[#171717] transition-colors focus:border-[#20a9ad] focus:outline-none focus:ring-1 focus:ring-[#20a9ad] disabled:opacity-50"
               placeholder="••••••"
             />
@@ -125,14 +135,14 @@ export function OtpForm({
 
         {/* Resend Footer */}
         {onResend && (
-          <div className="mt-8 text-center text-sm text-gray-500">
+          <div className="mt-8 text-center text-sm text-gray-600">
             Didn't receive the code?{" "}
             <button
               type="button"
               onClick={onResend}
               disabled={isLoading}
               id="otp-resend-btn"
-              className="font-medium text-[#20a9ad] transition-colors hover:text-[#1c989c] focus:outline-none disabled:opacity-50"
+              className="font-medium text-[#0e7f82] transition-colors hover:text-[#0a6b6e] focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2 disabled:opacity-50"
             >
               Resend Code
             </button>

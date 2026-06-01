@@ -8,25 +8,25 @@ import { motion } from "framer-motion";
 export function RentalsBanner() {
   const categories = [
     {
-      icon: <Accessibility className="h-6 w-6 text-[#20a9ad]" />,
+      icon: <Accessibility className="h-6 w-6 text-[#20a9ad]" aria-hidden="true" />,
       title: "Wheelchairs"
     },
     {
-      icon: <Bed className="h-6 w-6 text-[#20a9ad]" />,
+      icon: <Bed className="h-6 w-6 text-[#20a9ad]" aria-hidden="true" />,
       title: "Hospital Beds"
     },
     {
-      icon: <Activity className="h-6 w-6 text-[#20a9ad]" />,
+      icon: <Activity className="h-6 w-6 text-[#20a9ad]" aria-hidden="true" />,
       title: "Walking Aids"
     },
     {
-      icon: <Plus className="h-6 w-6 text-[#20a9ad]" />,
+      icon: <Plus className="h-6 w-6 text-[#20a9ad]" aria-hidden="true" />,
       title: "Other Supplies"
     }
   ];
 
   return (
-    <section className="px-4 pb-20 pt-6 sm:px-6 lg:px-8 lg:pb-28">
+    <section aria-label="Medical equipment rental solutions" className="px-4 pb-20 pt-6 sm:px-6 lg:px-8 lg:pb-28">
       <div className="mx-auto w-full max-w-[1720px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
@@ -97,15 +97,17 @@ export function RentalsBanner() {
               transition={{ duration: 0.6, delay: 0.7 }}
               className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-10"
             >
-              <Link href="/rentals" className="w-full sm:w-auto">
-                <button className="min-h-[54px] w-full sm:min-w-[190px] px-8 bg-[#20a9ad] hover:bg-[#1c989c] text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm shadow-lg shadow-[#20a9ad]/20 hover:shadow-[#20a9ad]/30 active:scale-98 cursor-pointer">
-                  View All Rentals
-                </button>
+              <Link
+                href="/rentals"
+                className="inline-flex min-h-[54px] w-full sm:min-w-[190px] items-center justify-center px-8 bg-[#20a9ad] hover:bg-[#1c989c] text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm shadow-lg shadow-[#20a9ad]/20 hover:shadow-[#20a9ad]/30 active:scale-98 focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+              >
+                View All Rentals
               </Link>
-              <Link href="/contact" className="w-full sm:w-auto">
-                <button className="min-h-[54px] w-full sm:min-w-[170px] px-8 border-2 border-slate-200 hover:border-[#20a9ad]/50 hover:bg-[#20a9ad]/5 text-slate-700 hover:text-[#20a9ad] font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm active:scale-98 cursor-pointer">
-                  Request Inquiry
-                </button>
+              <Link
+                href="/contact"
+                className="inline-flex min-h-[54px] w-full sm:min-w-[170px] items-center justify-center px-8 border-2 border-slate-200 hover:border-[#20a9ad]/50 hover:bg-[#20a9ad]/5 text-slate-700 hover:text-[#20a9ad] font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-xs sm:text-sm active:scale-98 focus-visible:outline-2 focus-visible:outline-[#20a9ad] focus-visible:outline-offset-2"
+              >
+                Request Inquiry
               </Link>
             </motion.div>
           </div>

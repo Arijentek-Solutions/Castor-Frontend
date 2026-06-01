@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   X,
   ChevronRight,
@@ -36,7 +36,10 @@ interface Option {
 export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) => {
   const [currentStep, setCurrentStep] = useState<StepID>('ROOT');
   const [history, setHistory] = useState<StepID[]>([]);
-  
+  const modalContentRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
+
   // Track selections for final navigation
   const [selections, setSelections] = useState<{
     service: string;
@@ -54,6 +57,52 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
     window.addEventListener('open-help-modal', handleOpenModal as EventListener);
     return () => window.removeEventListener('open-help-modal', handleOpenModal as EventListener);
   }, []);
+
+  // Focus trap and initial focus management
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Store the previously focused element
+    previouslyFocusedElementRef.current = document.activeElement as HTMLElement;
+
+    // Focus the close button when modal opens
+    const timer = setTimeout(() => {
+      closeButtonRef.current?.focus();
+    }, 100);
+
+    // Focus trap handler
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !modalContentRef.current) return;
+
+      const focusableElements = modalContentRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('keydown', handleKeyDown);
+      // Restore focus when modal closes
+      if (previouslyFocusedElementRef.current) {
+        previouslyFocusedElementRef.current.focus();
+      }
+    };
+  }, [isOpen]);
 
   const goToStep = (step: StepID) => {
     setHistory((prev) => [...prev, currentStep]);
@@ -288,7 +337,12 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="help-modal-title"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -300,6 +354,7 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
 
           {/* Modal Content */}
           <motion.div
+            ref={modalContentRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -308,7 +363,7 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
             {/* Header */}
             <div className="mb-8 flex items-start justify-between">
               <div className="pr-8">
-                <h2 className="text-[28px] font-black leading-tight text-[#0E1B33] sm:text-[32px]">
+                <h2 id="help-modal-title" className="text-[28px] font-black leading-tight text-[#0E1B33] sm:text-[32px]">
                   {currentStepData.title}
                 </h2>
                 <p className="mt-2 text-[15px] leading-relaxed text-[#6A6A67]">
@@ -316,11 +371,12 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
                 </p>
               </div>
               <button
+                ref={closeButtonRef}
                 onClick={handleClose}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-[#6A6A67] hover:bg-[#F3F4F6] transition-colors"
                 aria-label="Close modal"
               >
-                <X className="w-6 h-6" />
+                <X aria-hidden="true" className="w-6 h-6" />
               </button>
             </div>
 
@@ -342,7 +398,7 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
                       className="group relative flex w-full items-center gap-4 rounded-[20px] border border-[#edf0f4] bg-white p-4 text-left transition-all hover:border-[#20A9AD] hover:bg-[#F7FAFA] hover:shadow-[0_8px_30px_rgba(32,169,173,0.1)] active:scale-[0.99]"
                     >
                       {option.icon && (
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f3f4f6] text-[#6A6A67] transition-colors group-hover:bg-[#eef8f8] group-hover:text-[#20A9AD]">
+                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#f3f4f6] text-[#6A6A67] transition-colors group-hover:bg-[#eef8f8] group-hover:text-[#20A9AD]" aria-hidden="true">
                           {option.icon}
                         </div>
                       )}
@@ -356,7 +412,7 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
                           </div>
                         )}
                       </div>
-                      <ChevronRight className="absolute right-6 h-5 w-5 text-[#D1D5DB] transition-transform group-hover:translate-x-1 group-hover:text-[#20A9AD]" />
+                      <ChevronRight aria-hidden="true" className="absolute right-6 h-5 w-5 text-[#D1D5DB] transition-transform group-hover:translate-x-1 group-hover:text-[#20A9AD]" />
                     </button>
                   ))}
                 </motion.div>
@@ -369,6 +425,7 @@ export const HelpMeChooseModal = ({ isOpen, onClose }: HelpMeChooseModalProps) =
                 <button
                   onClick={goBack}
                   className="flex items-center gap-2 text-[15px] font-bold text-[#0E1B33] hover:opacity-70 transition-opacity"
+                  aria-label="Go back to previous step"
                 >
                   Back
                 </button>

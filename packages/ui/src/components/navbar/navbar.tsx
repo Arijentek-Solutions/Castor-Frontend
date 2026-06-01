@@ -8,12 +8,12 @@ import { type ServiceContext } from "./types";
 import { navItems } from "./nav-data";
 import { MenuIcon } from "./navbar-utils";
 import { ServiceSubNav } from "./service-sub-nav";
-import { 
-  TopBar, 
-  Brand, 
-  DesktopNavItem, 
-  MobileNavItem, 
-  HelpMeChooseButton 
+import {
+  TopBar,
+  Brand,
+  DesktopNavItem,
+  MobileNavItem,
+  HelpMeChooseButton
 } from "./navbar-components";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -123,6 +123,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
               <HelpMeChooseButton className="hidden min-[350px]:flex" onClick={openHelpModal} />
               <button
                 aria-expanded={isMobileOpen}
+                aria-controls="mobile-navigation-menu"
                 aria-label="Toggle navigation menu"
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-[#edf0f4] text-[#0E1B33] transition-colors hover:bg-[#f7f9fb]"
                 onClick={() => setIsMobileOpen((open) => !open)}
@@ -134,7 +135,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
           </div>
 
           {isMobileOpen ? (
-            <div className="border-t border-[#edf0f4] pt-3 lg:hidden">
+            <nav id="mobile-navigation-menu" className="border-t border-[#edf0f4] pt-3 lg:hidden" aria-label="Mobile navigation">
               <div className="space-y-1 pb-1">
                 {navItems.map((item) => (
                   <MobileNavItem
@@ -149,7 +150,7 @@ export const Navbar = ({ serviceContext }: { serviceContext?: ServiceContext }) 
                   />
                 ))}
               </div>
-            </div>
+            </nav>
           ) : null}
         </div>
       </nav>
